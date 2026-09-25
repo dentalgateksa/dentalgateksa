@@ -25,8 +25,7 @@ uploadUrl: 'https://....'
 | `index.html` | هيكل الصفحات |
 | `css/style.css` | التصميم |
 | `js/i18n.js` | نصوص العربي والإنجليزي |
-| `js/app.js` | التنقل واللغة وزرار الرفع |
-| `js/fx.js` | حركة النقط في الخلفية |
+| `js/app.js` | اللغة والقائمة وزرار الرفع |
 | `config.js` | لينك رفع الحالات |
 | `CNAME` | الدومين `www.dentalgateksa.com` |
 | `.github/workflows/pages.yml` | النشر على GitHub Pages |
