@@ -1,8 +1,0 @@
-[
-    {
-        "origin": ["https://www.dentalgateksa.com", "https://dentalgateksa.com"],
-        "method": ["GET"],
-        "responseHeader": ["Content-Type"],
-        "maxAgeSeconds": 3600
-    }
-]

@@ -1,6 +1,6 @@
 # نشر الموقع على GitHub Pages بدومين www.dentalgateksa.com
 
-الموقع بيتنشر أوتوماتيك من فرع `main` كل مرة يحصل فيه تغيير (ملف `.github/workflows/pages.yml`). بيتنشر **ملفات الموقع بس** (`index.html` و `css` و `js` و `config.js` والأيقونات)، مش ملفات الاختبارات ولا الـ Functions.
+الموقع بيتنشر أوتوماتيك من فرع `main` كل مرة يحصل فيه تغيير (ملف `.github/workflows/pages.yml`). بيتنشر **ملفات الموقع بس** (`index.html` و `css` و `js` و `config.js` والأيقونات).
 
 ---
 
@@ -59,7 +59,7 @@
 
 - افتح `https://www.dentalgateksa.com` ← لازم يفتح بالقفل 🔒.
 - افتح `https://dentalgateksa.com` ← لازم يحوّلك على `www`.
-- لو فعّلت Firebase بعد كده، اتأكد إن الدومين متضاف في **Authorized domains** وفي إعدادات الـ CORS (موجودين في `docs/FIREBASE_SETUP_AR.md`).
+- افتح صفحة **رفع الحالات** واتأكد إن الزرار بيودّي على لينك dentlflow الصح.
 
 ## لو حصلت مشكلة
 

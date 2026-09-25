@@ -1,42 +1,22 @@
 # DENTALGATE — Digital Dental Lab
 
-موقع معمل أسنان رقمي: صفحة رئيسية، من نحن، بوابة رفع الحالات للأطباء، ولوحة تحكم للإدارة والفنيين (على الرابط `#staff`). عربي / إنجليزي.
-الـ Backend على **Firebase في الدمام (me-central2)**: Firestore + Cloud Storage + Cloud Functions + Authentication.
+موقع معمل أسنان رقمي (عربي / إنجليزي): الرئيسية، من نحن، ورفع الحالات.
+رفع الحالات بيتم عن طريق حساب المعمل على **dentlflow**، والموقع بيودّي الدكتور على لينك الرفع بتاعه.
 
-## الأوضاع الثلاثة
+## تغيير لينك رفع الحالات
 
-| الوضع | إمتى بيشتغل | البيانات فين |
-|---|---|---|
-| **تجريبي (Demo)** | طول ما `config.js` فاضي — الوضع الحالي | في متصفح الزائر بس. الدخول `admin` / `admin`. **ماتستقبلش بيه حالات حقيقية.** |
-| **اختبار محلي (Emulator)** | `npm run dev` وفتح `http://localhost:5500/?emulator` | Firebase كامل بس على جهازك، ومن غير حساب ولا دفع. بيتمسح لما تقفل. |
-| **حقيقي (Firebase)** | بعد ما تملا `config.js` | السعودية (الدمام). الخطوات في [`docs/FIREBASE_SETUP_AR.md`](docs/FIREBASE_SETUP_AR.md). |
+افتح `config.js` على GitHub ← أيقونة القلم ✏️ ← حط اللينك بين العلامتين:
 
-## الأدلة
-
-- [`docs/FIREBASE_SETUP_AR.md`](docs/FIREBASE_SETUP_AR.md) — تفعيل Firebase الحقيقي، تنبيه الميزانية، والمسح الأوتوماتيك للملفات القديمة.
-- [`docs/GITHUB_PAGES_DNS_AR.md`](docs/GITHUB_PAGES_DNS_AR.md) — النشر على GitHub Pages وإعدادات الـ DNS في Namecheap.
-
-## التجربة على الـ Emulator (على جهازك)
-
-محتاج تنزّل مرة واحدة: [Node.js 22](https://nodejs.org) و [Java 21](https://adoptium.net).
-
-```bash
-npm run setup     # مرة واحدة: بينزّل الأدوات
-npm run dev       # بيشغّل Firebase Emulator + الموقع
+```js
+uploadUrl: 'https://....'
 ```
 
-بعدها افتح `http://localhost:5500/?emulator`:
-- **أدمن:** `admin@dentalgate.test` / `admin12345`
-- **فني:** `tech@dentalgate.test` / `tech12345`
-- تشوف البيانات المتخزنة من `http://localhost:4000`.
+← **Commit changes**. الموقع بيتحدّث خلال دقيقتين. طول ما اللينك فاضي، صفحة الرفع بتقول "متاح قريباً".
 
-## الاختبارات
+## النشر والدومين
 
-```bash
-npm test
-```
-
-بتشغّل الـ Emulator وتتأكد من كل صلاحية (23 اختبار): الدكتور يرفع بس، الفني يشوف ويغيّر الحالة، الأدمن بس يحذف ويدير الفنيين. بتشتغل كمان أوتوماتيك على GitHub في كل Pull Request.
+الموقع بيتنشر أوتوماتيك على GitHub Pages مع أي تغيير على `main`. الإعدادات وخطوات Namecheap في
+[`docs/GITHUB_PAGES_DNS_AR.md`](docs/GITHUB_PAGES_DNS_AR.md).
 
 ## الملفات
 
@@ -45,23 +25,15 @@ npm test
 | `index.html` | هيكل الصفحات |
 | `css/style.css` | التصميم |
 | `js/i18n.js` | نصوص العربي والإنجليزي |
-| `js/data.js` | طبقة البيانات (تجريبي / Emulator / Firebase) |
-| `js/app.js` | التنقل، الفورم، رفع الملفات، لوحة التحكم |
+| `js/app.js` | التنقل واللغة وزرار الرفع |
 | `js/fx.js` | حركة النقط في الخلفية |
-| `config.js` | إعدادات Firebase (مش أسرار) وحد حجم الملف |
-| `firestore.rules` | صلاحيات قاعدة البيانات |
-| `storage.rules` | صلاحيات الملفات |
-| `functions/index.js` | تسجيل الحالات وإدارة حسابات الفنيين (منطقة الدمام) |
-| `firebase/storage-lifecycle.json` | مسح ملفات السكان الأقدم من 180 يوم تلقائياً |
-| `firebase/storage-cors.json` | السماح بتحميل الملفات من دومين الموقع بس |
-| `scripts/dev.mjs` | بيانات تجريبية للـ Emulator + تشغيل الموقع محلياً |
-| `tests/` | اختبارات الصلاحيات والـ Functions |
-| `.github/workflows/` | النشر على GitHub Pages + تشغيل الاختبارات |
+| `config.js` | لينك رفع الحالات |
+| `CNAME` | الدومين `www.dentalgateksa.com` |
+| `.github/workflows/pages.yml` | النشر على GitHub Pages |
 
-## الأمان
+## تجربته على جهازك
 
-- المستودع Public: **مفيهوش أسرار ولا بيانات مرضى**. قيم `config.js` مصممة إنها تكون علنية.
-- **عمرك ما ترفع** ملف Service Account أو أي JSON فيه `private_key`.
-- الدكتور مايقدرش يقرا أي حالة؛ الحالات بتتسجل عن طريق Cloud Function بتتأكد من البيانات والملفات.
-- الفني بيفقد صلاحيته فوراً لما يتمسح.
-- ملفات أكبر من 50 ميجا أو امتدادات غير (STL, PLY, OBJ, ZIP, DCM, PDF, JPG, PNG) مرفوضة من السيرفر نفسه.
+```bash
+python3 -m http.server 8000
+# افتح http://localhost:8000
+```
