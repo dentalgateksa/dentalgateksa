@@ -464,8 +464,7 @@ a {
 /* ---------- Footer ---------- */
 .site-footer {
     border-top: 1px solid var(--border);
-    /* extra bottom space so the host's floating badge never covers the footer */
-    padding: 28px 0 96px;
+    padding: 28px 0;
 }
 
 .footer-inner {
