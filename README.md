@@ -1,6 +1,42 @@
 # DENTALGATE — Digital Dental Lab
 
 موقع معمل أسنان رقمي: صفحة رئيسية، من نحن، بوابة رفع الحالات للأطباء، ولوحة تحكم للإدارة والفنيين (على الرابط `#staff`). عربي / إنجليزي.
+الـ Backend على **Firebase في الدمام (me-central2)**: Firestore + Cloud Storage + Cloud Functions + Authentication.
+
+## الأوضاع الثلاثة
+
+| الوضع | إمتى بيشتغل | البيانات فين |
+|---|---|---|
+| **تجريبي (Demo)** | طول ما `config.js` فاضي — الوضع الحالي | في متصفح الزائر بس. الدخول `admin` / `admin`. **ماتستقبلش بيه حالات حقيقية.** |
+| **اختبار محلي (Emulator)** | `npm run dev` وفتح `http://localhost:5500/?emulator` | Firebase كامل بس على جهازك، ومن غير حساب ولا دفع. بيتمسح لما تقفل. |
+| **حقيقي (Firebase)** | بعد ما تملا `config.js` | السعودية (الدمام). الخطوات في [`docs/FIREBASE_SETUP_AR.md`](docs/FIREBASE_SETUP_AR.md). |
+
+## الأدلة
+
+- [`docs/FIREBASE_SETUP_AR.md`](docs/FIREBASE_SETUP_AR.md) — تفعيل Firebase الحقيقي، تنبيه الميزانية، والمسح الأوتوماتيك للملفات القديمة.
+- [`docs/GITHUB_PAGES_DNS_AR.md`](docs/GITHUB_PAGES_DNS_AR.md) — النشر على GitHub Pages وإعدادات الـ DNS في Namecheap.
+
+## التجربة على الـ Emulator (على جهازك)
+
+محتاج تنزّل مرة واحدة: [Node.js 22](https://nodejs.org) و [Java 21](https://adoptium.net).
+
+```bash
+npm run setup     # مرة واحدة: بينزّل الأدوات
+npm run dev       # بيشغّل Firebase Emulator + الموقع
+```
+
+بعدها افتح `http://localhost:5500/?emulator`:
+- **أدمن:** `admin@dentalgate.test` / `admin12345`
+- **فني:** `tech@dentalgate.test` / `tech12345`
+- تشوف البيانات المتخزنة من `http://localhost:4000`.
+
+## الاختبارات
+
+```bash
+npm test
+```
+
+بتشغّل الـ Emulator وتتأكد من كل صلاحية (23 اختبار): الدكتور يرفع بس، الفني يشوف ويغيّر الحالة، الأدمن بس يحذف ويدير الفنيين. بتشتغل كمان أوتوماتيك على GitHub في كل Pull Request.
 
 ## الملفات
 
@@ -9,47 +45,23 @@
 | `index.html` | هيكل الصفحات |
 | `css/style.css` | التصميم |
 | `js/i18n.js` | نصوص العربي والإنجليزي |
-| `js/data.js` | طبقة البيانات (وضع تجريبي أو Supabase) |
+| `js/data.js` | طبقة البيانات (تجريبي / Emulator / Firebase) |
 | `js/app.js` | التنقل، الفورم، رفع الملفات، لوحة التحكم |
 | `js/fx.js` | حركة النقط في الخلفية |
-| `config.js` | إعدادات Supabase وحد حجم الملف |
-| `supabase/schema.sql` | الجداول وصلاحيات الأمان (RLS) |
-| `supabase/functions/manage-staff` | إنشاء وحذف حسابات الفنيين (للأدمن فقط) |
+| `config.js` | إعدادات Firebase (مش أسرار) وحد حجم الملف |
+| `firestore.rules` | صلاحيات قاعدة البيانات |
+| `storage.rules` | صلاحيات الملفات |
+| `functions/index.js` | تسجيل الحالات وإدارة حسابات الفنيين (منطقة الدمام) |
+| `firebase/storage-lifecycle.json` | مسح ملفات السكان الأقدم من 180 يوم تلقائياً |
+| `firebase/storage-cors.json` | السماح بتحميل الملفات من دومين الموقع بس |
+| `scripts/dev.mjs` | بيانات تجريبية للـ Emulator + تشغيل الموقع محلياً |
+| `tests/` | اختبارات الصلاحيات والـ Functions |
+| `.github/workflows/` | النشر على GitHub Pages + تشغيل الاختبارات |
 
-## التشغيل محلياً
+## الأمان
 
-```bash
-python3 -m http.server 8000
-# افتح http://localhost:8000
-```
-
-## الوضع التجريبي (الافتراضي)
-
-طالما `config.js` فاضي، الموقع بيشتغل في **وضع تجريبي**: البيانات بتتحفظ في متصفح الزائر فقط، والدخول للوحة التحكم بـ `admin` / `admin`.
-**لا تستخدم الوضع التجريبي لاستقبال حالات حقيقية.**
-
-## التشغيل الفعلي مع Supabase
-
-1. اعمل مشروع مجاني على [supabase.com](https://supabase.com).
-2. من **SQL Editor** شغّل محتوى `supabase/schema.sql`.
-3. من **Authentication → Users → Add user** اعمل حساب الأدمن (فعّل Auto Confirm)، وبعدين شغّل في SQL Editor:
-   ```sql
-   insert into public.staff (id, name, email, role, is_admin)
-   select id, 'Admin', email, 'Admin', true from auth.users where email = 'you@example.com';
-   ```
-4. انشر الـ Edge Function الخاصة بإدارة الفنيين:
-   ```bash
-   npx supabase login
-   npx supabase functions deploy manage-staff --project-ref <project-ref>
-   ```
-5. من **Project Settings → API** انسخ `Project URL` و `anon public key` وحطهم في `config.js`.
-6. ارفع الموقع على أي استضافة ثابتة (GitHub Pages / Netlify / Vercel).
-
-### الأمان
-- الأطباء (بدون تسجيل دخول) يقدروا **يرسلوا** حالات ويرفعوا ملفات فقط — مايقدروش يشوفوا أي حالة.
-- الفنيين يشوفوا الحالات ويغيروا حالتها ويحملوا الملفات (روابط مؤقتة 5 دقائق).
-- الأدمن فقط يحذف الحالات ويدير حسابات الفنيين.
-- الملفات في bucket خاص (غير عام)، وحد الملف 50 ميجا (يتغير من `config.js` و `schema.sql`).
-- مفتاح `anon` مصمم إنه يكون علني؛ الحماية الفعلية في سياسات RLS. **لا تضع مفتاح `service_role` في الموقع أبداً.**
-- بيانات المرضى بيانات صحية: راجع متطلبات نظام حماية البيانات الشخصية (PDPL) واختر منطقة سيرفر مناسبة في Supabase.
-- مقترح لاحقاً: إضافة CAPTCHA (مثل Cloudflare Turnstile) على فورم الرفع لمنع السبام.
+- المستودع Public: **مفيهوش أسرار ولا بيانات مرضى**. قيم `config.js` مصممة إنها تكون علنية.
+- **عمرك ما ترفع** ملف Service Account أو أي JSON فيه `private_key`.
+- الدكتور مايقدرش يقرا أي حالة؛ الحالات بتتسجل عن طريق Cloud Function بتتأكد من البيانات والملفات.
+- الفني بيفقد صلاحيته فوراً لما يتمسح.
+- ملفات أكبر من 50 ميجا أو امتدادات غير (STL, PLY, OBJ, ZIP, DCM, PDF, JPG, PNG) مرفوضة من السيرفر نفسه.

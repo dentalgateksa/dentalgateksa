@@ -4,6 +4,7 @@
     const T = window.DG_TRANSLATIONS;
     const CFG = window.DG_CONFIG || {};
     const MAX_MB = CFG.maxFileSizeMB || 50;
+    const MAX_FILES = CFG.maxFiles || 20;
     const ALLOWED_EXT = ['stl', 'ply', 'obj', 'zip', 'dcm', 'pdf', 'jpg', 'jpeg', 'png'];
     const STATUSES = ['pending', 'in_progress', 'completed'];
     const PAGES = ['home', 'about', 'upload', 'staff'];
@@ -187,7 +188,11 @@
                 errors.push(t('file_bad_type', { name: f.name }));
             } else if (f.size > MAX_MB * 1024 * 1024) {
                 errors.push(t('file_too_big', { name: f.name, max: MAX_MB }));
-            } else if (!selectedFiles.some((x) => x.name === f.name && x.size === f.size)) {
+            } else if (selectedFiles.some((x) => x.name === f.name && x.size === f.size)) {
+                // already added
+            } else if (selectedFiles.length >= MAX_FILES) {
+                errors.push(t('file_too_many', { max: MAX_FILES }));
+            } else {
                 selectedFiles.push(f);
             }
         });
@@ -264,14 +269,15 @@
         btn.textContent = t('btn_sending');
         try {
             const a = await withApi();
-            await a.submitCase({
+            const result = await a.submitCase({
                 doctor: $('inputDoc').value.trim(),
                 clinic: $('inputClinic').value.trim(),
                 patient: $('inputPatient').value.trim(),
                 shade: $('inputShade').value.trim(),
                 notes: $('inputNotes').value.trim()
-            }, selectedFiles);
-            toast(a.mode === 'demo' ? t('case_sent_demo') : t('case_sent'));
+            }, selectedFiles, (pct) => { btn.textContent = t('btn_sending') + ' ' + pct + '%'; });
+            const n = result && result.caseNo ? result.caseNo : '';
+            toast(a.mode === 'demo' ? t('case_sent_demo', { n }) : t('case_sent', { n }));
             form.reset();
             selectedFiles = [];
             renderFiles();
@@ -310,12 +316,8 @@
 
     async function openFile(file) {
         try {
-            const url = await (await withApi()).getFileUrl(file);
-            if (!url) {
-                toast(t('file_unavailable'), true);
-                return;
-            }
-            window.open(url, '_blank', 'noopener');
+            const ok = await (await withApi()).downloadFile(file);
+            if (!ok) toast(api && api.mode === 'demo' ? t('file_unavailable_demo') : t('file_unavailable'), true);
         } catch (err) {
             console.error(err);
             toast(t('action_failed'), true);
@@ -491,6 +493,7 @@
         try {
             api = await window.DG_API_READY;
             document.querySelectorAll('[data-demo-only]').forEach((n) => { n.hidden = api.mode !== 'demo'; });
+            document.querySelectorAll('[data-emulator-only]').forEach((n) => { n.hidden = api.mode !== 'emulator'; });
             session = await api.getSession();
         } catch (err) {
             apiError = err;

@@ -1,0 +1,51 @@
+rules_version = '2';
+
+// DENTALGATE — Firestore security rules.
+//
+// Who can do what:
+//   Doctor (no login)  -> nothing here. New cases are created only by the
+//                         submitCase Cloud Function, so a doctor can never read
+//                         any case, not even their own.
+//   Technician (staff) -> read cases, change a case's status, read the staff list.
+//   Admin              -> everything a technician can, plus delete cases.
+//                         Technician accounts are created/deleted only by the
+//                         createStaff / deleteStaff Cloud Functions.
+//
+// A user is staff only while a document exists at staff/{uid}; deleting that
+// document removes access immediately, even if the login token is still valid.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function staffDoc() {
+      return /databases/$(database)/documents/staff/$(request.auth.uid);
+    }
+
+    function isStaff() {
+      return request.auth != null && exists(staffDoc());
+    }
+
+    function isAdmin() {
+      return isStaff() && get(staffDoc()).data.isAdmin == true;
+    }
+
+    match /cases/{caseId} {
+      allow read: if isStaff();
+      allow create: if false;
+      allow update: if isStaff()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
+        && request.resource.data.status in ['pending', 'in_progress', 'completed']
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if isAdmin();
+    }
+
+    match /staff/{uid} {
+      allow read: if isStaff();
+      allow write: if false;
+    }
+
+    // Everything else (e.g. meta/counters) is server-only.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

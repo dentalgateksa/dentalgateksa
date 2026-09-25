@@ -1,15 +1,22 @@
 // Data layer. Exposes window.DG_API_READY -> Promise<api>.
 // Both backends implement the same interface:
-//   mode, getSession(), signIn(user, pass), signOut(),
-//   submitCase(fields, files), listCases(), setCaseStatus(id, status), deleteCase(c),
-//   getFileUrl(file), listStaff(), createStaff(s), deleteStaff(id)
+//   mode ('demo' | 'firebase' | 'emulator'), getSession(), signIn(user, pass), signOut(),
+//   submitCase(fields, files, onProgress) -> { caseNo }, listCases(), setCaseStatus(id, status),
+//   deleteCase(c), downloadFile(file) -> boolean, listStaff(), createStaff(s), deleteStaff(id)
 // A session is { id, name, isAdmin }.
 (function () {
     'use strict';
 
     const cfg = window.DG_CONFIG || {};
-    const BUCKET = 'case-files';
-    const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    const REGION = cfg.functionsRegion || 'me-central2';
+    const SDK_BASE = 'https://www.gstatic.com/firebasejs/' + (cfg.firebaseSdkVersion || '12.19.0') + '/';
+    const EMULATOR_CONFIG = {
+        apiKey: 'demo-key',
+        authDomain: 'demo-dentalgate.firebaseapp.com',
+        projectId: 'demo-dentalgate',
+        storageBucket: 'demo-dentalgate.appspot.com',
+        appId: 'demo-app'
+    };
 
     function uuid() {
         if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -72,15 +79,17 @@
             },
             async submitCase(fields, files) {
                 const db = load();
+                const caseNo = db.nextCaseNo++;
                 db.cases.unshift({
                     id: uuid(),
-                    caseNo: db.nextCaseNo++,
+                    caseNo,
                     createdAt: new Date().toISOString(),
                     ...fields,
                     files: files.map((f) => ({ name: f.name, size: f.size })),
                     status: 'pending'
                 });
                 save();
+                return { caseNo };
             },
             async listCases() { return load().cases.slice(); },
             async setCaseStatus(id, status) {
@@ -92,7 +101,7 @@
                 db.cases = db.cases.filter((x) => x.id !== c.id);
                 save();
             },
-            async getFileUrl() { return null; },
+            async downloadFile() { return false; },
             async listStaff() { return load().staff.slice(); },
             async createStaff(s) {
                 const db = load();
@@ -110,121 +119,166 @@
         };
     }
 
-    // ---------------- Supabase backend ----------------
-    function loadScript(src) {
-        return new Promise((resolve, reject) => {
-            const s = document.createElement('script');
-            s.src = src;
-            s.onload = resolve;
-            s.onerror = () => reject(new Error('Failed to load ' + src));
-            document.head.appendChild(s);
-        });
+    // ---------------- Firebase backend ----------------
+    function toIso(ts) {
+        return ts && typeof ts.toDate === 'function' ? ts.toDate().toISOString() : new Date().toISOString();
     }
 
-    function fromCaseRow(r) {
-        return {
-            id: r.id,
-            caseNo: r.case_no,
-            createdAt: r.created_at,
-            patient: r.patient,
-            doctor: r.doctor,
-            clinic: r.clinic,
-            shade: r.shade,
-            notes: r.notes || '',
-            files: Array.isArray(r.files) ? r.files : [],
-            status: r.status
+    function callableError(err) {
+        // Firebase callable errors look like "functions/already-exists"; keep the server message.
+        return new Error((err && err.message) || 'Request failed');
+    }
+
+    async function createFirebaseApi(firebaseConfig, useEmulator) {
+        const [appM, authM, fsM, stM, fnM] = await Promise.all(
+            ['app', 'auth', 'firestore', 'storage', 'functions'].map((n) => import(SDK_BASE + 'firebase-' + n + '.js'))
+        );
+        const app = appM.initializeApp(firebaseConfig);
+        const auth = authM.getAuth(app);
+        const db = fsM.getFirestore(app);
+        const storage = stM.getStorage(app);
+        const fns = fnM.getFunctions(app, REGION);
+
+        if (useEmulator) {
+            const host = location.hostname;
+            authM.connectAuthEmulator(auth, 'http://' + host + ':9099', { disableWarnings: true });
+            fsM.connectFirestoreEmulator(db, host, 8080);
+            stM.connectStorageEmulator(storage, host, 9199);
+            fnM.connectFunctionsEmulator(fns, host, 5001);
+        }
+
+        const call = (name) => async (data) => {
+            try {
+                return (await fnM.httpsCallable(fns, name)(data)).data;
+            } catch (err) {
+                throw callableError(err);
+            }
         };
-    }
-
-    async function createSupabaseApi() {
-        await loadScript(SUPABASE_JS);
-        const client = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
 
         async function loadProfile() {
-            const { data: { user } } = await client.auth.getUser();
+            const user = auth.currentUser;
             if (!user) return null;
-            const { data, error } = await client.from('staff').select('name, is_admin').eq('id', user.id).maybeSingle();
-            if (error || !data) return null;
-            return { id: user.id, name: data.name, isAdmin: !!data.is_admin };
-        }
-
-        async function invokeStaffFn(body) {
-            const { data, error } = await client.functions.invoke('manage-staff', { body });
-            if (error) throw error;
-            if (data && data.error) throw new Error(data.error);
-            return data;
+            try {
+                const snap = await fsM.getDoc(fsM.doc(db, 'staff', user.uid));
+                if (!snap.exists()) return null;
+                const d = snap.data();
+                return { id: user.uid, name: d.name, isAdmin: d.isAdmin === true };
+            } catch (err) {
+                return null; // not staff: the rules deny the read
+            }
         }
 
         return {
-            mode: 'supabase',
+            mode: useEmulator ? 'emulator' : 'firebase',
             async getSession() {
-                const { data } = await client.auth.getSession();
-                return data.session ? loadProfile() : null;
+                await auth.authStateReady();
+                return loadProfile();
             },
             async signIn(email, password) {
-                const { error } = await client.auth.signInWithPassword({ email: email.trim(), password });
-                if (error) return null;
+                try {
+                    await authM.signInWithEmailAndPassword(auth, email.trim(), password);
+                } catch (err) {
+                    return null;
+                }
                 const profile = await loadProfile();
                 if (!profile) {
-                    await client.auth.signOut();
+                    await authM.signOut(auth);
                     return null;
                 }
                 return profile;
             },
-            async signOut() { await client.auth.signOut(); },
-            async submitCase(fields, files) {
-                const id = uuid();
-                const stored = [];
+            async signOut() { await authM.signOut(auth); },
+            async submitCase(fields, files, onProgress) {
+                const caseId = uuid();
+                const total = files.reduce((n, f) => n + f.size, 0) || 1;
+                let done = 0;
                 for (let i = 0; i < files.length; i++) {
                     const f = files[i];
-                    const path = `${id}/${i + 1}-${safeName(f.name)}`;
-                    const { error } = await client.storage.from(BUCKET).upload(path, f, {
-                        upsert: false,
-                        contentType: f.type || 'application/octet-stream'
+                    const fileRef = stM.ref(storage, 'cases/' + caseId + '/' + (i + 1) + '-' + safeName(f.name));
+                    const task = stM.uploadBytesResumable(fileRef, f, {
+                        contentType: f.type || 'application/octet-stream',
+                        customMetadata: { originalName: f.name }
                     });
-                    if (error) throw error;
-                    stored.push({ name: f.name, path, size: f.size });
+                    if (onProgress) {
+                        task.on('state_changed', (s) => onProgress(Math.round(((done + s.bytesTransferred) / total) * 100)));
+                    }
+                    await task;
+                    done += f.size;
                 }
-                // Visitors may insert but not read cases, so don't ask for the row back.
-                const { error } = await client.from('cases').insert({ id, ...fields, files: stored });
-                if (error) throw error;
+                // Doctors may create but never read cases: the function registers it server-side.
+                return call('submitCase')({ caseId, ...fields });
             },
             async listCases() {
-                const { data, error } = await client.from('cases').select('*').order('created_at', { ascending: false });
-                if (error) throw error;
-                return data.map(fromCaseRow);
+                const snap = await fsM.getDocs(fsM.query(fsM.collection(db, 'cases'), fsM.orderBy('createdAt', 'desc')));
+                return snap.docs.map((d) => {
+                    const r = d.data();
+                    return {
+                        id: d.id,
+                        caseNo: r.caseNo,
+                        createdAt: toIso(r.createdAt),
+                        patient: r.patient,
+                        doctor: r.doctor,
+                        clinic: r.clinic,
+                        shade: r.shade,
+                        notes: r.notes || '',
+                        files: Array.isArray(r.files) ? r.files : [],
+                        status: r.status
+                    };
+                });
             },
             async setCaseStatus(id, status) {
-                const { error } = await client.from('cases').update({ status }).eq('id', id);
-                if (error) throw error;
+                await fsM.updateDoc(fsM.doc(db, 'cases', id), { status, updatedAt: fsM.serverTimestamp() });
             },
             async deleteCase(c) {
-                const paths = c.files.map((f) => f.path).filter(Boolean);
-                if (paths.length) {
-                    const { error } = await client.storage.from(BUCKET).remove(paths);
-                    if (error) throw error;
+                for (const f of c.files) {
+                    if (!f.path) continue;
+                    try {
+                        await stM.deleteObject(stM.ref(storage, f.path));
+                    } catch (err) {
+                        if (err.code !== 'storage/object-not-found') throw err;
+                    }
                 }
-                const { error } = await client.from('cases').delete().eq('id', c.id);
-                if (error) throw error;
+                await fsM.deleteDoc(fsM.doc(db, 'cases', c.id));
             },
-            async getFileUrl(file) {
-                if (!file.path) return null;
-                const { data, error } = await client.storage.from(BUCKET).createSignedUrl(file.path, 300, { download: file.name });
-                if (error) throw error;
-                return data.signedUrl;
+            async downloadFile(file) {
+                if (!file.path) return false;
+                let blob;
+                try {
+                    blob = await stM.getBlob(stM.ref(storage, file.path));
+                } catch (err) {
+                    if (err.code === 'storage/object-not-found') return false; // e.g. removed by the auto-cleanup
+                    throw err;
+                }
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 60e3);
+                return true;
             },
             async listStaff() {
-                const { data, error } = await client.from('staff').select('id, name, email, role, is_admin').order('created_at');
-                if (error) throw error;
-                return data.map((r) => ({ id: r.id, name: r.name, email: r.email, role: r.role, isAdmin: r.is_admin }));
+                const snap = await fsM.getDocs(fsM.query(fsM.collection(db, 'staff'), fsM.orderBy('createdAt')));
+                return snap.docs.map((d) => {
+                    const r = d.data();
+                    return { id: d.id, name: r.name, email: r.email, role: r.role, isAdmin: r.isAdmin === true };
+                });
             },
-            async createStaff(s) { await invokeStaffFn({ action: 'create', ...s }); },
-            async deleteStaff(id) { await invokeStaffFn({ action: 'delete', id }); }
+            async createStaff(s) { await call('createStaff')(s); },
+            async deleteStaff(id) { await call('deleteStaff')({ id }); }
         };
     }
 
-    const configured = Boolean(cfg.supabaseUrl && cfg.supabaseAnonKey);
-    // If Supabase is configured but fails to load, reject rather than fall back to
+    const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+    const useEmulator = isLocal && new URLSearchParams(location.search).has('emulator');
+    const fbCfg = cfg.firebase || {};
+    const configured = Boolean(fbCfg.apiKey && fbCfg.projectId && fbCfg.appId);
+
+    // If Firebase is configured but fails to load, reject rather than fall back to
     // demo mode: a doctor must never believe a case was sent when it wasn't.
-    window.DG_API_READY = configured ? createSupabaseApi() : Promise.resolve(createDemoApi());
+    window.DG_API_READY = useEmulator ? createFirebaseApi(EMULATOR_CONFIG, true)
+        : configured ? createFirebaseApi(fbCfg, false)
+            : Promise.resolve(createDemoApi());
 })();

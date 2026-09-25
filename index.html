@@ -139,6 +139,7 @@
             <div class="form-card narrow">
                 <h2 class="form-title" data-i18n="admin_login_title">Staff & Admin Access Portal</h2>
                 <p class="demo-note" data-demo-only hidden data-i18n="demo_login_note">Demo mode: login with admin / admin. Data is saved in this browser only.</p>
+                <p class="demo-note" data-emulator-only hidden data-i18n="emulator_note">Local test mode (Firebase Emulator): test data, erased when stopped.</p>
                 <form id="loginForm">
                     <div class="form-group">
                         <label for="adminUser" data-i18n="label_username">Email</label>
@@ -159,7 +160,8 @@
                 <h2 data-i18n="dashboard_title">Lab Management Dashboard</h2>
                 <span class="badge badge-completed" id="sessionBadge"></span>
             </div>
-            <p class="demo-note" data-demo-only hidden data-i18n="demo_dashboard_note">Demo mode: data is saved in this browser only. Connect Supabase to receive real cases.</p>
+            <p class="demo-note" data-demo-only hidden data-i18n="demo_dashboard_note">Demo mode: data is saved in this browser only. Connect Firebase to receive real cases.</p>
+            <p class="demo-note" data-emulator-only hidden data-i18n="emulator_note">Local test mode (Firebase Emulator): test data, erased when stopped.</p>
 
             <div class="admin-nav-tabs" role="tablist">
                 <button type="button" role="tab" id="tab-cases-btn" aria-controls="tab-cases" data-tab="cases" data-i18n="tab_cases">Uploaded Cases & Files</button>
