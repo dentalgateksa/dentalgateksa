@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENTALGATE | Digital Dental Lab</title>
+    <meta name="description" content="DENTALGATE — a digital dental lab using CAD/CAM technology. Upload your intraoral scan cases online.">
+
+    <!-- PWA & iOS -->
+    <meta name="theme-color" content="#0F1115">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DentalGate">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon.svg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main" data-i18n="skip_link">Skip to content</a>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <a class="logo" href="#home" aria-label="DENTALGATE">DENTALGATE</a>
+        <div class="nav-right">
+            <button type="button" class="lang-btn" id="langBtn" lang="ar">عربي</button>
+            <button type="button" class="menu-btn" id="menuBtn" aria-controls="navLinks" aria-expanded="false" data-i18n-aria="menu_label" aria-label="Menu">☰</button>
+
+            <nav aria-label="Main">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" data-page="home" data-i18n="nav_home">Home</a></li>
+                    <li><a href="#about" data-page="about" data-i18n="nav_about">About Us</a></li>
+                    <li><a href="#upload" data-page="upload" data-i18n="nav_upload">Upload Cases</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+
+        <!-- Home -->
+        <section id="page-home" class="page-section active">
+            <div class="hero-section" id="hero">
+                <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+                <div class="hero-content">
+                    <h1 class="hero-title" data-i18n="hero_title">Where Digital Dentistry Meets Art</h1>
+                    <a class="cta-btn" href="#upload" data-i18n="hero_cta">( Upload Case )</a>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="text-region-box">
+                    <h2 data-i18n="home_box_title">About Our Digital Lab</h2>
+                    <p data-i18n="home_box_desc">At DENTALGATE, we leverage cutting-edge CAD/CAM technology to deliver high-precision dental restorations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="page-about" class="page-section container page-offset">
+            <div class="text-region-box">
+                <h2 data-i18n="about_title">About Us - DENTALGATE</h2>
+                <p data-i18n="about_desc">An integrated digital dental lab manufacturing top-tier restorations following international standards.</p>
+            </div>
+            <div class="grid-cards">
+                <div class="card">
+                    <h3 data-i18n="card1_title">CAD/CAM Technology</h3>
+                    <p data-i18n="card1_desc">Full digital design and milling ensuring perfect fit for every restoration.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="card2_title">All Scanner Files</h3>
+                    <p data-i18n="card2_desc">Direct support for intraoral scan files including STL, PLY, OBJ and ZIP.</p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="card3_title">Speed & Precision</h3>
+                    <p data-i18n="card3_desc">Fast delivery and accurate execution to serve clinics and centers efficiently.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Cases -->
+        <section id="page-upload" class="page-section container page-offset">
+            <div class="text-region-box">
+                <h2 data-i18n="upload_title">Digital Cases Upload Portal</h2>
+                <p data-i18n="upload_desc">A dedicated platform for doctors and centers to submit patient details and files.</p>
+            </div>
+            <div class="form-card upload-card">
+                <p data-i18n="upload_go_hint">Upload your case files and details securely through our case portal.</p>
+                <a class="submit-btn upload-go" id="uploadLink" href="#" target="_blank" rel="noopener" hidden data-i18n="upload_go_btn">Upload a Case Now</a>
+                <p class="demo-note" id="uploadSoon" hidden data-i18n="upload_soon">Online case upload is coming soon.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <a class="logo" href="#home" aria-label="DENTALGATE">DENTALGATE</a>
+        <p data-i18n="footer_rights">All rights reserved © 2026 DENTALGATE</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
