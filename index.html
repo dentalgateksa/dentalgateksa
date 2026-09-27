@@ -664,7 +664,7 @@ a {
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#about" data-i18n="nav_about">About</a></li>
                     <li><a href="#how" data-i18n="nav_how">How it works</a></li>
-                    <li><a class="btn btn-primary btn-sm" href="#upload" data-i18n="nav_upload">Upload a Case</a></li>
+                    <li><a class="btn btn-primary btn-sm" href="#upload" data-upload data-i18n="nav_upload">Upload a Case</a></li>
                 </ul>
             </nav>
 
@@ -687,7 +687,7 @@ a {
                     <h1 data-i18n="hero_title">Where Dentistry Meets Art</h1>
                     <p class="lead" data-i18n="hero_desc">At DENTALGATE, we use the latest CAD/CAM technology to deliver high-precision restorations for modern clinics.</p>
                     <div class="hero-buttons">
-                        <a class="btn btn-primary" href="#upload" data-i18n="hero_cta">Upload a Case</a>
+                        <a class="btn btn-primary" href="#upload" data-upload data-i18n="hero_cta">Upload a Case</a>
                         <a class="btn btn-ghost" href="#about" data-i18n="hero_more">Learn more</a>
                     </div>
                 </div>
@@ -809,7 +809,7 @@ a {
 // uploadUrl: your case-upload link from your dentlflow account (must start with https://).
 // While it is empty, the "Upload Cases" page shows "coming soon" instead of a button.
 window.DG_CONFIG = {
-    uploadUrl: ''
+    uploadUrl: 'https://dental-gate-clinic.ilab.dental/#/login'
 };
 
 </script>
@@ -935,7 +935,15 @@ window.DG_TRANSLATIONS = {
     function setupUploadLink() {
         const url = String(CFG.uploadUrl || '').trim();
         const valid = /^https:\/\//i.test(url);
-        if (valid) $('uploadLink').href = url;
+        if (valid) {
+            $('uploadLink').href = url;
+            // Send every "Upload a Case" button straight to the case portal
+            document.querySelectorAll('[data-upload]').forEach((a) => {
+                a.href = url;
+                a.target = '_blank';
+                a.rel = 'noopener';
+            });
+        }
         $('uploadLink').hidden = !valid;
         $('uploadSoon').hidden = valid;
     }
