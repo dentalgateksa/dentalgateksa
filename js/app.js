@@ -120,6 +120,8 @@
 
         closeMenu();
         window.DG_HERO_FX.setActive(page === 'home');
+        const video = $('introVideo');
+        if (page === 'home') video.play().catch(() => {}); else video.pause();
         window.scrollTo(0, 0);
 
         if (page === 'staff' && session) loadDashboard();
@@ -475,6 +477,14 @@
             adminTab = b.dataset.tab;
             renderTabs();
         }));
+        $('soundBtn').addEventListener('click', () => {
+            const v = $('introVideo');
+            v.muted = !v.muted;
+            if (!v.muted) v.play();
+            $('soundBtn').setAttribute('aria-pressed', String(!v.muted));
+            $('soundBtn').dataset.i18n = v.muted ? 'sound_on' : 'sound_off';
+            $('soundBtn').textContent = t($('soundBtn').dataset.i18n);
+        });
         window.addEventListener('hashchange', render);
         setupFileZone();
     }
