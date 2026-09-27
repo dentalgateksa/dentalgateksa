@@ -1,0 +1,85 @@
+<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--o:#E2A16F;--o2:#E0833B;--ol:#EDB88F;--ob:#FDF4EC;--ink:#1f2937;--mut:#64748b;--line:#f1e4d8}
+*{box-sizing:border-box;margin:0;padding:0}body{width:1240px;font-family:Cairo,"Noto Sans Arabic",Tahoma,sans-serif;background:#fff;color:var(--ink)}
+.hd{position:relative;overflow:hidden;padding:48px 56px 40px;background:radial-gradient(900px 420px at 0% 0%,#FBE3CD 0,transparent 60%),linear-gradient(180deg,#FFF9F4,#fff)}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:64px;height:64px}.brand .n{font-size:46px;font-weight:800;line-height:1;direction:ltr}.brand .s{font-size:12px;letter-spacing:.18em;color:var(--mut);direction:ltr}
+.hd h1{font-size:40px;font-weight:800;margin:26px 0 10px;max-width:640px;line-height:1.35}.hd h1 span{color:var(--o2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.pill{background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:15px;font-weight:700}
+.hd p{font-size:17px;color:var(--mut);max-width:600px}
+.dev{position:absolute;left:48px;top:44px;width:520px;height:330px}
+.lap{position:absolute;left:0;top:10px;width:470px;border-radius:14px;background:#1f2937;padding:10px 10px 18px;box-shadow:0 30px 60px -20px rgba(224,131,59,.45)}
+.lap img{width:100%;height:270px;object-fit:cover;object-position:top right;border-radius:6px;display:block}
+.ph{position:absolute;right:0;top:80px;width:140px;border-radius:24px;background:#1f2937;padding:7px;box-shadow:0 20px 40px -12px rgba(0,0,0,.35)}
+.ph img{width:100%;height:250px;object-fit:cover;object-position:55% 40%;border-radius:18px;display:block}
+.wrap{padding:8px 56px 40px}
+.row{display:grid;gap:18px;margin-top:18px}.c2{grid-template-columns:1.4fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}.c2b{grid-template-columns:1fr 1.25fr}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:0 6px 20px -14px rgba(224,131,59,.35)}
+.card.tint{background:var(--ob)}
+.t{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;margin-bottom:8px}
+.ic{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--ol),var(--o2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.card p,.card li{font-size:15px;color:#475569;line-height:1.75}.card ul{padding-right:18px}.card li::marker{color:var(--o2)}
+.sec{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:800;margin:30px 0 0}.sec:before{content:"";width:8px;height:26px;border-radius:4px;background:var(--o2)}
+.sub2{font-size:14px;color:var(--mut);margin-top:-4px;margin-bottom:6px}
+.stat .v{font-size:40px;font-weight:800;color:var(--o2);line-height:1.2}.stat .l{font-size:14px;color:var(--mut)}
+.tech{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.tech div{border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;font-size:13.5px;font-weight:700;direction:ltr}.tech small{display:block;font-weight:400;color:var(--mut);font-size:12px}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;font-size:14px;text-align:right;border-bottom:1px solid #f3ebe3}th{color:var(--mut);font-size:12.5px;background:var(--ob)}td b{color:var(--ink)}td.p{color:var(--o2);font-weight:800;white-space:nowrap}
+.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}.shot img{width:100%;height:150px;object-fit:cover;object-position:top right;display:block}.shot div{background:linear-gradient(90deg,var(--o2),var(--o));color:#fff;font-size:14px;font-weight:700;text-align:center;padding:7px}
+.ok li{list-style:none;padding-right:0}.ok li:before{content:"✓";color:var(--o2);font-weight:800;margin-left:8px}
+.big{font-size:32px;font-weight:800;color:var(--o2);direction:ltr;text-align:center;margin:8px 0}
+.warn{background:#FFF7ED;border:1px solid #FED7AA}
+.ft{margin-top:34px;background:linear-gradient(90deg,#E0833B,#E2A16F);color:#fff;padding:22px 56px;display:flex;justify-content:space-between;align-items:center;font-size:16px}
+.ft .brand .n{font-size:30px}.ft .brand img{width:44px;height:44px}.ft .brand .s{color:#fff;opacity:.85}
+</style></head><body>
+<div class="hd">
+<div class="brand"><img src="logo.svg"><div><div class="n">Hidento</div><div class="s">DENTAL ECOSYSTEM PLATFORM</div></div></div>
+<h1>منصة متكاملة <span>لصناعة المستقبل</span> في طب الأسنان</h1>
+<div class="pills"><span class="pill">نظام إدارة معامل الأسنان ERP</span><span class="pill">بوابة الأطباء</span><span class="pill">شبكة مهنية وسوق عمل</span></div>
+<p>حل واحد يجمع إدارة المعمل والتواصل مع الأطباء ومجتمع الفنيين، بالعربية والإنجليزية.</p>
+<div class="dev"><div class="lap"><img src="ar-dashboard.png"></div><div class="ph"><img src="doctor-smile.png"></div></div>
+</div>
+<div class="wrap">
+<div class="row c2">
+<div class="card tint"><div class="t"><span class="ic">✦</span>الفكرة الأساسية</div><p>Hidento منظومة برمجية متكاملة لمعامل الأسنان، تربط المعمل بأطبائه وبمجتمع الفنيين والمستقلين على منصة واحدة وقاعدة بيانات واحدة، بدل أنظمة متفرقة لا تتكلم مع بعضها.</p></div>
+<div class="card"><div class="t"><span class="ic">★</span>ما يميزنا</div><ul><li>ثلاثة منتجات مترابطة في منصة واحدة</li><li>مصمّم ابتسامة للأطباء (نادر عند المنافسين)</li><li>فوترة وضرائب لعدة دول، منها الخليج</li><li>واجهة عربية وإنجليزية كاملة</li></ul></div>
+</div>
+<div class="sec">المنتجات الرئيسية</div>
+<div class="row c3">
+<div class="card"><div class="t"><span class="ic">1</span>نظام إدارة المعمل</div><div class="sub2">كل ما يحتاجه المعمل لتشغيل يومه</div><ul><li>الحالات ومراحل الإنتاج وأداء الفنيين</li><li>فواتير ضريبية مفصّلة وإشعارات دائنة</li><li>حسابات الأطباء وكشوف الحساب وأعمار الديون</li><li>المخزون والموظفون والفروع والصلاحيات</li><li>تقارير ومساعد ذكي بالعربي والإنجليزي</li></ul></div>
+<div class="card"><div class="t"><span class="ic">2</span>بوابة الأطباء</div><div class="sub2">تجربة سهلة للطبيب مع معمله</div><ul><li>متابعة الحالات لحظة بلحظة</li><li>موافقة على التصميم بعارض ثلاثي الأبعاد STL</li><li>مصمّم الابتسامة: تحديد تلقائي للفم وتعديل باللمس وصورة قبل وبعد</li><li>تطبيق جوال قابل للتثبيت وإشعارات فورية</li></ul></div>
+<div class="card"><div class="t"><span class="ic">3</span>DentoMedia</div><div class="sub2">الشبكة المهنية وسوق العمل</div><ul><li>مجتمع احترافي للفنيين والأطباء</li><li>سوق عمل حر مع تقييمات متبادلة</li><li>محادثات ومكالمات صوتية ومرئية</li><li>إعلانات ذاتية الخدمة وتوثيق مدفوع</li></ul></div>
+</div>
+<div class="row c4">
+<div class="card stat"><div class="t" style="font-size:17px">حجم الكود</div><div class="v">53 ألف</div><div class="l">سطر برمجي تقريبًا (TypeScript)</div></div>
+<div class="card stat"><div class="t" style="font-size:17px">الاختبارات</div><div class="v">288</div><div class="l">اختبارًا آليًا ناجحًا</div></div>
+<div class="card stat"><div class="t" style="font-size:17px">البنية التحتية</div><div class="v" style="font-size:24px;direction:ltr;text-align:right">Convex + Vercel</div><div class="l">سحابية بالكامل، بدون سيرفرات لإدارتها</div></div>
+<div class="card stat"><div class="t" style="font-size:17px">الأمان</div><div class="v">0</div><div class="l">ثغرات معروفة، وفحص أمني على عدة مراحل مع إصلاح كل الملاحظات</div></div>
+</div>
+<div class="row c2b">
+<div class="card"><div class="t"><span class="ic">⚙</span>التقنيات المستخدمة</div><div class="tech">
+<div>React 19<small>TypeScript</small></div><div>Vite 6<small>Build</small></div><div>Tailwind<small>UI</small></div><div>Framer Motion<small>Animation</small></div><div>Convex<small>Backend</small></div>
+<div>Paddle<small>Payments</small></div><div>Sentry<small>Errors</small></div><div>Web Push<small>Notifications</small></div><div>MediaPipe<small>Face detection</small></div><div>Lucide<small>Icons</small></div></div></div>
+<div class="card"><div class="t"><span class="ic">$</span>مصادر الدخل الجاهزة داخل المنصة</div>
+<table><tr><th>المصدر</th><th>التفاصيل</th><th>السعر الحالي</th></tr>
+<tr><td><b>اشتراك المعامل (SaaS)</b></td><td>تسجيل ذاتي، تجربة مجانية 15 يومًا، تجديد تلقائي عبر Paddle</td><td class="p">149 دولار شهريًا<br>1,490 دولار سنويًا</td></tr>
+<tr><td><b>مصمّم الابتسامة للأطباء</b></td><td>يُفعَّل لكل طبيب من صاحب المنصة</td><td class="p">يحدده المشتري</td></tr>
+<tr><td><b>إعلانات DentoMedia</b></td><td>شراء ذاتي مع مراجعة الإدارة</td><td class="p">3–5 دولار يوميًا</td></tr>
+<tr><td><b>توثيق المستقلين</b></td><td>شارة توثيق مدفوعة</td><td class="p">9 دولار مرة واحدة</td></tr>
+<tr><td><b>عمولة سوق العمل</b></td><td>رسوم على كل عمل مكتمل</td><td class="p">5 دولار لكل عمل</td></tr></table></div>
+</div>
+<div class="sec">لقطات من المنصة</div>
+<div class="row"><div class="shots">
+<div class="shot"><img src="ar-dashboard.png"><div>لوحة المعلومات</div></div>
+<div class="shot"><img src="cases.png"><div>إدارة الحالات</div></div>
+<div class="shot"><img src="doctor-smile.png" style="object-position:70% 40%"><div>مصمّم الابتسامة</div></div>
+<div class="shot"><img src="dm.png"><div>DentoMedia</div></div>
+</div></div>
+<div class="row c3">
+<div class="card"><div class="t"><span class="ic">⌂</span>تكلفة البناء من الصفر</div><p>بناء منصة مشابهة يحتاج فريقًا من 4 أشخاص لمدة 12–15 شهرًا تقريبًا:</p><div class="big">$300,000 – $450,000</div><p style="text-align:center;font-size:13px">بأسعار السوق الخليجي، مع مخاطر التأخير</p></div>
+<div class="card warn"><div class="t"><span class="ic">!</span>الوضع الحالي بشفافية</div><ul class="ok"><li>لا يوجد عملاء مشتركون حتى الآن (قبل الإيرادات)</li><li>المنصة مطوّرة بنسبة كبيرة</li><li>المتبقي لمسات بسيطة حسب سوق المشتري (مثل ZATCA المرحلة الثانية)</li><li>بوابة الدفع Paddle مربوطة وجاهزة</li><li>دعم في التسليم بعد البيع</li></ul></div>
+<div class="card tint"><div class="t"><span class="ic">◎</span>لماذا Hidento؟</div><ul class="ok"><li>توفير 12–15 شهرًا من التطوير</li><li>منصة مختبرة وموثّقة بدليل تسليم كامل</li><li>ثلاثة منتجات ومصادر دخل جاهزة</li><li>جاهزة للطرح في سوق الخليج</li></ul></div>
+</div>
+</div>
+<div class="ft"><div class="brand"><img src="logo.svg"><div><div class="n">Hidento</div><div class="s">DENTAL ECOSYSTEM PLATFORM</div></div></div><div>حلٌّ متكامل لمجتمع أسنان أكثر ارتباطًا وازدهارًا</div><div>للتواصل: ______________</div></div>
+</body></html>
