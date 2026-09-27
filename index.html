@@ -4,118 +4,979 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DENTALGATE | Digital Dental Lab</title>
-    <meta name="description" content="DENTALGATE — a digital dental lab using CAD/CAM technology. Upload your intraoral scan cases online.">
+    <meta name="description" content="DENTALGATE — a digital dental lab in Saudi Arabia using CAD/CAM technology for high-precision restorations.">
+    <meta name="theme-color" content="#0B2A4A">
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9Ijk2IiBmaWxsPSIjMEIyQTRBIi8+CiAgPHBhdGggZD0iTTI1NiAxMjBjLTQwIDAtNjAtMjItMTAwLTIyLTUyIDAtODAgNDQtODAgMTAwIDAgNzAgMzAgMTEwIDQ2IDE3NiAxMCA0MiAyMiA3NCA0NiA3NCAzMCAwIDMwLTk2IDg4LTk2czU4IDk2IDg4IDk2YzI0IDAgMzYtMzIgNDYtNzQgMTYtNjYgNDYtMTA2IDQ2LTE3NiAwLTU2LTI4LTEwMC04MC0xMDAtNDAgMC02MCAyMi0xMDAgMjJ6IgogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdGRDZERSIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9Ijk2IiBmaWxsPSIjMEIyQTRBIi8+CiAgPHBhdGggZD0iTTI1NiAxMjBjLTQwIDAtNjAtMjItMTAwLTIyLTUyIDAtODAgNDQtODAgMTAwIDAgNzAgMzAgMTEwIDQ2IDE3NiAxMCA0MiAyMiA3NCA0NiA3NCAzMCAwIDMwLTk2IDg4LTk2czU4IDk2IDg4IDk2YzI0IDAgMzYtMzIgNDYtNzQgMTYtNjYgNDYtMTA2IDQ2LTE3NiAwLTU2LTI4LTEwMC04MC0xMDAtNDAgMC02MCAyMi0xMDAgMjJ6IgogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzdGRDZERSIgc3Ryb2tlLXdpZHRoPSIyMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K">
 
-    <!-- PWA & iOS -->
-    <meta name="theme-color" content="#0F1115">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="DentalGate">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="icon.svg">
-
-    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+/* DENTALGATE — clean, professional light theme */
+:root {
+    --navy: #0B2A4A;
+    --navy-2: #123A63;
+    --teal: #0E8F9B;
+    --teal-soft: #E3F4F5;
+    --bg: #FFFFFF;
+    --bg-soft: #F4F7FA;
+    --text: #0F172A;
+    --muted: #5B6B7F;
+    --border: #E3E8EF;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(11, 42, 74, 0.08);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: 'Tajawal', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+}
+
+.container {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.skip-link {
+    position: absolute;
+    top: -80px;
+    inset-inline-start: 12px;
+    background: var(--navy);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+:focus-visible {
+    outline: 3px solid var(--teal);
+    outline-offset: 3px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: var(--navy);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--navy-2);
+}
+
+.btn-ghost {
+    border-color: var(--border);
+    color: var(--navy);
+    background: #fff;
+}
+
+.btn-ghost:hover {
+    border-color: var(--navy);
+}
+
+.btn-light {
+    background: #fff;
+    color: var(--navy);
+}
+
+.btn-sm {
+    padding: 9px 18px;
+    font-size: 15px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 72px;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: 3px;
+    color: var(--navy);
+    text-decoration: none;
+    direction: ltr;
+}
+
+.logo-mark {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: var(--teal);
+    stroke-width: 34;
+    stroke-linejoin: round;
+}
+
+.nav {
+    margin-inline-start: auto;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+}
+
+.nav-links a:not(.btn) {
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:not(.btn):hover {
+    color: var(--navy);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lang-btn {
+    font: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+}
+
+.lang-btn:hover {
+    border-color: var(--navy);
+}
+
+.menu-btn {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.menu-btn span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    background:
+        radial-gradient(circle at 85% 20%, var(--teal-soft) 0, transparent 45%),
+        linear-gradient(180deg, #fff 0%, var(--bg-soft) 100%);
+    padding: 88px 0 96px;
+}
+
+[dir="rtl"] .hero {
+    background:
+        radial-gradient(circle at 15% 20%, var(--teal-soft) 0, transparent 45%),
+        linear-gradient(180deg, #fff 0%, var(--bg-soft) 100%);
+}
+
+.hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 48px;
+}
+
+.eyebrow {
+    display: inline-block;
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 18px;
+}
+
+.lead {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 32px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-circle {
+    width: min(340px, 80vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-circle svg {
+    width: 52%;
+    fill: var(--teal-soft);
+    stroke: var(--navy);
+    stroke-width: 14;
+    stroke-linejoin: round;
+}
+
+.hero-chip {
+    position: absolute;
+    background: #fff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    direction: ltr;
+}
+
+.chip-a {
+    top: 12%;
+    inset-inline-start: 0;
+}
+
+.chip-b {
+    bottom: 12%;
+    inset-inline-end: 0;
+}
+
+/* ---------- Sections ---------- */
+.section {
+    padding: 88px 0;
+}
+
+.section-soft {
+    background: var(--bg-soft);
+}
+
+.section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 48px;
+}
+
+.section-head h2 {
+    font-size: clamp(28px, 3.5vw, 38px);
+    line-height: 1.3;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.section-desc {
+    color: var(--muted);
+    font-size: 17px;
+    margin-top: 12px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 30px 28px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--teal-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.card-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: var(--teal);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.card h3,
+.step h3 {
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 8px;
+}
+
+.card p,
+.step p {
+    color: var(--muted);
+}
+
+.steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.step {
+    text-align: center;
+    padding: 12px 20px;
+}
+
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+/* ---------- Upload CTA ---------- */
+.cta {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff;
+    border-radius: 24px;
+    padding: 56px 32px;
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: clamp(26px, 3.5vw, 36px);
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.cta p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 17px;
+    max-width: 520px;
+    margin: 0 auto 28px;
+}
+
+.cta .soon {
+    display: inline-block;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-weight: 700;
+}
+
+.cta [hidden] {
+    display: none;
+}
+
+/* ---------- Intro video ---------- */
+.video-section {
+    padding: 0 0 88px;
+    background: var(--bg-soft);
+}
+
+.video-frame {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    background: #0F1115;
+    aspect-ratio: 16 / 9;
+}
+
+.video-frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sound-btn {
+    position: absolute;
+    bottom: 14px;
+    inset-inline-end: 14px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 16px;
+    cursor: pointer;
+}
+
+.sound-btn:hover {
+    background: #fff;
+}
+
+@media (max-width: 860px) {
+    .video-section {
+        padding-bottom: 64px;
+    }
+
+    .video-frame {
+        border-radius: 16px;
+    }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.footer-inner .logo {
+    font-size: 16px;
+}
+
+.footer-inner .logo-mark {
+    width: 24px;
+    height: 24px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 860px) {
+    .hero {
+        padding: 56px 0 64px;
+    }
+
+    .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .lead {
+        margin-inline: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        display: none;
+    }
+
+    .cards,
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 64px 0;
+    }
+}
+
+@media (max-width: 720px) {
+    .header-inner {
+        gap: 12px;
+    }
+
+    .header-actions {
+        margin-inline-start: auto;
+    }
+
+    .menu-btn {
+        display: flex;
+    }
+
+    .nav {
+        position: absolute;
+        top: 72px;
+        inset-inline: 0;
+        margin: 0;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 12px 20px 20px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a:not(.btn) {
+        display: block;
+        padding: 10px 4px;
+    }
+
+    .nav-links .btn {
+        margin-top: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .btn,
+    .card {
+        transition: none;
+    }
+}
+
+</style>
 </head>
 <body>
 
     <a class="skip-link" href="#main" data-i18n="skip_link">Skip to content</a>
 
-    <!-- Header Navigation -->
-    <header class="site-header">
-        <a class="logo" href="#home" aria-label="DENTALGATE">DENTALGATE</a>
-        <div class="nav-right">
-            <button type="button" class="lang-btn" id="langBtn" lang="ar">عربي</button>
-            <button type="button" class="menu-btn" id="menuBtn" aria-controls="navLinks" aria-expanded="false" data-i18n-aria="menu_label" aria-label="Menu">☰</button>
+    <header class="site-header" id="top">
+        <div class="container header-inner">
+            <a class="logo" href="#top" aria-label="DENTALGATE">
+                <svg class="logo-mark" viewBox="0 0 512 512" aria-hidden="true">
+                    <path d="M256 120c-40 0-60-22-100-22-52 0-80 44-80 100 0 70 30 110 46 176 10 42 22 74 46 74 30 0 30-96 88-96s58 96 88 96c24 0 36-32 46-74 16-66 46-106 46-176 0-56-28-100-80-100-40 0-60 22-100 22z"/>
+                </svg>
+                <span>DENTALGATE</span>
+            </a>
 
-            <nav aria-label="Main">
+            <nav class="nav" aria-label="Main">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#home" data-page="home" data-i18n="nav_home">Home</a></li>
-                    <li><a href="#about" data-page="about" data-i18n="nav_about">About Us</a></li>
-                    <li><a href="#upload" data-page="upload" data-i18n="nav_upload">Upload Cases</a></li>
+                    <li><a href="#about" data-i18n="nav_about">About</a></li>
+                    <li><a href="#how" data-i18n="nav_how">How it works</a></li>
+                    <li><a class="btn btn-primary btn-sm" href="#upload" data-i18n="nav_upload">Upload a Case</a></li>
                 </ul>
             </nav>
+
+            <div class="header-actions">
+                <button type="button" class="lang-btn" id="langBtn" lang="ar">عربي</button>
+                <button type="button" class="menu-btn" id="menuBtn" aria-controls="navLinks" aria-expanded="false" data-i18n-aria="menu_label" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
         </div>
     </header>
 
     <main id="main">
 
-        <!-- Home -->
-        <section id="page-home" class="page-section active">
-            <div class="hero-section" id="hero">
-                <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
-                <div class="hero-content">
-                    <h1 class="hero-title" data-i18n="hero_title">Where Digital Dentistry Meets Art</h1>
-                    <a class="cta-btn" href="#upload" data-i18n="hero_cta">( Upload Case )</a>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container hero-inner">
+                <div class="hero-text">
+                    <p class="eyebrow" data-i18n="hero_eyebrow">Digital Dental Lab · Saudi Arabia</p>
+                    <h1 data-i18n="hero_title">Where Dentistry Meets Art</h1>
+                    <p class="lead" data-i18n="hero_desc">At DENTALGATE, we use the latest CAD/CAM technology to deliver high-precision restorations for modern clinics.</p>
+                    <div class="hero-buttons">
+                        <a class="btn btn-primary" href="#upload" data-i18n="hero_cta">Upload a Case</a>
+                        <a class="btn btn-ghost" href="#about" data-i18n="hero_more">Learn more</a>
+                    </div>
+                </div>
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="hero-circle">
+                        <svg viewBox="0 0 512 512">
+                            <path d="M256 120c-40 0-60-22-100-22-52 0-80 44-80 100 0 70 30 110 46 176 10 42 22 74 46 74 30 0 30-96 88-96s58 96 88 96c24 0 36-32 46-74 16-66 46-106 46-176 0-56-28-100-80-100-40 0-60 22-100 22z"/>
+                        </svg>
+                    </div>
+                    <div class="hero-chip chip-a">CAD/CAM</div>
+                    <div class="hero-chip chip-b">STL · PLY · OBJ</div>
                 </div>
             </div>
+        </section>
 
+        <!-- Intro video -->
+        <section class="video-section" aria-label="DENTALGATE intro video">
             <div class="container">
-                <div class="intro-video">
-                    <video id="introVideo" autoplay muted loop playsinline preload="metadata" aria-label="DENTALGATE intro video">
+                <div class="video-frame">
+                    <video id="introVideo" autoplay muted loop playsinline preload="metadata">
                         <source src="media/dentalgate-intro.webm" type="video/webm">
                         <source src="media/dentalgate-intro.mp4" type="video/mp4">
                     </video>
                     <button type="button" class="sound-btn" id="soundBtn" aria-pressed="false" data-i18n="sound_on">🔇 Sound on</button>
                 </div>
+            </div>
+        </section>
 
-                <div class="text-region-box">
-                    <h2 data-i18n="home_box_title">About Our Digital Lab</h2>
-                    <p data-i18n="home_box_desc">At DENTALGATE, we leverage cutting-edge CAD/CAM technology to deliver high-precision dental restorations.</p>
+        <!-- About / features -->
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow" data-i18n="about_eyebrow">About us</p>
+                    <h2 data-i18n="about_title">Why DENTALGATE</h2>
+                    <p class="section-desc" data-i18n="about_desc">An integrated digital dental lab producing top-tier restorations to international quality standards.</p>
+                </div>
+                <div class="cards">
+                    <article class="card">
+                        <div class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+                        </div>
+                        <h3 data-i18n="card1_title">CAD/CAM Technology</h3>
+                        <p data-i18n="card1_desc">Fully digital design and milling for a perfect fit on every restoration.</p>
+                    </article>
+                    <article class="card">
+                        <div class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+                        </div>
+                        <h3 data-i18n="card2_title">All Scanner Files</h3>
+                        <p data-i18n="card2_desc">Direct support for intraoral scan files including STL, PLY, OBJ and ZIP.</p>
+                    </article>
+                    <article class="card">
+                        <div class="card-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        </div>
+                        <h3 data-i18n="card3_title">Speed &amp; Precision</h3>
+                        <p data-i18n="card3_desc">Fast, accurate delivery to serve clinics and centers efficiently.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- About -->
-        <section id="page-about" class="page-section container page-offset">
-            <div class="text-region-box">
-                <h2 data-i18n="about_title">About Us - DENTALGATE</h2>
-                <p data-i18n="about_desc">An integrated digital dental lab manufacturing top-tier restorations following international standards.</p>
-            </div>
-            <div class="grid-cards">
-                <div class="card">
-                    <h3 data-i18n="card1_title">CAD/CAM Technology</h3>
-                    <p data-i18n="card1_desc">Full digital design and milling ensuring perfect fit for every restoration.</p>
+        <!-- How it works -->
+        <section class="section section-soft" id="how">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow" data-i18n="how_eyebrow">How it works</p>
+                    <h2 data-i18n="how_title">Three simple steps</h2>
                 </div>
-                <div class="card">
-                    <h3 data-i18n="card2_title">All Scanner Files</h3>
-                    <p data-i18n="card2_desc">Direct support for intraoral scan files including STL, PLY, OBJ and ZIP.</p>
-                </div>
-                <div class="card">
-                    <h3 data-i18n="card3_title">Speed & Precision</h3>
-                    <p data-i18n="card3_desc">Fast delivery and accurate execution to serve clinics and centers efficiently.</p>
-                </div>
+                <ol class="steps">
+                    <li class="step">
+                        <span class="step-num">1</span>
+                        <h3 data-i18n="step1_title">Scan</h3>
+                        <p data-i18n="step1_desc">Take an intraoral scan with any scanner.</p>
+                    </li>
+                    <li class="step">
+                        <span class="step-num">2</span>
+                        <h3 data-i18n="step2_title">Upload</h3>
+                        <p data-i18n="step2_desc">Send the files and case details through our portal.</p>
+                    </li>
+                    <li class="step">
+                        <span class="step-num">3</span>
+                        <h3 data-i18n="step3_title">Receive</h3>
+                        <p data-i18n="step3_desc">We design, manufacture and deliver your restoration.</p>
+                    </li>
+                </ol>
             </div>
         </section>
 
-        <!-- Upload Cases -->
-        <section id="page-upload" class="page-section container page-offset">
-            <div class="text-region-box">
-                <h2 data-i18n="upload_title">Digital Cases Upload Portal</h2>
-                <p data-i18n="upload_desc">A dedicated platform for doctors and centers to submit patient details and files.</p>
-            </div>
-            <div class="form-card upload-card">
-                <p data-i18n="upload_go_hint">Upload your case files and details securely through our case portal.</p>
-                <a class="submit-btn upload-go" id="uploadLink" href="#" target="_blank" rel="noopener" hidden data-i18n="upload_go_btn">Upload a Case Now</a>
-                <p class="demo-note" id="uploadSoon" hidden data-i18n="upload_soon">Online case upload is coming soon.</p>
+        <!-- Upload CTA -->
+        <section class="section" id="upload">
+            <div class="container">
+                <div class="cta">
+                    <h2 data-i18n="upload_title">Ready to send a case?</h2>
+                    <p data-i18n="upload_desc">Upload your case files and details securely through our case portal.</p>
+                    <a class="btn btn-light" id="uploadLink" href="#" target="_blank" rel="noopener" hidden data-i18n="upload_go_btn">Upload a Case Now</a>
+                    <p class="soon" id="uploadSoon" hidden data-i18n="upload_soon">Online case upload is coming soon.</p>
+                </div>
             </div>
         </section>
 
     </main>
 
     <footer class="site-footer">
-        <a class="logo" href="#home" aria-label="DENTALGATE">DENTALGATE</a>
-        <p data-i18n="footer_rights">All rights reserved © 2026 DENTALGATE</p>
+        <div class="container footer-inner">
+            <a class="logo" href="#top" aria-label="DENTALGATE">
+                <svg class="logo-mark" viewBox="0 0 512 512" aria-hidden="true">
+                    <path d="M256 120c-40 0-60-22-100-22-52 0-80 44-80 100 0 70 30 110 46 176 10 42 22 74 46 74 30 0 30-96 88-96s58 96 88 96c24 0 36-32 46-74 16-66 46-106 46-176 0-56-28-100-80-100-40 0-60 22-100 22z"/>
+                </svg>
+                <span>DENTALGATE</span>
+            </a>
+            <p data-i18n="footer_rights">All rights reserved © 2026 DENTALGATE</p>
+        </div>
     </footer>
 
-    <script src="config.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/fx.js"></script>
-    <script src="js/app.js"></script>
+    <script>
+// Site configuration. This file is public.
+//
+// uploadUrl: your case-upload link from your dentlflow account (must start with https://).
+// While it is empty, the "Upload Cases" page shows "coming soon" instead of a button.
+window.DG_CONFIG = {
+    uploadUrl: ''
+};
+
+</script>
+    <script>
+window.DG_TRANSLATIONS = {
+    ar: {
+        doc_title: "DENTALGATE | معمل أسنان رقمي",
+        skip_link: "انتقل إلى المحتوى",
+        menu_label: "القائمة",
+        nav_about: "من نحن",
+        nav_how: "طريقة العمل",
+        nav_upload: "ارفع حالة",
+        hero_eyebrow: "معمل أسنان رقمي · المملكة العربية السعودية",
+        hero_title: "حيث يلتقي طب الأسنان بالفن",
+        hero_desc: "نعمل في DENTALGATE بأحدث تقنيات الـ CAD/CAM لتقديم تركيبات بدقة فائقة تناسب متطلبات العيادات الحديثة.",
+        hero_cta: "ارفع حالتك",
+        hero_more: "تعرّف علينا",
+        sound_on: "🔇 تشغيل الصوت",
+        sound_off: "🔊 كتم الصوت",
+        about_eyebrow: "من نحن",
+        about_title: "لماذا DENTALGATE",
+        about_desc: "معمل رقمي متكامل لتصميم وتصنيع تركيبات الأسنان بأعلى معايير الجودة العالمية.",
+        card1_title: "تقنيات CAD/CAM",
+        card1_desc: "تصميم وتصنيع رقمي كامل يضمن مطابقة تامة لكل تركيبة.",
+        card2_title: "دعم كافة الملفات",
+        card2_desc: "استقبال مباشر لملفات STL و PLY و OBJ و ZIP المأخوذة بالماسح الضوئي.",
+        card3_title: "سرعة والتزام",
+        card3_desc: "تسليم دقيق وسريع لخدمة المراكز والعيادات بكفاءة عالية.",
+        how_eyebrow: "طريقة العمل",
+        how_title: "ثلاث خطوات بسيطة",
+        step1_title: "امسح",
+        step1_desc: "التقط سكان داخل الفم بأي ماسح ضوئي.",
+        step2_title: "ارفع",
+        step2_desc: "أرسل الملفات وبيانات الحالة من خلال بوابتنا.",
+        step3_title: "استلم",
+        step3_desc: "نصمم ونصنّع ونسلّم التركيبة بدقة وسرعة.",
+        upload_title: "جاهز ترسل حالتك؟",
+        upload_desc: "ارفع ملفات الحالة وبياناتها بأمان من خلال بوابة الحالات الخاصة بنا.",
+        upload_go_btn: "ارفع حالتك الآن",
+        upload_soon: "رفع الحالات أونلاين متاح قريباً",
+        footer_rights: "جميع الحقوق محفوظة © 2026 DENTALGATE"
+    },
+    en: {
+        doc_title: "DENTALGATE | Digital Dental Lab",
+        skip_link: "Skip to content",
+        menu_label: "Menu",
+        nav_about: "About",
+        nav_how: "How it works",
+        nav_upload: "Upload a Case",
+        hero_eyebrow: "Digital Dental Lab · Saudi Arabia",
+        hero_title: "Where Dentistry Meets Art",
+        hero_desc: "At DENTALGATE, we use the latest CAD/CAM technology to deliver high-precision restorations for modern clinics.",
+        hero_cta: "Upload a Case",
+        hero_more: "Learn more",
+        sound_on: "🔇 Sound on",
+        sound_off: "🔊 Mute",
+        about_eyebrow: "About us",
+        about_title: "Why DENTALGATE",
+        about_desc: "An integrated digital dental lab producing top-tier restorations to international quality standards.",
+        card1_title: "CAD/CAM Technology",
+        card1_desc: "Fully digital design and milling for a perfect fit on every restoration.",
+        card2_title: "All Scanner Files",
+        card2_desc: "Direct support for intraoral scan files including STL, PLY, OBJ and ZIP.",
+        card3_title: "Speed & Precision",
+        card3_desc: "Fast, accurate delivery to serve clinics and centers efficiently.",
+        how_eyebrow: "How it works",
+        how_title: "Three simple steps",
+        step1_title: "Scan",
+        step1_desc: "Take an intraoral scan with any scanner.",
+        step2_title: "Upload",
+        step2_desc: "Send the files and case details through our portal.",
+        step3_title: "Receive",
+        step3_desc: "We design, manufacture and deliver your restoration.",
+        upload_title: "Ready to send a case?",
+        upload_desc: "Upload your case files and details securely through our case portal.",
+        upload_go_btn: "Upload a Case Now",
+        upload_soon: "Online case upload is coming soon",
+        footer_rights: "All rights reserved © 2026 DENTALGATE"
+    }
+};
+
+</script>
+    <script>
+(function () {
+    'use strict';
+
+    const T = window.DG_TRANSLATIONS;
+    const CFG = window.DG_CONFIG || {};
+
+    const $ = (id) => document.getElementById(id);
+
+    let lang = 'en';
+
+    function t(key) {
+        return (T[lang] && T[lang][key]) || T.en[key] || key;
+    }
+
+    // ---------- language ----------
+    function applyLanguage(next) {
+        lang = next === 'ar' ? 'ar' : 'en';
+        const html = document.documentElement;
+        html.lang = lang;
+        html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+        const langBtn = $('langBtn');
+        langBtn.textContent = lang === 'ar' ? 'English' : 'عربي';
+        langBtn.setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
+
+        document.querySelectorAll('[data-i18n]').forEach((node) => { node.textContent = t(node.dataset.i18n); });
+        document.querySelectorAll('[data-i18n-aria]').forEach((node) => { node.setAttribute('aria-label', t(node.dataset.i18nAria)); });
+        document.title = t('doc_title');
+
+        try { localStorage.setItem('dg_lang', lang); } catch (e) { /* ignore */ }
+    }
+
+    // ---------- mobile menu ----------
+    function setMenu(open) {
+        $('navLinks').classList.toggle('open', open);
+        $('menuBtn').setAttribute('aria-expanded', String(open));
+    }
+
+    // ---------- upload link ----------
+    function setupUploadLink() {
+        const url = String(CFG.uploadUrl || '').trim();
+        const valid = /^https:\/\//i.test(url);
+        if (valid) $('uploadLink').href = url;
+        $('uploadLink').hidden = !valid;
+        $('uploadSoon').hidden = valid;
+    }
+
+    // ---------- init ----------
+    function init() {
+        let saved = null;
+        try { saved = localStorage.getItem('dg_lang'); } catch (e) { /* ignore */ }
+        const browserAr = (navigator.language || '').toLowerCase().startsWith('ar');
+
+        $('langBtn').addEventListener('click', () => applyLanguage(lang === 'en' ? 'ar' : 'en'));
+        $('menuBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            setMenu(!$('navLinks').classList.contains('open'));
+        });
+        $('navLinks').addEventListener('click', (e) => {
+            if (e.target.closest('a')) setMenu(false);
+        });
+        document.addEventListener('click', (e) => {
+            if (!$('navLinks').contains(e.target)) setMenu(false);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setMenu(false);
+        });
+
+        $('soundBtn').addEventListener('click', () => {
+            const v = $('introVideo');
+            v.muted = !v.muted;
+            if (!v.muted) v.play();
+            $('soundBtn').setAttribute('aria-pressed', String(!v.muted));
+            $('soundBtn').dataset.i18n = v.muted ? 'sound_on' : 'sound_off';
+            $('soundBtn').textContent = t($('soundBtn').dataset.i18n);
+        });
+
+        setupUploadLink();
+        applyLanguage(saved || (browserAr ? 'ar' : 'en'));
+    }
+
+    init();
+})();
+
+</script>
 </body>
 </html>
