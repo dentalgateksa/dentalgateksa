@@ -531,6 +531,65 @@ a {
     }
 }
 
+/* ---------- Location ---------- */
+.map-card {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.map-info {
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.map-info h3 {
+    font-size: 22px;
+    color: var(--navy);
+}
+
+.map-info p {
+    color: var(--muted);
+}
+
+.map-info .btn {
+    align-self: flex-start;
+}
+
+.map-frame {
+    min-height: 360px;
+}
+
+.map-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    border: 0;
+}
+
+@media (max-width: 860px) {
+    .map-card {
+        grid-template-columns: 1fr;
+    }
+
+    .map-info {
+        text-align: center;
+        padding: 32px 24px;
+    }
+
+    .map-info .btn {
+        align-self: center;
+    }
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
     border-top: 1px solid var(--border);
@@ -664,6 +723,7 @@ a {
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#about" data-i18n="nav_about">About</a></li>
                     <li><a href="#how" data-i18n="nav_how">How it works</a></li>
+                    <li><a href="#location" data-i18n="nav_location">Location</a></li>
                     <li><a class="btn btn-primary btn-sm" href="#upload" data-upload data-i18n="nav_upload">Upload a Case</a></li>
                 </ul>
             </nav>
@@ -789,6 +849,26 @@ a {
             </div>
         </section>
 
+        <!-- Location -->
+        <section class="section section-soft" id="location">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow" data-i18n="location_eyebrow">Visit us</p>
+                    <h2 data-i18n="location_title">Our Lab Location</h2>
+                </div>
+                <div class="map-card">
+                    <div class="map-info">
+                        <h3>DENTALGATE</h3>
+                        <p data-i18n="location_desc">Saudi Arabia</p>
+                        <a class="btn btn-primary" href="https://www.google.com/maps?q=24.471018,46.285334" target="_blank" rel="noopener" data-i18n="location_btn">Open in Google Maps</a>
+                    </div>
+                    <div class="map-frame">
+                        <iframe src="https://maps.google.com/maps?q=24.471018,46.285334&amp;z=15&amp;output=embed" title="DENTALGATE location on Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="site-footer">
@@ -821,6 +901,11 @@ window.DG_TRANSLATIONS = {
         menu_label: "القائمة",
         nav_about: "من نحن",
         nav_how: "طريقة العمل",
+        nav_location: "موقعنا",
+        location_eyebrow: "زورونا",
+        location_title: "موقع المعمل",
+        location_desc: "المملكة العربية السعودية",
+        location_btn: "افتح في خرائط جوجل",
         nav_upload: "ارفع حالة",
         hero_eyebrow: "معمل أسنان رقمي · المملكة العربية السعودية",
         hero_title: "حيث يلتقي طب الأسنان بالفن",
@@ -858,6 +943,11 @@ window.DG_TRANSLATIONS = {
         menu_label: "Menu",
         nav_about: "About",
         nav_how: "How it works",
+        nav_location: "Location",
+        location_eyebrow: "Visit us",
+        location_title: "Our Lab Location",
+        location_desc: "Saudi Arabia",
+        location_btn: "Open in Google Maps",
         nav_upload: "Upload a Case",
         hero_eyebrow: "Digital Dental Lab · Saudi Arabia",
         hero_title: "Where Dentistry Meets Art",
