@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{margin:0;padding:0;box-sizing:border-box}body{width:1400px;background:#1e1e1e;font-family:Consolas,"DejaVu Sans Mono",monospace;color:#d4d4d4}
+.top{height:34px;background:#323233;display:flex;align-items:center;gap:8px;padding:0 14px;font-family:Arial;font-size:13px;color:#ccc}.d{width:12px;height:12px;border-radius:50%}
+.main{display:flex}.side{width:52px;background:#333;}.tree{width:250px;background:#252526;padding:10px 0;font-family:Arial;font-size:13.5px;color:#ccc}.tree div{padding:3px 16px}.tree .o{color:#E2A16F}.tree .sel{background:#37373d}
+.ed{flex:1}.tabs{display:flex;background:#252526}.tab{padding:9px 18px;font-family:Arial;font-size:13px;color:#999;border-right:1px solid #1e1e1e}.tab.a{background:#1e1e1e;color:#fff;border-top:2px solid #E0833B}
+pre{padding:14px 0;font-size:15px;line-height:1.6}.ln{display:inline-block;width:52px;text-align:right;padding-right:18px;color:#6e7681}
+.k{color:#c586c0}.f{color:#dcdcaa}.s{color:#ce9178}.c{color:#6a9955}.t{color:#4ec9b0}.v{color:#9cdcfe}.n{color:#b5cea8}.b{color:#569cd6}
+.term{border-top:1px solid #444;background:#181818}.tt{display:flex;gap:24px;padding:8px 18px;font-family:Arial;font-size:12.5px;color:#999}.tt .a{color:#fff;border-bottom:1px solid #E0833B}
+.term pre{padding:8px 18px 18px;font-size:14.5px;line-height:1.55}.g{color:#3fb950}.y{color:#e3b341}.p{color:#d4d4d4}.m{color:#8b949e}.cy{color:#56d4dd}.or{color:#E2A16F;font-weight:bold}
+.bar{height:24px;background:#E0833B;color:#fff;font-family:Arial;font-size:12px;display:flex;align-items:center;gap:22px;padding:0 12px}
+</style></head><body>
+<div class="top"><span class="d" style="background:#ff5f57"></span><span class="d" style="background:#febc2e"></span><span class="d" style="background:#28c840"></span><span style="margin:auto">hidento — Visual Studio Code</span></div>
+<div class="main"><div class="side"></div>
+<div class="tree"><div style="font-size:11px;color:#bbb">EXPLORER</div><div class="o">▾ HIDENTO</div><div>&nbsp;&nbsp;▸ convex</div><div>&nbsp;&nbsp;▾ src</div><div>&nbsp;&nbsp;&nbsp;&nbsp;▸ components</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▸ production</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▸ portal</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▾ smile</div><div class="sel">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SmileDesigner.tsx</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detectMouth.ts</div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;smileRender.ts</div><div>&nbsp;&nbsp;&nbsp;&nbsp;▸ lib</div><div>&nbsp;&nbsp;▸ public</div><div>&nbsp;&nbsp;package.json</div><div>&nbsp;&nbsp;README.md</div></div>
+<div class="ed"><div class="tabs"><div class="tab a">SmileDesigner.tsx</div><div class="tab">smileRender.ts</div><div class="tab">detectMouth.ts</div></div>
+<pre><span class="ln">118</span><span class="c">// Zoom to the mouth so the doctor sees every edit up close</span>
+<span class="ln">119</span><span class="k">const</span> <span class="v">zoomStyle</span> = <span class="f">useMemo</span>(() => {
+<span class="ln">120</span>  <span class="k">if</span> (!<span class="v">zoom</span> || <span class="v">phase</span> !== <span class="s">"edit"</span>) <span class="k">return</span> <span class="b">undefined</span>;
+<span class="ln">121</span>  <span class="k">const</span> <span class="v">xs</span> = <span class="v">d</span>.<span class="v">mask</span>.<span class="f">map</span>((<span class="v">p</span>) => <span class="v">p</span>[<span class="n">0</span>]), <span class="v">ys</span> = <span class="v">d</span>.<span class="v">mask</span>.<span class="f">map</span>((<span class="v">p</span>) => <span class="v">p</span>[<span class="n">1</span>]);
+<span class="ln">122</span>  <span class="k">const</span> <span class="v">cx</span> = (<span class="t">Math</span>.<span class="f">min</span>(...<span class="v">xs</span>) + <span class="t">Math</span>.<span class="f">max</span>(...<span class="v">xs</span>)) / <span class="n">2</span>;
+<span class="ln">123</span>  <span class="k">const</span> <span class="v">z</span> = <span class="t">Math</span>.<span class="f">min</span>(<span class="n">5</span>, <span class="n">0.85</span> / (<span class="t">Math</span>.<span class="f">max</span>(...<span class="v">xs</span>) - <span class="t">Math</span>.<span class="f">min</span>(...<span class="v">xs</span>)));
+<span class="ln">124</span>  <span class="k">return</span> { <span class="v">transform</span>: <span class="s">`scale(${</span><span class="v">z</span><span class="s">})`</span> };
+<span class="ln">125</span>}, [<span class="v">zoom</span>, <span class="v">phase</span>, <span class="v">d</span>.<span class="v">mask</span>]);
+<span class="ln">126</span>
+<span class="ln">127</span><span class="c">// Undo / Redo: a full drag counts as one step</span>
+<span class="ln">128</span><span class="k">const</span> <span class="f">undo</span> = () => {
+<span class="ln">129</span>  <span class="k">const</span> <span class="v">target</span> = <span class="v">hist</span>.<span class="v">current</span>.<span class="v">past</span>.<span class="f">pop</span>();
+<span class="ln">130</span>  <span class="k">if</span> (!<span class="v">target</span>) <span class="k">return</span>;
+<span class="ln">131</span>  <span class="v">hist</span>.<span class="v">current</span>.<span class="v">future</span>.<span class="f">push</span>(<span class="v">d</span>); <span class="f">setD</span>(<span class="v">target</span>);
+<span class="ln">132</span>};</pre>
+<div class="term"><div class="tt"><span>PROBLEMS</span><span>OUTPUT</span><span class="a">TERMINAL</span><span>PORTS</span></div>
+<pre><span class="cy">hidento&gt;</span> <span class="p">npm run lint</span>
+<span class="g">✓</span> <span class="m">TypeScript</span> <span class="g">no errors</span>   <span class="g">✓</span> <span class="m">built in 7.1s</span>
+
+<span class="cy">hidento&gt;</span> <span class="p">npm test</span>
+ <span class="g">✓</span> convex/smileDesign.test.ts  <span class="m">(1 test)</span>
+ <span class="g">✓</span> convex/paddleWebhookRouter.test.ts  <span class="m">(20 tests)</span>
+ <span class="g">✓</span> convex/dentoMediaAds.test.ts  <span class="m">(16 tests)</span>
+ <span class="m">…</span>
+ <span class="or">Test Files</span>  <span class="g">43 passed</span> <span class="m">(43)</span>
+ <span class="or">     Tests</span>  <span class="g">288 passed</span> <span class="m">(288)</span>
+
+<span class="cy">hidento&gt;</span> <span class="p">npm audit</span>
+<span class="g">found 0 vulnerabilities</span>
+
+<span class="cy">hidento&gt;</span> <span class="p">npx convex deploy</span>
+<span class="g">✓</span> Schema validation complete.
+<span class="g">✓</span> <span class="y">Deployed Convex functions to production</span> 🚀
+<span class="cy">hidento&gt;</span> <span class="p">▌</span></pre></div></div></div>
+<div class="bar"><span>⎇ main</span><span>✓ 0 errors</span><span>TypeScript React</span><span style="margin-left:auto">Hidento · Dental Ecosystem Platform</span></div>
+</body></html>
