@@ -1,11 +1,7 @@
-// Site configuration.
-// Leave supabaseUrl / supabaseAnonKey empty to run in DEMO mode
-// (data is kept in the visitor's browser only, login is admin / admin).
-// Fill them in (Supabase dashboard → Project Settings → API) to go live.
-// The anon key is designed to be public; security is enforced by the
-// Row Level Security policies in supabase/schema.sql.
+// Site configuration. This file is public.
+//
+// uploadUrl: your case-upload link from your dentlflow account (must start with https://).
+// While it is empty, the "Upload Cases" page shows "coming soon" instead of a button.
 window.DG_CONFIG = {
-    supabaseUrl: '',
-    supabaseAnonKey: '',
-    maxFileSizeMB: 50
+    uploadUrl: ''
 };

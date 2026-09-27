@@ -38,10 +38,6 @@
                     <li><a href="#home" data-page="home" data-i18n="nav_home">Home</a></li>
                     <li><a href="#about" data-page="about" data-i18n="nav_about">About Us</a></li>
                     <li><a href="#upload" data-page="upload" data-i18n="nav_upload">Upload Cases</a></li>
-                    <li id="dashboardNavItem" hidden><a href="#staff" data-page="staff" data-i18n="nav_dashboard">Dashboard</a></li>
-                    <li id="logoutNavItem" hidden>
-                        <button type="button" class="logout-link" id="logoutBtn" data-i18n="nav_logout">Logout</button>
-                    </li>
                 </ul>
             </nav>
         </div>
@@ -103,142 +99,10 @@
                 <h2 data-i18n="upload_title">Digital Cases Upload Portal</h2>
                 <p data-i18n="upload_desc">A dedicated platform for doctors and centers to submit patient details and files.</p>
             </div>
-            <div class="form-card">
-                <form id="caseForm" novalidate>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="inputDoc" data-i18n="label_doctor">Doctor Name *</label>
-                            <input type="text" id="inputDoc" name="doctor" maxlength="120" autocomplete="name" data-i18n-placeholder="doc_ph" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputClinic" data-i18n="label_clinic">Clinic / Center Name *</label>
-                            <input type="text" id="inputClinic" name="clinic" maxlength="120" autocomplete="organization" data-i18n-placeholder="clinic_ph" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPatient" data-i18n="label_patient">Patient Name / ID *</label>
-                            <input type="text" id="inputPatient" name="patient" maxlength="120" autocomplete="off" data-i18n-placeholder="patient_ph" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputShade" data-i18n="label_shade">Shade *</label>
-                            <input type="text" id="inputShade" name="shade" maxlength="40" autocomplete="off" data-i18n-placeholder="shade_ph" required>
-                        </div>
-                        <div class="form-group full">
-                            <label for="inputNotes" data-i18n="label_notes">Additional Notes</label>
-                            <textarea rows="3" id="inputNotes" name="notes" maxlength="2000" data-i18n-placeholder="notes_ph"></textarea>
-                        </div>
-                        <div class="form-group full">
-                            <span class="label" id="filesLabel" data-i18n="label_files">Case Files (STL, PLY, OBJ, ZIP)</span>
-                            <div class="file-zone" id="fileZone" role="button" tabindex="0" aria-labelledby="filesLabel" aria-describedby="fileSummary">
-                                <p class="file-zone-title" data-i18n="file_text1">Click here to upload files or drag & drop</p>
-                                <p class="file-zone-hint" id="fileSummary"></p>
-                                <input type="file" id="fileInput" multiple hidden
-                                       accept=".stl,.ply,.obj,.zip,.dcm,.pdf,.jpg,.jpeg,.png">
-                            </div>
-                            <ul class="file-list" id="fileList"></ul>
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitCaseBtn" data-i18n="btn_submit">Submit Case Now</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Staff Login (#staff) -->
-        <section id="page-staff-login" class="page-section container page-offset">
-            <div class="form-card narrow">
-                <h2 class="form-title" data-i18n="admin_login_title">Staff & Admin Access Portal</h2>
-                <p class="demo-note" data-demo-only hidden data-i18n="demo_login_note">Demo mode: login with admin / admin. Data is saved in this browser only.</p>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="adminUser" data-i18n="label_username">Email</label>
-                        <input type="text" id="adminUser" autocomplete="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="adminPass" data-i18n="label_password">Password</label>
-                        <input type="password" id="adminPass" autocomplete="current-password" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="submit-btn" id="loginBtn" data-i18n="btn_login">Login to Dashboard</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Dashboard -->
-        <section id="page-admin-dashboard" class="page-section container page-offset">
-            <div class="dashboard-head">
-                <h2 data-i18n="dashboard_title">Lab Management Dashboard</h2>
-                <span class="badge badge-completed" id="sessionBadge"></span>
-            </div>
-            <p class="demo-note" data-demo-only hidden data-i18n="demo_dashboard_note">Demo mode: data is saved in this browser only. Connect Supabase to receive real cases.</p>
-
-            <div class="admin-nav-tabs" role="tablist">
-                <button type="button" role="tab" id="tab-cases-btn" aria-controls="tab-cases" data-tab="cases" data-i18n="tab_cases">Uploaded Cases & Files</button>
-                <button type="button" role="tab" id="tab-techs-btn" aria-controls="tab-techs" data-tab="techs" data-i18n="tab_techs">Technicians & Staff Management</button>
-            </div>
-
-            <div id="tab-cases" role="tabpanel" aria-labelledby="tab-cases-btn">
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th data-i18n="th_date">Date</th>
-                                <th data-i18n="th_patient">Patient</th>
-                                <th data-i18n="th_doctor">Doctor / Clinic</th>
-                                <th data-i18n="th_shade">Shade</th>
-                                <th data-i18n="th_files">Files</th>
-                                <th data-i18n="th_status">Status</th>
-                                <th data-i18n="th_actions">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="casesTableBody"></tbody>
-                    </table>
-                    <p class="empty-state" id="casesEmpty" hidden data-i18n="no_cases">No cases yet.</p>
-                </div>
-            </div>
-
-            <div id="tab-techs" role="tabpanel" aria-labelledby="tab-techs-btn" hidden>
-                <div class="stack">
-                    <div class="card">
-                        <h3 data-i18n="create_tech_title">Create Technician Account</h3>
-                        <form id="techForm">
-                            <div class="form-group">
-                                <label for="techName" data-i18n="label_tech_name">Technician Name *</label>
-                                <input type="text" id="techName" maxlength="120" data-i18n-placeholder="tech_name_ph" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="techEmail" data-i18n="label_tech_email">Email Address *</label>
-                                <input type="email" id="techEmail" placeholder="name@dentalgate.lab" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="techRole" data-i18n="label_tech_role">Specialty / Role</label>
-                                <select id="techRole">
-                                    <option value="CAD/CAM Designer" data-i18n="role_cad">CAD/CAM Designer</option>
-                                    <option value="Ceramist" data-i18n="role_ceramist">Ceramist</option>
-                                    <option value="3D Printing Tech" data-i18n="role_print">3D Printing Tech</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="techPass" data-i18n="label_new_password">Password (min. 8 characters) *</label>
-                                <input type="password" id="techPass" minlength="8" autocomplete="new-password" placeholder="••••••••" required>
-                            </div>
-                            <button type="submit" class="submit-btn" id="createTechBtn" data-i18n="btn_create_tech">Create Account</button>
-                        </form>
-                    </div>
-
-                    <div class="table-responsive">
-                        <h3 class="table-title" data-i18n="tech_list_title">Registered Technicians</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th data-i18n="th_tech_name">Name</th>
-                                    <th data-i18n="th_tech_email">Email</th>
-                                    <th data-i18n="th_tech_role">Specialty</th>
-                                    <th data-i18n="th_actions">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="techsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="form-card upload-card">
+                <p data-i18n="upload_go_hint">Upload your case files and details securely through our case portal.</p>
+                <a class="submit-btn upload-go" id="uploadLink" href="#" target="_blank" rel="noopener" hidden data-i18n="upload_go_btn">Upload a Case Now</a>
+                <p class="demo-note" id="uploadSoon" hidden data-i18n="upload_soon">Online case upload is coming soon.</p>
             </div>
         </section>
 
@@ -249,11 +113,8 @@
         <p data-i18n="footer_rights">All rights reserved © 2026 DENTALGATE</p>
     </footer>
 
-    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-
     <script src="config.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/data.js"></script>
     <script src="js/fx.js"></script>
     <script src="js/app.js"></script>
 </body>
