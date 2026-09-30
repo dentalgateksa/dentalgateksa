@@ -1,0 +1,46 @@
+[
+ {
+  "id": "intro",
+  "text": "Meet Hidento. An integrated platform for dental labs, their doctors, and the dental technician community."
+ },
+ {
+  "id": "idea",
+  "text": "Most labs run on separate tools that don't talk to each other. Hidento puts the lab, its doctors, and its technicians on one platform, in Arabic and English."
+ },
+ {
+  "id": "erp",
+  "text": "The lab ERP runs the whole day. Cases and production stages, technician performance, multi-country tax invoices, doctor accounts with debt aging, inventory, staff, and branches."
+ },
+ {
+  "id": "portal",
+  "text": "Doctors get their own portal. They send and track cases, approve designs in a 3D viewer, and see their balance and monthly statements."
+ },
+ {
+  "id": "smile",
+  "text": "There is also a smile designer. It finds the mouth automatically, places realistic new teeth, and lets the doctor adjust every tooth by touch, with a before and after image for the patient."
+ },
+ {
+  "id": "dento",
+  "text": "DentoMedia is a professional network and freelance marketplace for dental technicians, with messaging, voice and video calls, ads, and paid verification."
+ },
+ {
+  "id": "new",
+  "text": "Recent additions include a live demo anyone can try in one click, Excel import, and automations. A weekly report for the owner, payment reminders to doctors, alerts for stuck cases, and monthly statements."
+ },
+ {
+  "id": "quality",
+  "text": "It is built on React, TypeScript, and Convex. About fifty three thousand lines of code, two hundred and ninety nine automated tests, and four security reviews with every finding fixed."
+ },
+ {
+  "id": "revenue",
+  "text": "Revenue streams are already built in. Lab subscriptions at one hundred forty nine dollars a month, the smile designer for doctors, ads, verification, and a marketplace fee, with payments through Paddle."
+ },
+ {
+  "id": "honest",
+  "text": "To be transparent, Hidento is pre-revenue, with no paying customers yet. It is substantially developed, and the remaining finishing touches depend on the buyer's market. Building it from scratch would take a team of four about twelve to fifteen months."
+ },
+ {
+  "id": "cta",
+  "text": "Hidento is available for full acquisition, including the source code, the IP, and the documentation. Try the live demo, and get in touch."
+ }
+]

@@ -1,0 +1,107 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;overflow:hidden;font-family:Inter,Arial,sans-serif;color:#1f2937;background:radial-gradient(1200px 600px at 0% 0%,#FBE3CD 0,transparent 60%),radial-gradient(900px 500px at 100% 100%,#FDEBDC 0,transparent 60%),#FFFDFB}
+.scene{display:none;width:1920px;height:1080px;padding:90px 110px;position:relative}.scene.on{display:block}
+.brand{display:flex;align-items:center;gap:18px}.brand img{width:84px;height:84px}.brand .n{font-size:60px;font-weight:800;line-height:1}.brand .s{font-size:15px;letter-spacing:.2em;color:#64748b}
+.tag{display:inline-block;background:#E0833B1a;color:#C2621F;font-weight:700;border-radius:99px;padding:8px 20px;font-size:22px}
+h1{font-size:76px;font-weight:800;line-height:1.1;letter-spacing:-.02em}h1 span,.o{color:#E0833B}
+h2{font-size:58px;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.lead{font-size:30px;color:#475569;line-height:1.45}
+.pills{display:flex;gap:16px;flex-wrap:wrap}.pill{background:#fff;border:2px solid #f1e4d8;border-radius:99px;padding:14px 28px;font-size:26px;font-weight:700}
+.two{display:grid;grid-template-columns:720px 1fr;gap:70px;align-items:center;height:100%}
+ul.b{list-style:none;margin-top:34px}ul.b li{font-size:30px;line-height:1.35;padding:12px 0 12px 46px;position:relative;color:#334155}ul.b li:before{content:"";position:absolute;left:0;top:22px;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#EDB88F,#E0833B)}
+.lap{background:#1f2937;border-radius:22px;padding:14px 14px 26px;box-shadow:0 40px 80px -30px rgba(224,131,59,.55)}.lap img{display:block;width:100%;border-radius:10px}
+.stack{position:relative}.stack .lap2{position:absolute;right:-30px;bottom:-60px;width:52%;background:#1f2937;border-radius:16px;padding:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35)}.stack .lap2 img{width:100%;border-radius:8px;display:block}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px}.card{background:#fff;border:2px solid #f1e4d8;border-radius:28px;padding:36px;box-shadow:0 12px 40px -24px rgba(224,131,59,.5)}.card .ic{width:70px;height:70px;border-radius:20px;background:linear-gradient(135deg,#EDB88F,#E0833B);display:grid;place-items:center;font-size:36px;margin-bottom:22px}.card h3{font-size:34px;font-weight:800;margin-bottom:12px}.card p,.card li{font-size:24px;color:#475569;line-height:1.45}.card ul{padding-left:26px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:60px}.stat{background:#fff;border:2px solid #f1e4d8;border-radius:28px;padding:40px 34px}.stat b{display:block;font-size:84px;font-weight:800;color:#E0833B;line-height:1}.stat span{display:block;font-size:24px;color:#64748b;margin-top:14px}
+.chips{display:flex;gap:14px;flex-wrap:wrap;margin-top:44px}.chip{border:2px solid #f1e4d8;background:#fff;border-radius:14px;padding:12px 22px;font-size:24px;font-weight:700}
+table{width:100%;border-collapse:collapse;margin-top:44px;background:#fff;border-radius:24px;overflow:hidden;border:2px solid #f1e4d8}td{padding:26px 34px;font-size:30px;border-top:1px solid #f3ebe3}tr:first-child td{border-top:0}td.p{color:#C2621F;font-weight:800;text-align:right}
+.hub{position:relative;height:820px}.node{position:absolute;width:250px;height:250px;border-radius:50%;background:#fff;border:3px solid #f1e4d8;display:grid;place-items:center;text-align:center;font-size:28px;font-weight:800;box-shadow:0 20px 50px -25px rgba(224,131,59,.6)}.node i{display:block;font-style:normal;font-size:64px}
+.center{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:230px;height:230px;border-radius:50px;background:linear-gradient(135deg,#EDB88F,#E0833B);display:grid;place-items:center}.center img{width:150px}
+.big{font-size:96px;font-weight:800;color:#E0833B;letter-spacing:-.02em}
+.cta{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;gap:34px}
+.btn{display:inline-flex;align-items:center;gap:14px;font-size:32px;font-weight:800;border-radius:22px;padding:24px 44px}.btn.d{background:#1f2937;color:#fff}.btn.l{background:#fff;border:2px solid #f1e4d8}
+#new.on,#quality.on,#revenue.on,#honest.on{display:flex;flex-direction:column;justify-content:center;align-items:stretch}#new .tag,#quality .tag,#revenue .tag,#honest .tag{align-self:flex-start}
+#new h2,#quality h2,#revenue h2,#honest h2{font-size:64px}
+</style></head><body>
+
+<div class="scene" id="intro"><div class="cta">
+  <div class="brand"><img src="a/logo.svg"><div style="text-align:left"><div class="n">Hidento</div><div class="s">DENTAL ECOSYSTEM PLATFORM</div></div></div>
+  <h1 style="max-width:1400px">An integrated platform <span>shaping the future</span> of dentistry</h1>
+  <div class="pills"><span class="pill">Dental Lab ERP</span><span class="pill">Doctor Portal</span><span class="pill">Smile Designer</span><span class="pill">DentoMedia Network</span></div>
+</div></div>
+
+<div class="scene" id="idea"><div class="two">
+  <div><span class="tag">The core idea</span><h2 style="margin-top:28px">One platform instead of <span class="o">separate tools</span></h2><p class="lead" style="margin-top:28px">The lab, its doctors and the technician community on one platform and one database, in Arabic and English.</p></div>
+  <div class="hub">
+    <div class="center"><img src="a/logo.svg"></div>
+    <div class="node" style="left:40px;top:10px"><div><i>🦷</i>Dental lab</div></div>
+    <div class="node" style="right:40px;top:10px"><div><i>👨‍⚕️</i>Doctors</div></div>
+    <div class="node" style="left:50%;bottom:0;transform:translateX(-50%)"><div><i>🧑‍🔧</i>Technicians</div></div>
+  </div>
+</div></div>
+
+<div class="scene" id="erp"><div class="two">
+  <div><span class="tag">1 · Lab ERP</span><h2 style="margin-top:28px">Everything a lab needs to run its day</h2>
+  <ul class="b"><li>Cases, production stages, technician performance</li><li>Multi-country tax invoices and credit notes</li><li>Doctor accounts with debt aging</li><li>Inventory, staff, branches and roles</li></ul></div>
+  <div class="stack"><div class="lap"><img src="a/en-ai.png"></div><div class="lap2"><img src="a/en-prod.png"></div></div>
+</div></div>
+
+<div class="scene" id="portal"><div class="two">
+  <div><span class="tag">2 · Doctor portal</span><h2 style="margin-top:28px">A simple experience for doctors</h2>
+  <ul class="b"><li>Send and track cases in real time</li><li>Approve designs in a 3D viewer</li><li>Balance and monthly statements</li><li>Installable mobile app with notifications</li></ul></div>
+  <div class="stack"><div class="lap"><img src="a/en-design.png"></div><div class="lap2"><img src="a/portal-track.png"></div></div>
+</div></div>
+
+<div class="scene" id="smile"><div class="two">
+  <div><span class="tag">Smile designer</span><h2 style="margin-top:28px">New teeth in seconds, <span class="o">by touch</span></h2>
+  <ul class="b"><li>Finds the mouth automatically</li><li>Realistic new upper and lower teeth</li><li>Move, resize and rotate any tooth</li><li>Before and after image for the patient</li></ul></div>
+  <div class="lap"><img src="a/en-smile2.png"></div>
+</div></div>
+
+<div class="scene" id="dento"><div class="two">
+  <div><span class="tag">3 · DentoMedia</span><h2 style="margin-top:28px">A professional network for dental technicians</h2>
+  <ul class="b"><li>Feed, stories and follows</li><li>Messaging plus voice and video calls</li><li>Freelance marketplace with reviews</li><li>Paid ads and verification</li></ul></div>
+  <div class="lap"><img src="a/dm.png"></div>
+</div></div>
+
+<div class="scene" id="new"><span class="tag">Recently added</span><h2 style="margin-top:28px">Ready to try, easy to adopt</h2>
+  <div class="cards">
+    <div class="card"><div class="ic">▶️</div><h3>Live demo</h3><p>Anyone can open a fully populated demo lab in one click. Protected, and reset every night.</p></div>
+    <div class="card"><div class="ic">📥</div><h3>Excel import</h3><p>Inventory and price list from Excel, with a template, a preview and errors shown by row.</p></div>
+    <div class="card"><div class="ic">⚙️</div><h3>Automations</h3><ul><li>Weekly owner report</li><li>Payment reminders</li><li>Stuck case alerts</li><li>Monthly statements</li></ul></div>
+  </div>
+</div>
+
+<div class="scene" id="quality"><span class="tag">Build quality</span><h2 style="margin-top:28px">Tested, reviewed and documented</h2>
+  <div class="stats"><div class="stat"><b>~53k</b><span>lines of TypeScript</span></div><div class="stat"><b>299</b><span>automated tests, all passing</span></div><div class="stat"><b>4</b><span>security reviews, every finding fixed</span></div><div class="stat"><b>0</b><span>known dependency vulnerabilities</span></div></div>
+  <div class="chips"><span class="chip">React 19</span><span class="chip">TypeScript</span><span class="chip">Convex</span><span class="chip">Vercel</span><span class="chip">Paddle</span><span class="chip">Sentry</span><span class="chip">MediaPipe</span><span class="chip">PWA</span></div>
+</div>
+
+<div class="scene" id="revenue"><span class="tag">Business model</span><h2 style="margin-top:28px">Revenue streams built into the platform</h2>
+  <table>
+    <tr><td><b>Lab subscription (SaaS)</b> · 15-day free trial</td><td class="p">$149 / month · $1,490 / year</td></tr>
+    <tr><td><b>Smile designer</b> for doctors</td><td class="p">Set by the buyer</td></tr>
+    <tr><td><b>DentoMedia ads</b></td><td class="p">$3–5 / day</td></tr>
+    <tr><td><b>Freelancer verification</b></td><td class="p">$9 one-time</td></tr>
+    <tr><td><b>Marketplace fee</b></td><td class="p">$5 per job</td></tr>
+  </table>
+  <p class="lead" style="margin-top:24px">Payments through Paddle.</p>
+</div>
+
+<div class="scene" id="honest"><span class="tag">Honest status</span><h2 style="margin-top:28px">Where it stands today</h2>
+  <div class="cards" style="grid-template-columns:1fr 1fr">
+    <div class="card" style="background:#FFF7ED;border-color:#FED7AA"><h3>Transparent status</h3><ul><li>Pre-revenue: no paying customers yet</li><li>Substantially developed</li><li>Remaining finishing touches depend on the buyer's market</li><li>Handover support after the sale</li></ul></div>
+    <div class="card"><h3>Cost to build from scratch</h3><p>A team of about 4 for 12–15 months at Gulf rates:</p><div class="big" style="margin-top:20px">$300k – $450k</div></div>
+  </div>
+</div>
+
+<div class="scene" id="cta"><div class="cta">
+  <div class="brand"><img src="a/logo.svg"><div style="text-align:left"><div class="n">Hidento</div><div class="s">DENTAL ECOSYSTEM PLATFORM</div></div></div>
+  <h2 style="max-width:1400px">Available for <span class="o">full acquisition</span></h2>
+  <p class="lead">Source code, IP, documentation and handover support.</p>
+  <div style="display:flex;gap:24px"><span class="btn d">▶ Try the live demo on our website</span><span class="btn l">✉ amrmreda1988@gmail.com</span></div>
+</div></div>
+
+<script>const id=new URLSearchParams(location.search).get("s");document.getElementById(id).classList.add("on");</script>
+</body></html>
