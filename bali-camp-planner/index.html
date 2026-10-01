@@ -1,0 +1,883 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"></head><body style="margin:0">
+<title>مخطط مخيم بالي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap">
+<style>
+/* Layout: drafting table in three panes: tools rail (start) · site plan canvas · site summary (end) */
+:root{
+  --bg:#E8ECE3; --panel:#F7F9F3; --ink:#1C2A21; --muted:#5B6A5F; --line:#D1D8CA;
+  --accent:#0C7A70; --accent-soft:#D3EBE6; --accent-ink:#FFFFFF;
+  --canvas:#F3F5EE; --grid:#E1E7DA; --grid-major:#C4CEBA; --plan-ink:#34443A;
+  --warn:#A3560A; --warn-soft:#F6E5CF; --ok:#2B7A4B; --ok-soft:#DAEEE0;
+  --shadow:0 6px 24px rgba(28,42,33,.14);
+  --font-display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --font-num:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101613; --panel:#161E1A; --ink:#E2E9DE; --muted:#93A397; --line:#29342E;
+  --accent:#43B9AD; --accent-soft:#173A36; --accent-ink:#0B1411;
+  --canvas:#0E1411; --grid:#18211C; --grid-major:#27332C; --plan-ink:#C9D4C6;
+  --warn:#E3A35A; --warn-soft:#3A2A16; --ok:#6BC290; --ok-soft:#173226;
+  --shadow:0 6px 24px rgba(0,0,0,.45); color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#101613; --panel:#161E1A; --ink:#E2E9DE; --muted:#93A397; --line:#29342E;
+  --accent:#43B9AD; --accent-soft:#173A36; --accent-ink:#0B1411;
+  --canvas:#0E1411; --grid:#18211C; --grid-major:#27332C; --plan-ink:#C9D4C6;
+  --warn:#E3A35A; --warn-soft:#3A2A16; --ok:#6BC290; --ok-soft:#173226;
+  --shadow:0 6px 24px rgba(0,0,0,.45); color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.5}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.app{height:100%;display:grid;grid-template-columns:236px minmax(0,1fr) 304px;grid-template-rows:auto minmax(0,1fr)}
+.top{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px;min-width:0}
+.brand h1{font-family:var(--font-display);font-weight:700;font-size:22px;margin:0;letter-spacing:0;white-space:nowrap}
+.brand span{color:var(--muted);font-size:12px;white-space:nowrap}
+#projName{flex:1 1 200px;min-width:0;max-width:340px;border:1px solid transparent;background:transparent;border-radius:6px;padding:6px 8px;font-weight:500}
+#projName:hover,#projName:focus{border-color:var(--line);background:var(--bg)}
+.actions{display:flex;gap:6px;flex-wrap:wrap;margin-inline-start:auto}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:6px 11px;cursor:pointer;font-size:13px;white-space:nowrap}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:default;border-color:var(--line);color:inherit}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.08);color:var(--accent-ink)}
+.btn.danger:hover{border-color:#B42318;color:#B42318}
+
+.tools,.side{background:var(--panel);overflow:auto;padding:14px 16px 24px;display:flex;flex-direction:column;gap:20px;min-height:0}
+.tools{border-inline-end:1px solid var(--line)}
+.side{border-inline-start:1px solid var(--line)}
+.sec h2{font-size:11px;letter-spacing:.06em;color:var(--muted);font-weight:600;margin:0 0 8px;text-transform:uppercase}
+.sec h2 small{font-weight:400;letter-spacing:0}
+
+.toolrow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tool{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:7px 4px;cursor:pointer;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tool svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+.tool[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tool:hover{border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:4px 10px 4px 8px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.sw{width:11px;height:11px;border-radius:3px;flex:none;border:1px solid rgba(0,0,0,.18)}
+.catalog{display:grid;grid-template-columns:1fr;gap:4px}
+.cat{display:flex;align-items:center;gap:8px;border:1px solid transparent;background:transparent;border-radius:6px;padding:5px 6px;cursor:pointer;text-align:start;width:100%}
+.cat:hover{background:var(--bg);border-color:var(--line)}
+.cat .sw{width:14px;height:14px}
+.cat b{font-weight:500;font-size:13px;flex:1;min-width:0}
+.cat i{font-style:normal;font-family:var(--font-num);font-size:11px;color:var(--muted);direction:ltr}
+
+.stage{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--canvas)}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hint{position:absolute;top:10px;inset-inline-start:12px;inset-inline-end:12px;display:flex;justify-content:center;pointer-events:none}
+.hint span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12px;color:var(--muted);box-shadow:var(--shadow);max-width:100%}
+.drawbar{position:absolute;top:46px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--accent);border-radius:8px;padding:6px 8px 6px 12px;box-shadow:var(--shadow);flex-wrap:wrap;justify-content:center;max-width:calc(100% - 24px)}
+.drawbar output{font-family:var(--font-num);font-size:12px;direction:ltr;unicode-bidi:isolate}
+.zoom{position:absolute;left:12px;bottom:40px;display:flex;flex-direction:column;gap:4px}
+.zoom button{width:34px;height:34px;border:1px solid var(--line);background:var(--panel);border-radius:6px;cursor:pointer;font-size:17px;line-height:1;box-shadow:var(--shadow)}
+.zoom button:hover{border-color:var(--accent);color:var(--accent)}
+.status{position:absolute;bottom:0;left:0;right:0;display:flex;gap:16px;justify-content:space-between;padding:5px 12px;font-family:var(--font-num);font-size:11px;color:var(--muted);background:color-mix(in srgb,var(--panel) 88%,transparent);border-top:1px solid var(--line);direction:ltr;flex-wrap:wrap}
+
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.kpi{background:var(--panel);padding:9px 10px;min-width:0}
+.kpi.wide{grid-column:1/-1}
+.kpi label{display:block;font-size:11px;color:var(--muted)}
+.kpi strong{display:block;font-family:var(--font-num);font-weight:500;font-size:17px;direction:ltr;text-align:right;font-variant-numeric:tabular-nums;line-height:1.3}
+.kpi small{display:block;font-family:var(--font-num);font-size:11px;color:var(--muted);direction:ltr;text-align:right}
+.bar{height:5px;border-radius:3px;background:var(--bg);margin-top:5px;overflow:hidden;position:relative}
+.bar i{position:absolute;inset-block:0;right:0;background:var(--accent);border-radius:3px}
+.bar i.over{background:var(--warn)}
+.flags{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.flag{font-size:12px;border-radius:6px;padding:6px 9px;display:flex;gap:7px;align-items:flex-start}
+.flag.warn{background:var(--warn-soft);color:var(--warn)}
+.flag.ok{background:var(--ok-soft);color:var(--ok)}
+.flag::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;margin-top:6px;flex:none}
+
+.empty{color:var(--muted);font-size:13px;margin:0}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.field{display:flex;flex-direction:column;gap:3px;min-width:0}
+.field.wide{grid-column:1/-1}
+.field label{font-size:11px;color:var(--muted)}
+.field input,.field select{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;width:100%;min-width:0}
+.field input[type=number]{font-family:var(--font-num);direction:ltr;text-align:right}
+.field input[type=color]{padding:2px;height:34px}
+.check{display:flex;align-items:center;gap:8px;font-size:13px;grid-column:1/-1;cursor:pointer}
+.check input{accent-color:var(--accent);width:16px;height:16px}
+.readout{grid-column:1/-1;font-family:var(--font-num);font-size:12px;color:var(--muted);direction:ltr;text-align:right;background:var(--bg);border-radius:6px;padding:6px 8px}
+.rowbtns{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}
+
+.layers{display:flex;flex-direction:column;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.layer{display:flex;align-items:center;gap:8px;padding:6px 9px;border:0;border-bottom:1px solid var(--line);background:transparent;cursor:pointer;text-align:start;width:100%}
+.layer:last-child{border-bottom:0}
+.layer:hover{background:var(--bg)}
+.layer[aria-current="true"]{background:var(--accent-soft)}
+.layer b{font-weight:500;font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layer i{font-style:normal;font-family:var(--font-num);font-size:11px;color:var(--muted);direction:ltr}
+.note{font-size:11px;color:var(--muted);margin:6px 0 0}
+
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);padding:18px;width:min(560px,calc(100% - 32px));box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(10,20,15,.45)}
+dialog h3{font-family:var(--font-display);font-weight:500;font-size:19px;margin:0 0 6px}
+dialog p{margin:0 0 12px;color:var(--muted);font-size:13px}
+dialog textarea{width:100%;height:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:8px;font-family:var(--font-num);font-size:11px;direction:ltr}
+dialog img{width:100%;border:1px solid var(--line);border-radius:6px;display:block}
+.dlgbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;justify-content:flex-start}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--panel);padding:8px 16px;border-radius:999px;font-size:13px;z-index:20;transition:opacity .2s}
+
+@media (max-width:860px){
+  html,body{height:auto}
+  .app{display:flex;flex-direction:column;height:auto}
+  .stage{height:66vh;min-height:380px}
+  .tools,.side{border:0;border-top:1px solid var(--line);overflow:visible}
+  .catalog{grid-template-columns:1fr 1fr}
+  .zoom{bottom:36px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app" dir="rtl" lang="ar">
+  <header class="top">
+    <div class="brand"><h1>مخطط مخيم بالي</h1><span>تصميم الأرض والمباني بالمتر</span></div>
+    <input id="projName" aria-label="اسم المشروع" value="">
+    <div class="actions">
+      <button class="btn" id="bUndo" title="Ctrl+Z">تراجع</button>
+      <button class="btn" id="bRedo" title="Ctrl+Y">إعادة</button>
+      <button class="btn" id="bImg">عرض كصورة</button>
+      <button class="btn" id="bFile">حفظ / فتح ملف</button>
+      <button class="btn primary" id="bNew">مشروع جديد</button>
+    </div>
+  </header>
+
+  <aside class="tools" aria-label="الأدوات">
+    <section class="sec">
+      <h2>الأدوات</h2>
+      <div class="toolrow">
+        <button class="tool" data-tool="select" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M5 3l6 17 2.5-7L20 10.5z"/></svg>تحديد</button>
+        <button class="tool" data-tool="measure" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg>قياس</button>
+        <button class="tool" data-tool="path" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 20c4-1 4-6 8-8s4-7 8-8"/></svg>ممشى</button>
+      </div>
+    </section>
+    <section class="sec">
+      <h2>الأرض والمساحات <small>(ارسم بالنقاط)</small></h2>
+      <div class="chips" id="zoneChips"></div>
+    </section>
+    <section class="sec">
+      <h2>المباني والمرافق <small>(اضغط للإضافة)</small></h2>
+      <div class="catalog" id="catalog"></div>
+    </section>
+    <section class="sec">
+      <h2>الطبيعة</h2>
+      <div class="catalog" id="nature"></div>
+    </section>
+  </aside>
+
+  <main class="stage" id="stage">
+    <canvas id="cv" aria-label="مخطط الموقع" tabindex="0"></canvas>
+    <div class="hint"><span id="hint"></span></div>
+    <div class="drawbar" id="drawbar" hidden>
+      <output id="drawInfo"></output>
+      <button class="btn" id="dUndo">حذف آخر نقطة</button>
+      <button class="btn" id="dCancel">إلغاء</button>
+      <button class="btn primary" id="dDone">إنهاء</button>
+    </div>
+    <div class="zoom">
+      <button id="zIn" aria-label="تكبير">+</button>
+      <button id="zOut" aria-label="تصغير">−</button>
+      <button id="zFit" aria-label="ملاءمة المخطط" title="ملاءمة المخطط">⤢</button>
+    </div>
+    <div class="status"><span id="stPos">x 0.0 m · y 0.0 m</span><span id="stScale"></span></div>
+  </main>
+
+  <aside class="side" aria-label="ملخص المشروع">
+    <section class="sec">
+      <h2>ملخص الموقع</h2>
+      <div id="summary"></div>
+    </section>
+    <section class="sec">
+      <h2>العنصر المحدد</h2>
+      <div id="props"></div>
+    </section>
+    <section class="sec">
+      <h2>عناصر المخطط</h2>
+      <div class="layers" id="layers"></div>
+    </section>
+    <section class="sec">
+      <h2>إعدادات</h2>
+      <div class="form" id="settings">
+        <div class="field"><label for="sPrice">سعر الأرض / آر (USD)</label><input id="sPrice" type="number" min="0" step="100" data-s="landPrice"></div>
+        <div class="field"><label for="sKdb">أقصى نسبة بناء %</label><input id="sKdb" type="number" min="1" max="100" step="1" data-s="kdbMax"></div>
+        <label class="check"><input type="checkbox" id="sSnap" data-s="snap"> المحاذاة للشبكة (50 سم)</label>
+        <label class="check"><input type="checkbox" id="sGrid" data-s="grid"> إظهار الشبكة</label>
+        <label class="check"><input type="checkbox" id="sLabels" data-s="labels"> إظهار الأسماء والمقاسات</label>
+        <label class="check"><input type="checkbox" id="sDims" data-s="dims"> أطوال أضلاع الأرض</label>
+      </div>
+      <p class="note">1 آر = 100 م² · 1 هكتار = 100 آر. الأراضي في بالي تُباع وتُؤجَّر غالبًا بالآر. الأرقام تقديرية، وراجع اشتراطات البناء المحلية (KDB) قبل التنفيذ.</p>
+    </section>
+  </aside>
+</div>
+
+<dialog id="dlgFile">
+  <h3>حفظ المشروع وفتحه</h3>
+  <p>المشروع يُحفظ تلقائيًا في هذا المتصفح. لنقله لجهاز آخر انسخ النص التالي واحفظه، أو افتح ملف JSON حفظته من قبل.</p>
+  <textarea id="fileText" aria-label="بيانات المشروع" spellcheck="false"></textarea>
+  <div class="dlgbtns">
+    <button class="btn primary" id="fCopy">نسخ النص</button>
+    <button class="btn" id="fLoad">فتح من النص</button>
+    <label class="btn" for="fInput">اختيار ملف…</label>
+    <input type="file" id="fInput" accept=".json,application/json,text/plain" hidden>
+    <button class="btn" id="fClose">إغلاق</button>
+  </div>
+</dialog>
+<dialog id="dlgImg">
+  <h3>صورة المخطط</h3>
+  <p>اضغط مطولًا على الصورة (أو بالزر الأيمن) واختر حفظ الصورة.</p>
+  <img id="imgOut" alt="صورة مخطط المخيم">
+  <div class="dlgbtns"><button class="btn" id="iClose">إغلاق</button></div>
+</dialog>
+<dialog id="dlgNew">
+  <h3>مشروع جديد</h3>
+  <p>سيتم استبدال المخطط الحالي. احفظ نسخة أولًا من «حفظ / فتح ملف» لو كنت تريد الرجوع إليه.</p>
+  <div class="dlgbtns">
+    <button class="btn primary" id="nBlank">مخطط فارغ</button>
+    <button class="btn" id="nSample">تحميل المثال</button>
+    <button class="btn" id="nCancel">إلغاء</button>
+  </div>
+</dialog>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+document.documentElement.setAttribute('dir','rtl');
+document.documentElement.setAttribute('lang','ar');
+const $=s=>document.querySelector(s);
+const DEG=Math.PI/180;
+const KEY='bali-camp-planner-v1';
+
+/* ---------- catalog ---------- */
+const CATALOG=[
+  {key:'glamp',name:'خيمة جلامبينج',w:6,h:5,color:'#E4C78F',built:true,beds:2,rate:180},
+  {key:'bungalow',name:'بنجلو بامبو',w:7,h:8,color:'#C9A26B',built:true,beds:2,rate:420},
+  {key:'villa',name:'فيلا عائلية',w:11,h:12,color:'#B98859',built:true,beds:4,rate:650},
+  {key:'dorm',name:'لودج جماعي',w:9,h:14,color:'#D3B58C',built:true,beds:10,rate:380},
+  {key:'reception',name:'الاستقبال',w:8,h:6,color:'#8FB3A8',built:true,beds:0,rate:450},
+  {key:'restaurant',name:'مطعم وكافيه',w:14,h:10,color:'#E2A56F',built:true,beds:0,rate:480},
+  {key:'kitchen',name:'مطبخ',w:6,h:6,color:'#D8906A',built:true,beds:0,rate:520},
+  {key:'wc',name:'حمامات مشتركة',w:6,h:5,color:'#9DB7C9',built:true,beds:0,rate:430},
+  {key:'yoga',name:'شالية يوجا',w:12,h:12,color:'#CDB98E',built:true,beds:0,rate:260},
+  {key:'spa',name:'سبا ومساج',w:8,h:7,color:'#C6A8C3',built:true,beds:0,rate:520},
+  {key:'staff',name:'سكن الموظفين',w:8,h:10,color:'#B6B09A',built:true,beds:0,rate:300},
+  {key:'store',name:'مخزن وكهرباء',w:4,h:5,color:'#A2A69B',built:true,beds:0,rate:250},
+  {key:'pool',name:'مسبح',w:14,h:6,color:'#5BB7D5',built:false,beds:0,rate:550,sym:'pool'},
+  {key:'deck',name:'سطح خشبي',w:10,h:4,color:'#BD9B75',built:false,beds:0,rate:120,sym:'deck'},
+  {key:'parking',name:'موقف سيارات وسكوتر',w:16,h:10,color:'#AEB3AE',built:false,beds:0,rate:35,sym:'parking'},
+  {key:'gate',name:'بوابة الدخول',w:5,h:2,color:'#8C6A4A',built:false,beds:0,rate:300},
+];
+const NATURE=[
+  {key:'palm',name:'نخلة جوز هند',r:2,color:'#4E8B4A',rate:60},
+  {key:'tree',name:'شجرة فرانجيباني',r:2.5,color:'#6FA35A',rate:90},
+  {key:'fire',name:'منطقة نار المخيم',r:3,color:'#D9773F',rate:400},
+];
+const ZONES={
+  land:{name:'حدود الأرض',color:'#C2A86E',rate:0},
+  garden:{name:'حديقة',color:'#7FB069',rate:15},
+  rice:{name:'حقل أرز',color:'#A7C957',rate:8},
+  jungle:{name:'غابة محمية',color:'#3E7D4F',rate:0},
+  pond:{name:'بركة لوتس',color:'#6CB4C9',rate:60},
+  sand:{name:'منطقة رملية',color:'#E3CF9C',rate:20},
+};
+const PATH_DEF={name:'ممشى حجري',color:'#D3C29C',width:1.5,rate:30};
+
+/* ---------- state ---------- */
+let S, sel=null, selVertex=null, tool='select', drawing=null, measure=null, drag=null, hoverW=null;
+let hist=[], redoS=[], pendingSnap=null;
+const view={s:6,ox:0,oy:0};
+const uid=()=>'i'+Math.random().toString(36).slice(2,9);
+const clone=o=>JSON.parse(JSON.stringify(o));
+const defaultSettings=()=>({snap:true,grid:true,labels:true,dims:true,landPrice:0,kdbMax:40});
+
+function mkRect(c,x,y,rot=0,name){return {id:uid(),kind:'rect',type:c.key,name:name||c.name,x,y,w:c.w,h:c.h,rot,color:c.color,built:c.built,beds:c.beds||0,rate:c.rate,sym:c.sym||''};}
+function mkCircle(c,x,y){return {id:uid(),kind:'circle',type:c.key,name:c.name,x,y,r:c.r,color:c.color,rate:c.rate};}
+function mkPoly(zone,pts,name){const z=ZONES[zone];return {id:uid(),kind:'poly',zone,name:name||z.name,pts,color:z.color,rate:z.rate};}
+function mkPath(pts){return {id:uid(),kind:'path',name:PATH_DEF.name,pts,width:PATH_DEF.width,color:PATH_DEF.color,rate:PATH_DEF.rate};}
+const C=k=>CATALOG.find(c=>c.key===k)||NATURE.find(c=>c.key===k);
+
+function sample(){
+  const it=[];
+  it.push(mkPoly('land',[{x:0,y:0},{x:78,y:-4},{x:84,y:30},{x:80,y:62},{x:30,y:66},{x:-4,y:58}],'أرض المشروع'));
+  it.push(mkPoly('rice',[{x:1,y:18},{x:25,y:18},{x:25,y:29},{x:1,y:29}],'حقل أرز (إطلالة)'));
+  it.push(mkPoly('garden',[{x:30,y:24},{x:56,y:23},{x:58,y:40},{x:31,y:39}],'حديقة المسبح'));
+  it.push(mkPoly('pond',[{x:62,y:36},{x:72,y:35},{x:73,y:41},{x:63,y:42}],'بركة لوتس'));
+  it.push(mkPath([{x:42,y:61},{x:42,y:41},{x:29,y:41},{x:28,y:34},{x:28,y:17},{x:40,y:16}]));
+  it.push(mkPath([{x:42,y:41},{x:58,y:42},{x:61,y:31}]));
+  [8,18,28,38].forEach((x,i)=>it.push(mkRect(C('bungalow'),x,10,0,'بنجلو '+(i+1))));
+  [8,16,24].forEach((x,i)=>it.push(mkRect(C('glamp'),x,38,0,'خيمة '+(i+1))));
+  it.push(mkRect(C('villa'),52,12));
+  it.push(mkRect(C('yoga'),68,16,45));
+  it.push(mkRect(C('wc'),33,20));
+  it.push(mkRect(C('pool'),44,31));
+  it.push(Object.assign(mkRect(C('deck'),44,36.5),{h:3,w:14}));
+  it.push(mkRect(C('spa'),66,28));
+  it.push(mkRect(C('restaurant'),58,48));
+  it.push(mkRect(C('kitchen'),68,48));
+  it.push(mkRect(C('staff'),73,56.5));
+  it.push(mkRect(C('store'),77,40));
+  it.push(mkRect(C('reception'),36,54));
+  it.push(mkRect(C('parking'),12,52));
+  it.push(mkRect(C('gate'),42,62.5));
+  it.push(mkCircle(C('fire'),20,46));
+  [[44,3],[62,2],[2,44],[26,58],[48,58],[60,58],[47,45],[80,10],[-1,30]].forEach(([x,y])=>it.push(mkCircle(C('palm'),x,y)));
+  [[56,36],[34,46],[22,14]].forEach(([x,y])=>it.push(mkCircle(C('tree'),x,y)));
+  return {v:1,name:'مثال: مخيم أوبود البيئي (عدّله كما تريد)',items:it,settings:Object.assign(defaultSettings(),{landPrice:0})};
+}
+function blank(){return {v:1,name:'مخيمي في بالي',items:[],settings:defaultSettings()};}
+function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);if(d&&Array.isArray(d.items))return normalize(d);}}catch(e){}return null;}
+function normalize(d){d.settings=Object.assign(defaultSettings(),d.settings||{});d.name=d.name||'مخيمي في بالي';return d;}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+/* ---------- history ---------- */
+function pushHist(){hist.push(JSON.stringify(S));if(hist.length>100)hist.shift();redoS=[];updUndo();}
+function undo(){if(!hist.length)return;redoS.push(JSON.stringify(S));S=JSON.parse(hist.pop());afterRestore();}
+function redo(){if(!redoS.length)return;hist.push(JSON.stringify(S));S=JSON.parse(redoS.pop());afterRestore();}
+function afterRestore(){if(sel&&!getItem(sel))sel=null;selVertex=null;save();renderAll();}
+function updUndo(){$('#bUndo').disabled=!hist.length;$('#bRedo').disabled=!redoS.length;}
+
+/* ---------- geometry ---------- */
+function rotV(x,y,r){const c=Math.cos(r),s=Math.sin(r);return {x:x*c-y*s,y:x*s+y*c};}
+const toS=p=>({x:p.x*view.s+view.ox,y:p.y*view.s+view.oy});
+const toW=(x,y)=>({x:(x-view.ox)/view.s,y:(y-view.oy)/view.s});
+const snapOn=()=>S.settings.snap;
+const sn=v=>snapOn()?Math.round(v*2)/2:Math.round(v*100)/100;
+const snP=p=>({x:sn(p.x),y:sn(p.y)});
+function polyArea(pts){let a=0;for(let i=0;i<pts.length;i++){const p=pts[i],q=pts[(i+1)%pts.length];a+=p.x*q.y-q.x*p.y;}return Math.abs(a)/2;}
+function polyLen(pts,closed){let l=0;for(let i=0;i<pts.length-(closed?0:1);i++){const p=pts[i],q=pts[(i+1)%pts.length];l+=Math.hypot(q.x-p.x,q.y-p.y);}return l;}
+function centroid(pts){let a=0,cx=0,cy=0;for(let i=0;i<pts.length;i++){const p=pts[i],q=pts[(i+1)%pts.length],f=p.x*q.y-q.x*p.y;a+=f;cx+=(p.x+q.x)*f;cy+=(p.y+q.y)*f;}if(Math.abs(a)<1e-6){return {x:pts.reduce((s,p)=>s+p.x,0)/pts.length,y:pts.reduce((s,p)=>s+p.y,0)/pts.length};}return {x:cx/(3*a),y:cy/(3*a)};}
+function inPoly(p,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const a=pts[i],b=pts[j];if(((a.y>p.y)!==(b.y>p.y))&&(p.x<(b.x-a.x)*(p.y-a.y)/(b.y-a.y)+a.x))c=!c;}return c;}
+function distSeg(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,l=dx*dx+dy*dy;let t=l?((p.x-a.x)*dx+(p.y-a.y)*dy)/l:0;t=Math.max(0,Math.min(1,t));return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
+function rectCorners(it){return [[-1,-1],[1,-1],[1,1],[-1,1]].map(([a,b])=>{const v=rotV(a*it.w/2,b*it.h/2,it.rot*DEG);return {x:it.x+v.x,y:it.y+v.y};});}
+function toLocal(it,p){return rotV(p.x-it.x,p.y-it.y,-it.rot*DEG);}
+function itemArea(it){switch(it.kind){case'rect':return it.w*it.h;case'circle':return Math.PI*it.r*it.r;case'poly':return polyArea(it.pts);case'path':return polyLen(it.pts,false)*it.width;}return 0;}
+function itemCost(it){return it.kind==='circle'?(+it.rate||0):itemArea(it)*(+it.rate||0);}
+function bounds(items){let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity;const add=p=>{x0=Math.min(x0,p.x);y0=Math.min(y0,p.y);x1=Math.max(x1,p.x);y1=Math.max(y1,p.y);};
+  for(const it of items){if(it.kind==='rect')rectCorners(it).forEach(add);else if(it.kind==='circle'){add({x:it.x-it.r,y:it.y-it.r});add({x:it.x+it.r,y:it.y+it.r});}else it.pts.forEach(add);}
+  return isFinite(x0)?{x0,y0,x1,y1}:null;}
+
+/* ---------- formatting ---------- */
+const fmt=(n,d=0)=>(+n).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});
+const money=n=>'$'+fmt(Math.round(n));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function textOn(hex){const h=hex.replace('#','');const r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);return (0.299*r+0.587*g+0.114*b)>150?'#1C2A21':'#FFFFFF';}
+function shade(hex,f){const h=hex.replace('#','');let r=parseInt(h.substr(0,2),16),g=parseInt(h.substr(2,2),16),b=parseInt(h.substr(4,2),16);r=Math.round(r*f);g=Math.round(g*f);b=Math.round(b*f);return `rgb(${Math.min(255,r)},${Math.min(255,g)},${Math.min(255,b)})`;}
+function rgba(hex,a){const h=hex.replace('#','');return `rgba(${parseInt(h.substr(0,2),16)},${parseInt(h.substr(2,2),16)},${parseInt(h.substr(4,2),16)},${a})`;}
+
+/* ---------- theme ---------- */
+let T={};
+function readTheme(){const cs=getComputedStyle(document.documentElement);['canvas','grid','grid-major','plan-ink','accent','panel','muted','ink','warn','line'].forEach(k=>T[k]=cs.getPropertyValue('--'+k).trim());draw();}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',readTheme);
+new MutationObserver(readTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+/* ---------- canvas ---------- */
+const cv=$('#cv'),ctx=cv.getContext('2d');let W=0,H=0,DPR=1;
+function resize(){const r=cv.getBoundingClientRect();DPR=window.devicePixelRatio||1;const first=!W;W=r.width;H=r.height;cv.width=Math.max(1,Math.round(W*DPR));cv.height=Math.max(1,Math.round(H*DPR));if(first&&W)fit();draw();}
+new ResizeObserver(resize).observe(cv);
+const LAYER={poly:0,path:2,rect:3,circle:4};
+function layerOf(it){return it.kind==='poly'?(it.zone==='land'?0:1):LAYER[it.kind];}
+function ordered(){return S.items.map((it,i)=>[it,i]).sort((a,b)=>layerOf(a[0])-layerOf(b[0])||a[1]-b[1]).map(a=>a[0]);}
+const FONT=(px,w=500)=>`${w} ${px}px "IBM Plex Sans Arabic", system-ui, sans-serif`;
+const NUMFONT=px=>`500 ${px}px "IBM Plex Mono", ui-monospace, monospace`;
+
+function draw(){
+  if(!W||!S)return;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.fillStyle=T.canvas||'#F3F5EE';ctx.fillRect(0,0,W,H);
+  if(S.settings.grid)drawGrid();
+  const list=ordered();
+  for(const it of list)drawItem(it);
+  if(S.settings.labels)for(const it of list)drawLabel(it);
+  if(S.settings.dims)for(const it of list)if(it.kind==='poly'&&it.zone==='land')drawEdgeDims(it.pts,true);
+  const s=getItem(sel);if(s)drawSelection(s);
+  if(drawing)drawDrawing();
+  if(measure)drawMeasure();
+  drawScale();drawNorth();
+}
+function niceStep(minPx){const steps=[0.5,1,2,5,10,20,50,100,200,500];for(const st of steps)if(st*view.s>=minPx)return st;return 1000;}
+function drawGrid(){
+  const minor=niceStep(9),major=minor*(minor===2||minor===20?5:(minor===0.5?2:10));
+  const a=toW(0,0),b=toW(W,H);
+  const lines=(st,col,lw)=>{ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=lw;
+    for(let x=Math.floor(a.x/st)*st;x<=b.x;x+=st){const sx=Math.round(x*view.s+view.ox)+.5;ctx.moveTo(sx,0);ctx.lineTo(sx,H);}
+    for(let y=Math.floor(a.y/st)*st;y<=b.y;y+=st){const sy=Math.round(y*view.s+view.oy)+.5;ctx.moveTo(0,sy);ctx.lineTo(W,sy);}
+    ctx.stroke();};
+  lines(minor,T.grid,1);lines(major,T['grid-major'],1);
+}
+function pathPts(pts,closed){ctx.beginPath();pts.forEach((p,i)=>{const q=toS(p);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});if(closed)ctx.closePath();}
+function drawItem(it){
+  const s=view.s;
+  if(it.kind==='poly'){
+    pathPts(it.pts,true);
+    if(it.zone==='land'){
+      ctx.fillStyle=rgba(it.color,.16);ctx.fill();
+      ctx.setLineDash([14,4,3,4]);ctx.lineWidth=2.2;ctx.strokeStyle=shade(it.color,.62);ctx.stroke();ctx.setLineDash([]);
+    }else{
+      ctx.fillStyle=rgba(it.color,.5);ctx.fill();ctx.lineWidth=1.2;ctx.strokeStyle=shade(it.color,.7);ctx.stroke();
+      if(it.zone==='rice'){ctx.save();pathPts(it.pts,true);ctx.clip();const bb=bounds([it]);ctx.strokeStyle=rgba('#3F6B22',.35);ctx.lineWidth=1;ctx.beginPath();
+        for(let y=Math.floor(bb.y0);y<=bb.y1;y+=1.5){const p=toS({x:bb.x0,y}),q=toS({x:bb.x1,y});ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);}ctx.stroke();ctx.restore();}
+      if(it.zone==='jungle'){ctx.save();pathPts(it.pts,true);ctx.clip();const bb=bounds([it]);ctx.fillStyle=rgba('#1F4D2C',.35);
+        for(let x=Math.floor(bb.x0);x<=bb.x1;x+=3)for(let y=Math.floor(bb.y0);y<=bb.y1;y+=3){const q=toS({x:x+((y*7)%3)*.5,y});ctx.beginPath();ctx.arc(q.x,q.y,Math.max(1.5,1.1*s),0,7);ctx.fill();}ctx.restore();}
+    }
+    return;
+  }
+  if(it.kind==='path'){
+    pathPts(it.pts,false);ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.strokeStyle=shade(it.color,.78);ctx.lineWidth=Math.max(2,it.width*s+2);ctx.stroke();
+    pathPts(it.pts,false);ctx.strokeStyle=it.color;ctx.lineWidth=Math.max(1,it.width*s);ctx.stroke();
+    return;
+  }
+  if(it.kind==='circle'){
+    const c=toS(it),r=Math.max(2,it.r*s);
+    if(it.type==='fire'){
+      ctx.beginPath();ctx.arc(c.x,c.y,r,0,7);ctx.fillStyle=rgba('#BFA27A',.45);ctx.fill();ctx.strokeStyle=shade('#BFA27A',.7);ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(c.x,c.y,r*.35,0,7);ctx.fillStyle=it.color;ctx.fill();
+    }else if(it.type==='palm'){
+      ctx.beginPath();ctx.arc(c.x,c.y,r,0,7);ctx.fillStyle=rgba(it.color,.35);ctx.fill();
+      ctx.strokeStyle=shade(it.color,.8);ctx.lineWidth=Math.max(1,s*.18);ctx.beginPath();
+      for(let i=0;i<8;i++){const a=i*Math.PI/4+.2;ctx.moveTo(c.x,c.y);ctx.quadraticCurveTo(c.x+Math.cos(a+.3)*r*.6,c.y+Math.sin(a+.3)*r*.6,c.x+Math.cos(a)*r,c.y+Math.sin(a)*r);}ctx.stroke();
+      ctx.beginPath();ctx.arc(c.x,c.y,Math.max(1.5,r*.12),0,7);ctx.fillStyle=shade(it.color,.6);ctx.fill();
+    }else{
+      ctx.beginPath();for(let i=0;i<=24;i++){const a=i/24*Math.PI*2,rr=r*(i%2?0.9:1);const x=c.x+Math.cos(a)*rr,y=c.y+Math.sin(a)*rr;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+      ctx.closePath();ctx.fillStyle=rgba(it.color,.7);ctx.fill();ctx.strokeStyle=shade(it.color,.7);ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(c.x,c.y,Math.max(1.5,r*.1),0,7);ctx.fillStyle=shade(it.color,.55);ctx.fill();
+    }
+    return;
+  }
+  // rect
+  const c=toS(it),w=it.w*s,h=it.h*s;
+  ctx.save();ctx.translate(c.x,c.y);ctx.rotate(it.rot*DEG);
+  ctx.fillStyle=rgba(it.color,.92);ctx.fillRect(-w/2,-h/2,w,h);
+  ctx.strokeStyle=shade(it.color,.62);ctx.lineWidth=1.4;ctx.strokeRect(-w/2,-h/2,w,h);
+  ctx.strokeStyle=rgba('#000000',.18);ctx.lineWidth=1;
+  if(it.sym==='pool'){const m=Math.min(w,h)*.12;ctx.strokeStyle=rgba('#FFFFFF',.8);ctx.strokeRect(-w/2+m,-h/2+m,w-2*m,h-2*m);}
+  else if(it.sym==='parking'){ctx.beginPath();const n=Math.max(1,Math.floor(it.w/2.5));for(let i=1;i<n;i++){const x=-w/2+i*w/n;ctx.moveTo(x,-h/2);ctx.lineTo(x,-h/2+h*.4);ctx.moveTo(x,h/2);ctx.lineTo(x,h/2-h*.4);}ctx.stroke();}
+  else if(it.sym==='deck'){ctx.beginPath();for(let y=-h/2+0.5*s;y<h/2;y+=0.5*s){ctx.moveTo(-w/2,y);ctx.lineTo(w/2,y);}ctx.stroke();}
+  else if(it.built){ // hip roof lines
+    ctx.beginPath();
+    if(w>=h){const rx=w/2-h/2;ctx.moveTo(-w/2,-h/2);ctx.lineTo(-rx,0);ctx.lineTo(-w/2,h/2);ctx.moveTo(w/2,-h/2);ctx.lineTo(rx,0);ctx.lineTo(w/2,h/2);ctx.moveTo(-rx,0);ctx.lineTo(rx,0);}
+    else{const ry=h/2-w/2;ctx.moveTo(-w/2,-h/2);ctx.lineTo(0,-ry);ctx.lineTo(w/2,-h/2);ctx.moveTo(-w/2,h/2);ctx.lineTo(0,ry);ctx.lineTo(w/2,h/2);ctx.moveTo(0,-ry);ctx.lineTo(0,ry);}
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function pill(x,y,text,font,fg,bg){ctx.font=font;const m=ctx.measureText(text).width;const ph=font.includes('Mono')?15:17;ctx.fillStyle=bg;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x-m/2-5,y-ph/2,m+10,ph,4);else ctx.rect(x-m/2-5,y-ph/2,m+10,ph);ctx.fill();ctx.fillStyle=fg;ctx.fillText(text,x,y+1);}
+function drawLabel(it){
+  const s=view.s;ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='rtl';
+  if(it.kind==='rect'){
+    const minSide=Math.min(it.w,it.h)*s;if(minSide<26)return;
+    const c=toS(it),fs=Math.max(10,Math.min(13,s*1.2)),fg=textOn(it.color);
+    const showDims=minSide>40,room=it.w*s-8;let nfs=fs;
+    ctx.font=FONT(nfs,600);const tw=ctx.measureText(it.name).width;
+    if(tw>room)nfs=Math.max(8,fs*room/tw);
+    ctx.fillStyle=fg;ctx.font=FONT(nfs,600);
+    if(ctx.measureText(it.name).width<=room+2)ctx.fillText(it.name,c.x,c.y-(showDims?fs*.55:0));
+    if(showDims){ctx.font=NUMFONT(fs-2);ctx.globalAlpha=.8;ctx.direction='ltr';ctx.fillText(`${fmt(it.w,1)}×${fmt(it.h,1)} m`,c.x,c.y+fs*.65);ctx.globalAlpha=1;}
+  }else if(it.kind==='poly'){
+    const a=polyArea(it.pts);if(a*s*s<1800)return;
+    const land=it.zone==='land';const fs=land?13:11;
+    let c=toS(centroid(it.pts));
+    if(land){const lo=it.pts.reduce((m,p)=>p.y>m.y?p:m,it.pts[0]);const xs=it.pts.map(p=>p.x);c=toS({x:(Math.min(...xs)+Math.max(...xs))/2,y:lo.y});c.y+=34;
+      pill(c.x,c.y-10,it.name,FONT(fs,600),T.ink,T.panel);
+      ctx.direction='ltr';pill(c.x,c.y+10,`${fmt(a)} m² · ${fmt(a/100,1)} are`,NUMFONT(11),T.ink,T.panel);
+    }else{
+      ctx.fillStyle=shade(it.color,.42);ctx.font=FONT(fs,600);ctx.fillText(it.name,c.x,c.y-7);
+      ctx.font=NUMFONT(10);ctx.direction='ltr';ctx.fillText(`${fmt(a)} m²`,c.x,c.y+8);
+    }
+  }
+  ctx.direction='ltr';
+}
+function drawEdgeDims(pts,closed){
+  if(view.s<1.5)return;
+  const cen=centroid(pts);ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='ltr';
+  for(let i=0;i<pts.length-(closed?0:1);i++){
+    const p=pts[i],q=pts[(i+1)%pts.length],L=Math.hypot(q.x-p.x,q.y-p.y);if(L*view.s<45)continue;
+    const m={x:(p.x+q.x)/2,y:(p.y+q.y)/2};let nx=-(q.y-p.y)/L,ny=(q.x-p.x)/L;
+    if((m.x+nx-cen.x)**2+(m.y+ny-cen.y)**2<(m.x-cen.x)**2+(m.y-cen.y)**2){nx=-nx;ny=-ny;}
+    const sm=toS(m);pill(sm.x+nx*14,sm.y+ny*14,`${fmt(L,1)} m`,NUMFONT(10.5),T['plan-ink'],T.panel);
+  }
+}
+function handlePts(it){
+  const out=[];
+  if(it.kind==='rect'){
+    const r=it.rot*DEG,cr=rotV(it.w/2,it.h/2,r),top=rotV(0,-it.h/2,r);
+    const cs=toS({x:it.x+cr.x,y:it.y+cr.y}),ts=toS({x:it.x+top.x,y:it.y+top.y});
+    out.push({type:'resize',x:cs.x,y:cs.y});
+    out.push({type:'rotate',x:ts.x+Math.sin(r)*26,y:ts.y-Math.cos(r)*26,bx:ts.x,by:ts.y});
+  }else if(it.kind==='circle'){const p=toS({x:it.x+it.r,y:it.y});out.push({type:'radius',x:p.x,y:p.y});}
+  else{
+    const closed=it.kind==='poly';
+    it.pts.forEach((p,i)=>{const q=toS(p);out.push({type:'vertex',i,x:q.x,y:q.y});});
+    for(let i=0;i<it.pts.length-(closed?0:1);i++){const p=it.pts[i],q=it.pts[(i+1)%it.pts.length];const m=toS({x:(p.x+q.x)/2,y:(p.y+q.y)/2});out.push({type:'mid',i,x:m.x,y:m.y});}
+  }
+  return out;
+}
+function drawSelection(it){
+  ctx.strokeStyle=T.accent;ctx.lineWidth=1.6;ctx.setLineDash([5,4]);
+  if(it.kind==='rect'){const cs=rectCorners(it);pathPts(cs,true);ctx.stroke();}
+  else if(it.kind==='circle'){const c=toS(it);ctx.beginPath();ctx.arc(c.x,c.y,it.r*view.s+3,0,7);ctx.stroke();}
+  else{pathPts(it.pts,it.kind==='poly');ctx.stroke();}
+  ctx.setLineDash([]);
+  if(it.kind==='poly'&&it.zone!=='land'&&S.settings.dims)drawEdgeDims(it.pts,true);
+  for(const h of handlePts(it)){
+    ctx.beginPath();
+    if(h.type==='rotate'){ctx.moveTo(h.bx,h.by);ctx.lineTo(h.x,h.y);ctx.strokeStyle=T.accent;ctx.stroke();ctx.beginPath();ctx.arc(h.x,h.y,6,0,7);ctx.fillStyle=T.panel;ctx.fill();ctx.stroke();}
+    else if(h.type==='mid'){ctx.arc(h.x,h.y,4,0,7);ctx.fillStyle=T.panel;ctx.fill();ctx.strokeStyle=T.accent;ctx.lineWidth=1.2;ctx.stroke();}
+    else{const sz=h.type==='vertex'?5:6;ctx.rect(h.x-sz,h.y-sz,sz*2,sz*2);ctx.fillStyle=(h.type==='vertex'&&selVertex===h.i)?T.accent:T.panel;ctx.fill();ctx.strokeStyle=T.accent;ctx.lineWidth=1.6;ctx.stroke();}
+  }
+}
+function drawDrawing(){
+  const pts=drawing.pts.slice();const live=hoverW?snP(hoverW):null;
+  const col=drawing.kind==='path'?PATH_DEF.color:ZONES[drawing.zone].color;
+  if(pts.length){
+    const all=live?pts.concat([live]):pts;
+    if(drawing.kind==='poly'&&all.length>=3){pathPts(all,true);ctx.fillStyle=rgba(col,.25);ctx.fill();}
+    pathPts(all,false);ctx.strokeStyle=T.accent;ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.stroke();ctx.setLineDash([]);
+    drawEdgeDims(all,false);
+  }
+  pts.forEach((p,i)=>{const q=toS(p);ctx.beginPath();ctx.arc(q.x,q.y,i===0&&drawing.kind==='poly'?7:4,0,7);ctx.fillStyle=i===0?T.accent:T.panel;ctx.fill();ctx.strokeStyle=T.accent;ctx.lineWidth=1.5;ctx.stroke();});
+  if(live){const q=toS(live);ctx.strokeStyle=T.accent;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(q.x-8,q.y);ctx.lineTo(q.x+8,q.y);ctx.moveTo(q.x,q.y-8);ctx.lineTo(q.x,q.y+8);ctx.stroke();}
+}
+function drawMeasure(){
+  const a=toS(measure.a),b=toS(measure.b);const L=Math.hypot(measure.b.x-measure.a.x,measure.b.y-measure.a.y);
+  ctx.strokeStyle=T.warn;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+  [a,b].forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,7);ctx.fillStyle=T.warn;ctx.fill();});
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction='ltr';
+  pill((a.x+b.x)/2,(a.y+b.y)/2-14,`${fmt(L,2)} m`,NUMFONT(12),T.panel,T.warn);
+}
+function drawScale(){
+  const target=110/view.s;const nice=[0.5,1,2,5,10,20,25,50,100,200,500];let L=nice[0];for(const n of nice)if(n<=target)L=n;
+  const px=L*view.s,x=16,y=H-44;
+  ctx.strokeStyle=T['plan-ink'];ctx.fillStyle=T['plan-ink'];ctx.lineWidth=1.5;
+  ctx.fillRect(x,y-3,px/2,4);ctx.strokeRect(x,y-3,px,4);
+  ctx.font=NUMFONT(11);ctx.textAlign='left';ctx.textBaseline='bottom';ctx.direction='ltr';ctx.fillText('0',x-2,y-6);ctx.textAlign='right';ctx.fillText(`${fmt(L,L<1?1:0)} m`,x+px+6,y-6);
+}
+function drawNorth(){
+  const x=W-30,y=H-74;ctx.save();ctx.translate(x,y);
+  ctx.beginPath();ctx.moveTo(0,-16);ctx.lineTo(7,8);ctx.lineTo(0,3);ctx.closePath();ctx.fillStyle=T['plan-ink'];ctx.fill();
+  ctx.beginPath();ctx.moveTo(0,-16);ctx.lineTo(-7,8);ctx.lineTo(0,3);ctx.closePath();ctx.strokeStyle=T['plan-ink'];ctx.lineWidth=1.2;ctx.stroke();
+  ctx.font=NUMFONT(11);ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText('N',0,-18);ctx.restore();
+}
+
+/* ---------- hit testing ---------- */
+function hitTest(p){
+  const list=ordered().reverse(),tol=6/view.s;
+  for(const it of list){
+    if(it.kind==='circle'){if(Math.hypot(p.x-it.x,p.y-it.y)<=Math.max(it.r,tol*1.5))return it;}
+    else if(it.kind==='rect'){const l=toLocal(it,p);if(Math.abs(l.x)<=it.w/2+tol*.5&&Math.abs(l.y)<=it.h/2+tol*.5)return it;}
+    else if(it.kind==='path'){for(let i=0;i<it.pts.length-1;i++)if(distSeg(p,it.pts[i],it.pts[i+1])<=it.width/2+tol)return it;}
+  }
+  for(const it of list){
+    if(it.kind!=='poly')continue;
+    if(it.zone!=='land'&&inPoly(p,it.pts))return it;
+    for(let i=0;i<it.pts.length;i++)if(distSeg(p,it.pts[i],it.pts[(i+1)%it.pts.length])<=tol*1.5)return it;
+  }
+  return null;
+}
+function hitHandle(it,sx,sy){for(const h of handlePts(it))if(Math.hypot(h.x-sx,h.y-sy)<=(h.type==='mid'?8:11))return h;return null;}
+const getItem=id=>S.items.find(i=>i.id===id)||null;
+
+/* ---------- interaction ---------- */
+const pointers=new Map();let pinch=null,lastTap={t:0,x:0,y:0},spaceDown=false;
+function evPos(e){const r=cv.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+cv.addEventListener('pointerdown',e=>{
+  cv.focus({preventScroll:true});
+  const sp=evPos(e);cv.setPointerCapture(e.pointerId);pointers.set(e.pointerId,sp);
+  if(pointers.size===2){const [a,b]=[...pointers.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)||1,mx:(a.x+b.x)/2,my:(a.y+b.y)/2,s:view.s,ox:view.ox,oy:view.oy};
+    if(drag&&drag.pushed&&!drag.moved)hist.pop();if(drag&&drag.moved){save();renderPanels();}drag=null;updUndo();return;}
+  if(pointers.size>2)return;
+  const p=toW(sp.x,sp.y);
+  if(e.button===1||spaceDown){drag={type:'pan',sx:sp.x,sy:sp.y,ox:view.ox,oy:view.oy};return;}
+  if(drawing){drawClick(p,sp);return;}
+  if(tool==='measure'){const a=snP(p);measure={a,b:a};drag={type:'measure'};draw();return;}
+  const cur=getItem(sel);
+  if(cur){const h=hitHandle(cur,sp.x,sp.y);if(h){
+    pushHist();drag={pushed:true,moved:false,id:cur.id,orig:clone(cur),...h};
+    if(h.type==='resize'){const r=cur.rot*DEG,a=rotV(-cur.w/2,-cur.h/2,r);drag.anchor={x:cur.x+a.x,y:cur.y+a.y};}
+    if(h.type==='mid'){cur.pts.splice(h.i+1,0,snP(p));drag.type='vertex';drag.i=h.i+1;drag.moved=true;}
+    if(drag.type==='vertex'){selVertex=drag.i;renderProps();}
+    draw();return;}}
+  const hit=hitTest(p);
+  if(hit){if(sel!==hit.id){sel=hit.id;selVertex=null;renderPanels();}pushHist();drag={type:'move',id:hit.id,start:p,orig:clone(hit),pushed:true,moved:false};draw();return;}
+  if(sel){sel=null;selVertex=null;renderPanels();}
+  drag={type:'pan',sx:sp.x,sy:sp.y,ox:view.ox,oy:view.oy};draw();
+});
+cv.addEventListener('pointermove',e=>{
+  const sp=evPos(e);if(pointers.has(e.pointerId))pointers.set(e.pointerId,sp);
+  const p=toW(sp.x,sp.y);hoverW=p;
+  $('#stPos').textContent=`x ${fmt(p.x,1)} m · y ${fmt(p.y,1)} m`;
+  if(pinch&&pointers.size>=2){const [a,b]=[...pointers.values()];const d=Math.hypot(a.x-b.x,a.y-b.y),mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+    const ns=clampS(pinch.s*d/pinch.d);const wx=(pinch.mx-pinch.ox)/pinch.s,wy=(pinch.my-pinch.oy)/pinch.s;view.s=ns;view.ox=mx-wx*ns;view.oy=my-wy*ns;updScale();draw();return;}
+  if(!drag){updCursor(sp,p);if(drawing)draw();return;}
+  const it=getItem(drag.id);
+  switch(drag.type){
+    case'pan':view.ox=drag.ox+sp.x-drag.sx;view.oy=drag.oy+sp.y-drag.sy;break;
+    case'measure':measure.b=snP(p);break;
+    case'move':{const dx=sn(p.x-drag.start.x),dy=sn(p.y-drag.start.y);if(!dx&&!dy&&!drag.moved)return;drag.moved=true;
+      if(it.kind==='rect'||it.kind==='circle'){it.x=+(drag.orig.x+dx).toFixed(2);it.y=+(drag.orig.y+dy).toFixed(2);}
+      else it.pts=drag.orig.pts.map(q=>({x:+(q.x+dx).toFixed(2),y:+(q.y+dy).toFixed(2)}));
+      showStatusFor(it);break;}
+    case'resize':{const r=it.rot*DEG,l=rotV(p.x-drag.anchor.x,p.y-drag.anchor.y,-r);
+      const w=Math.max(.5,sn(l.x)),h=Math.max(.5,sn(l.y));const c=rotV(w/2,h/2,r);
+      it.w=w;it.h=h;it.x=+(drag.anchor.x+c.x).toFixed(2);it.y=+(drag.anchor.y+c.y).toFixed(2);drag.moved=true;showStatusFor(it);break;}
+    case'rotate':{let a=Math.atan2(p.y-it.y,p.x-it.x)/DEG+90;a=((a%360)+360)%360;if(snapOn()&&!e.shiftKey)a=Math.round(a/5)*5;it.rot=a%360;drag.moved=true;$('#stScale').textContent=`rotation ${fmt(it.rot)}°`;break;}
+    case'radius':it.r=Math.max(.3,sn(Math.hypot(p.x-it.x,p.y-it.y)));drag.moved=true;break;
+    case'vertex':it.pts[drag.i]=snP(p);drag.moved=true;showStatusFor(it);break;
+  }
+  draw();
+});
+function endPointer(e){
+  pointers.delete(e.pointerId);if(pointers.size<2)pinch=null;
+  if(!drag)return;
+  if(drag.pushed&&!drag.moved){hist.pop();updUndo();}
+  else if(drag.moved){save();renderPanels();}
+  if(drag.type==='measure')draw();
+  drag=null;updScale();
+}
+cv.addEventListener('pointerup',endPointer);cv.addEventListener('pointercancel',endPointer);
+cv.addEventListener('pointerleave',()=>{if(drawing){hoverW=null;draw();}});
+const clampS=s=>Math.max(.4,Math.min(160,s));
+function zoomAt(f,mx,my){const ns=clampS(view.s*f);view.ox=mx-(mx-view.ox)*ns/view.s;view.oy=my-(my-view.oy)*ns/view.s;view.s=ns;updScale();draw();}
+cv.addEventListener('wheel',e=>{e.preventDefault();const sp=evPos(e);zoomAt(Math.exp(-e.deltaY*(e.ctrlKey?.01:.0015)),sp.x,sp.y);},{passive:false});
+function updCursor(sp,p){
+  if(drawing||tool==='measure'){cv.style.cursor='crosshair';return;}
+  const cur=getItem(sel);const h=cur&&hitHandle(cur,sp.x,sp.y);
+  cv.style.cursor=h?(h.type==='rotate'?'alias':h.type==='resize'?'nwse-resize':'move'):(hitTest(p)?'move':'grab');
+}
+function updScale(){$('#stScale').textContent=`1 m = ${fmt(view.s,1)} px`;}
+function showStatusFor(it){const a=itemArea(it);$('#stScale').textContent=it.kind==='rect'?`${fmt(it.w,1)} × ${fmt(it.h,1)} m = ${fmt(a)} m²`:it.kind==='path'?`${fmt(polyLen(it.pts,false),1)} m`:`${fmt(a)} m²`;}
+
+function drawClick(p,sp){
+  const now=performance.now(),pts=drawing.pts;
+  if(pts.length&&now-lastTap.t<380&&Math.hypot(sp.x-lastTap.x,sp.y-lastTap.y)<10){finishDraw();return;}
+  lastTap={t:now,x:sp.x,y:sp.y};
+  if(drawing.kind==='poly'&&pts.length>=3){const f=toS(pts[0]);if(Math.hypot(f.x-sp.x,f.y-sp.y)<12){finishDraw();return;}}
+  const q=snP(p);const last=pts[pts.length-1];if(last&&last.x===q.x&&last.y===q.y)return;
+  pts.push(q);updDrawbar();draw();
+}
+function startDraw(kind,zone){
+  sel=null;selVertex=null;measure=null;drawing={kind,zone,pts:[]};setTool(kind==='path'?'path':'zone:'+zone,true);renderPanels();updDrawbar();draw();
+}
+function finishDraw(){
+  if(!drawing)return;const d=drawing;
+  const ok=d.kind==='poly'?d.pts.length>=3:d.pts.length>=2;
+  if(ok){pushHist();const it=d.kind==='poly'?mkPoly(d.zone,d.pts):mkPath(d.pts);
+    if(d.kind==='poly'&&d.zone==='land'&&!S.items.some(i=>i.zone==='land'))it.name='أرض المشروع';
+    S.items.push(it);sel=it.id;save();toast(d.kind==='poly'?`تمت إضافة ${it.name}: ${fmt(polyArea(it.pts))} م²`:`تمت إضافة ممشى بطول ${fmt(polyLen(it.pts,false),1)} م`);}
+  else toast(d.kind==='poly'?'المساحة تحتاج 3 نقاط على الأقل':'الممشى يحتاج نقطتين على الأقل');
+  drawing=null;setTool('select');renderPanels();updDrawbar();draw();
+}
+function cancelDraw(){drawing=null;setTool('select');updDrawbar();draw();}
+function updDrawbar(){
+  const bar=$('#drawbar');bar.hidden=!drawing;updHint();if(!drawing)return;
+  const pts=drawing.pts;let info=`${pts.length} pts`;
+  if(drawing.kind==='poly'&&pts.length>=3)info+=` · ${fmt(polyArea(pts))} m² · ${fmt(polyArea(pts)/100,1)} are`;
+  else if(pts.length>=2)info+=` · ${fmt(polyLen(pts,false),1)} m`;
+  $('#drawInfo').textContent=info;$('#dUndo').disabled=!pts.length;
+}
+function updHint(){
+  let t='اسحب العناصر لتحريكها · اسحب الفراغ للتنقل · العجلة أو إصبعين للتكبير';
+  if(drawing)t=drawing.kind==='path'?'اضغط لرسم نقاط الممشى · اضغط مرتين أو «إنهاء» عند الانتهاء':`ارسم ${ZONES[drawing.zone].name}: اضغط عند كل ركن · اضغط على النقطة الأولى أو «إنهاء» للإغلاق`;
+  else if(tool==='measure')t='اسحب بين نقطتين لقياس المسافة بالمتر';
+  else if(!S.items.length)t='ابدأ برسم «حدود الأرض» من القائمة، ثم أضف المباني';
+  $('#hint').textContent=t;
+}
+
+/* ---------- tools ---------- */
+function setTool(t,keepDrawing){
+  if(!keepDrawing&&drawing)drawing=null;
+  tool=t;if(t!=='measure')measure=null;
+  document.querySelectorAll('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tool===t)));
+  document.querySelectorAll('[data-zone]').forEach(b=>b.setAttribute('aria-pressed',String('zone:'+b.dataset.zone===t)));
+  updDrawbar();draw();
+}
+document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tool;if(t==='path')startDraw('path');else setTool(t);}));
+$('#zoneChips').innerHTML=Object.entries(ZONES).map(([k,z])=>`<button class="chip" data-zone="${k}" aria-pressed="false"><span class="sw" style="background:${z.color}"></span>${z.name}</button>`).join('');
+document.querySelectorAll('[data-zone]').forEach(b=>b.addEventListener('click',()=>startDraw('poly',b.dataset.zone)));
+$('#catalog').innerHTML=CATALOG.map(c=>`<button class="cat" data-add="${c.key}"><span class="sw" style="background:${c.color}"></span><b>${c.name}</b><i>${c.w}×${c.h}</i></button>`).join('');
+$('#nature').innerHTML=NATURE.map(c=>`<button class="cat" data-add="${c.key}"><span class="sw" style="background:${c.color};border-radius:50%"></span><b>${c.name}</b><i>⌀${c.r*2}</i></button>`).join('');
+document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>addItem(b.dataset.add)));
+function addItem(key){
+  if(drawing)cancelDraw();setTool('select');
+  const c=C(key),ctr=snP(toW(W/2,H/2));pushHist();
+  const it=c.r?mkCircle(c,ctr.x,ctr.y):mkRect(c,ctr.x,ctr.y);
+  const same=S.items.filter(i=>i.type===key).length;if(same&&!c.r)it.name=`${c.name} ${same+1}`;
+  S.items.push(it);sel=it.id;selVertex=null;save();renderPanels();draw();
+  toast(`تمت إضافة ${it.name} في منتصف الشاشة، اسحبه لمكانه`);
+  if(innerWidth<=860)$('#stage').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function fit(){
+  const b=bounds(S.items);if(!b||!W){view.s=6;view.ox=W/2;view.oy=H/2;updScale();draw();return;}
+  const pad=50,bw=Math.max(10,b.x1-b.x0),bh=Math.max(10,b.y1-b.y0);
+  view.s=clampS(Math.min((W-pad*2)/bw,(H-pad*2-30)/bh));
+  view.ox=W/2-(b.x0+b.x1)/2*view.s;view.oy=(H-30)/2-(b.y0+b.y1)/2*view.s;updScale();draw();
+}
+$('#zIn').onclick=()=>zoomAt(1.25,W/2,H/2);$('#zOut').onclick=()=>zoomAt(.8,W/2,H/2);$('#zFit').onclick=fit;
+$('#dDone').onclick=finishDraw;$('#dCancel').onclick=cancelDraw;$('#dUndo').onclick=()=>{if(drawing){drawing.pts.pop();updDrawbar();draw();}};
+
+/* ---------- panels ---------- */
+function renderAll(){$('#projName').value=S.name;renderSettings();renderPanels();updUndo();draw();}
+function renderPanels(){renderSummary();renderProps();renderLayers();updUndo();updHint();}
+function stats(){
+  const lands=S.items.filter(i=>i.kind==='poly'&&i.zone==='land');
+  const land=lands.reduce((s,i)=>s+polyArea(i.pts),0);
+  const built=S.items.filter(i=>i.kind==='rect'&&i.built).reduce((s,i)=>s+i.w*i.h,0);
+  const green=S.items.filter(i=>i.kind==='poly'&&['garden','rice','jungle'].includes(i.zone)).reduce((s,i)=>s+polyArea(i.pts),0);
+  const units=S.items.filter(i=>i.kind==='rect'&&i.beds>0);const beds=units.reduce((s,i)=>s+(+i.beds||0),0);
+  const cost=S.items.reduce((s,i)=>s+itemCost(i),0);const landCost=land/100*(+S.settings.landPrice||0);
+  let outside=0;
+  if(lands.length)for(const it of S.items){if(it.kind==='poly'&&it.zone==='land')continue;
+    const pts=it.kind==='rect'?rectCorners(it):it.kind==='circle'?[it]:it.pts;
+    if(!pts.every(p=>lands.some(l=>inPoly(p,l.pts))))outside++;}
+  return {land,built,green,units:units.length,beds,cost,landCost,outside,hasLand:lands.length>0,trees:S.items.filter(i=>i.kind==='circle'&&i.type!=='fire').length};
+}
+function renderSummary(){
+  const st=stats(),kdb=st.land?st.built/st.land*100:0,gr=st.land?st.green/st.land*100:0,max=+S.settings.kdbMax||40;
+  let h=`<div class="kpis">
+    <div class="kpi wide"><label>مساحة الأرض</label><strong>${fmt(st.land)} m²</strong><small>${fmt(st.land/100,1)} are · ${fmt(st.land/10000,2)} ha</small></div>
+    <div class="kpi"><label>مسطح المباني</label><strong>${fmt(st.built)} m²</strong><small>${fmt(kdb,1)}% من الأرض</small><div class="bar"><i class="${kdb>max?'over':''}" style="width:${Math.min(100,kdb/max*100)}%"></i></div></div>
+    <div class="kpi"><label>مساحات خضراء</label><strong>${fmt(st.green)} m²</strong><small>${fmt(gr,1)}% · ${st.trees} شجرة</small></div>
+    <div class="kpi"><label>وحدات الإقامة</label><strong>${st.units}</strong><small>${st.beds} ضيف</small></div>
+    <div class="kpi"><label>تكلفة البناء التقديرية</label><strong>${money(st.cost)}</strong><small>${st.beds?money(st.cost/st.beds)+' / ضيف':'—'}</small></div>
+    ${st.landCost?`<div class="kpi wide"><label>الأرض + البناء</label><strong>${money(st.cost+st.landCost)}</strong><small>الأرض ${money(st.landCost)}</small></div>`:''}
+  </div><div class="flags">`;
+  if(!st.hasLand)h+=`<div class="flag warn">لم ترسم حدود الأرض بعد. اختر «حدود الأرض» وارسم أركانها لحساب المساحات والنسب.</div>`;
+  else{
+    h+=kdb>max?`<div class="flag warn">نسبة البناء ${fmt(kdb,1)}% أعلى من الحد الذي حددته (${max}%).</div>`:`<div class="flag ok">نسبة البناء ${fmt(kdb,1)}% ضمن الحد (${max}%).</div>`;
+    if(st.outside)h+=`<div class="flag warn">${st.outside} ${st.outside===1?'عنصر يخرج':'عناصر تخرج'} عن حدود الأرض.</div>`;
+  }
+  $('#summary').innerHTML=h+'</div>';
+}
+function num(id,k,v,label,stepv='0.5',min='0'){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="number" data-k="${k}" value="${+(+v).toFixed(2)}" step="${stepv}" min="${min}"></div>`;}
+function renderProps(){
+  const it=getItem(sel),el=$('#props');
+  if(!it){el.innerHTML='<p class="empty">اضغط على أي عنصر في المخطط أو في القائمة لتعديل اسمه ومقاساته. لحدود الأرض: اضغط على خط الحدود.</p>';return;}
+  let h=`<div class="form"><div class="field wide"><label for="p-name">الاسم</label><input id="p-name" data-k="name" value="${esc(it.name)}"></div>`;
+  if(it.kind==='rect'){
+    h+=num('p-w','w',it.w,'العرض (م)')+num('p-h','h',it.h,'العمق (م)')+num('p-rot','rot',it.rot,'الدوران (°)','5','-360')+num('p-beds','beds',it.beds,'عدد الضيوف','1')
+      +num('p-rate','rate',it.rate,'تكلفة م² (USD)','10')
+      +`<div class="field"><label for="p-color">اللون</label><input id="p-color" type="color" data-k="color" value="${it.color}"></div>`
+      +`<label class="check"><input type="checkbox" id="p-built" data-k="built" ${it.built?'checked':''}> يُحتسب ضمن مسطح المباني</label>`;
+  }else if(it.kind==='circle'){
+    h+=num('p-r','r',it.r,'نصف القطر (م)')+num('p-rate','rate',it.rate,'التكلفة للوحدة (USD)','10')
+      +`<div class="field"><label for="p-color">اللون</label><input id="p-color" type="color" data-k="color" value="${it.color}"></div>`;
+  }else if(it.kind==='poly'){
+    h+=`<div class="field"><label for="p-zone">النوع</label><select id="p-zone" data-k="zone">${Object.entries(ZONES).map(([k,z])=>`<option value="${k}" ${k===it.zone?'selected':''}>${z.name}</option>`).join('')}</select></div>`
+      +num('p-rate','rate',it.rate,'تكلفة م² (USD)','1')
+      +`<div class="field"><label for="p-color">اللون</label><input id="p-color" type="color" data-k="color" value="${it.color}"></div>`;
+  }else{
+    h+=num('p-wd','width',it.width,'عرض الممشى (م)','0.25')+num('p-rate','rate',it.rate,'تكلفة م² (USD)','5')
+      +`<div class="field"><label for="p-color">اللون</label><input id="p-color" type="color" data-k="color" value="${it.color}"></div>`;
+  }
+  h+=`<div class="readout" id="p-read"></div><div class="rowbtns"><button class="btn" id="pDup">تكرار</button>`;
+  if(it.kind==='rect')h+=`<button class="btn" id="pRot">تدوير 90°</button>`;
+  if(selVertex!=null&&it.pts&&it.pts.length>(it.kind==='poly'?3:2))h+=`<button class="btn" id="pDelV">حذف النقطة</button>`;
+  h+=`<button class="btn danger" id="pDel">حذف</button></div>`;
+  if(it.pts)h+=`<p class="note" style="grid-column:1/-1;margin:0">اسحب المربعات لتعديل الأركان، واسحب الدوائر الصغيرة بين الأركان لإضافة ركن جديد.</p>`;
+  el.innerHTML=h+'</div>';updReadout();
+  $('#pDup').onclick=duplicate;$('#pDel').onclick=removeSel;
+  if($('#pRot'))$('#pRot').onclick=()=>{pushHist();it.rot=(it.rot+90)%360;commitEdit();};
+  if($('#pDelV'))$('#pDelV').onclick=delVertex;
+}
+function updReadout(){const it=getItem(sel),r=$('#p-read');if(!it||!r)return;const a=itemArea(it),c=itemCost(it);
+  let t=`${fmt(a,1)} m²`;if(it.kind==='poly')t+=` · ${fmt(a/100,2)} are · perimeter ${fmt(polyLen(it.pts,true),1)} m`;if(it.kind==='path')t=`${fmt(polyLen(it.pts,false),1)} m long · ${t}`;
+  r.textContent=`${t} · ${money(c)}`;}
+const props=$('#props');
+props.addEventListener('focusin',()=>{pendingSnap=JSON.stringify(S);});
+props.addEventListener('input',e=>{
+  const t=e.target,k=t.dataset.k,it=getItem(sel);if(!k||!it)return;
+  let v=t.type==='checkbox'?t.checked:t.type==='number'?parseFloat(t.value):t.value;
+  if(t.type==='number'&&!isFinite(v))return;
+  if(k==='w'||k==='h')v=Math.max(.3,v);if(k==='r')v=Math.max(.2,v);if(k==='width')v=Math.max(.3,v);if(k==='beds'||k==='rate')v=Math.max(0,v);
+  if(k==='zone'){it.zone=v;it.color=ZONES[v].color;it.rate=ZONES[v].rate;if(Object.values(ZONES).some(z=>z.name===it.name))it.name=ZONES[v].name;}
+  else it[k]=v;
+  draw();renderSummary();renderLayers();updReadout();save();
+});
+props.addEventListener('change',e=>{
+  if(pendingSnap&&pendingSnap!==JSON.stringify(S)){hist.push(pendingSnap);redoS=[];pendingSnap=JSON.stringify(S);updUndo();}
+  if(e.target.dataset.k==='zone')renderProps();
+});
+function commitEdit(){save();renderPanels();draw();}
+function duplicate(){const it=getItem(sel);if(!it)return;pushHist();const c=clone(it);c.id=uid();
+  if(c.pts)c.pts=c.pts.map(p=>({x:p.x+3,y:p.y+3}));else{c.x+=3;c.y+=3;}
+  S.items.push(c);sel=c.id;selVertex=null;commitEdit();}
+function removeSel(){const it=getItem(sel);if(!it)return;pushHist();S.items=S.items.filter(i=>i.id!==sel);toast(`تم حذف ${it.name} (تراجع لاسترجاعه)`);sel=null;selVertex=null;commitEdit();}
+function delVertex(){const it=getItem(sel);if(!it||selVertex==null||!it.pts)return;if(it.pts.length<=(it.kind==='poly'?3:2))return;pushHist();it.pts.splice(selVertex,1);selVertex=null;commitEdit();}
+function renderLayers(){
+  const list=ordered().reverse();
+  $('#layers').innerHTML=list.length?list.map(it=>{const a=itemArea(it);const meta=it.kind==='circle'?'':it.kind==='path'?`${fmt(polyLen(it.pts,false))} m`:`${fmt(a)} m²`;
+    return `<button class="layer" data-id="${it.id}" aria-current="${it.id===sel}"><span class="sw" style="background:${it.color};${it.kind==='circle'?'border-radius:50%':''}"></span><b>${esc(it.name)}</b><i>${meta}</i></button>`;}).join('')
+    :'<p class="empty" style="padding:10px">لا توجد عناصر بعد.</p>';
+}
+$('#layers').addEventListener('click',e=>{const b=e.target.closest('[data-id]');if(!b)return;if(drawing)cancelDraw();setTool('select');sel=b.dataset.id;selVertex=null;
+  const it=getItem(sel),bb=bounds([it]);const cx=(bb.x0+bb.x1)/2,cy=(bb.y0+bb.y1)/2,s=toS({x:cx,y:cy});
+  if(s.x<40||s.x>W-40||s.y<40||s.y>H-60){view.ox+=W/2-s.x;view.oy+=H/2-s.y;}renderPanels();draw();});
+function renderSettings(){
+  document.querySelectorAll('[data-s]').forEach(el=>{const k=el.dataset.s;if(el.type==='checkbox')el.checked=!!S.settings[k];else el.value=S.settings[k];});
+}
+$('#settings').addEventListener('input',e=>{const el=e.target,k=el.dataset.s;if(!k)return;
+  S.settings[k]=el.type==='checkbox'?el.checked:(parseFloat(el.value)||0);save();renderSummary();draw();});
+$('#projName').addEventListener('input',e=>{S.name=e.target.value;save();});
+
+/* ---------- keyboard ---------- */
+addEventListener('keydown',e=>{
+  const tag=(e.target.tagName||'').toLowerCase();const typing=['input','textarea','select'].includes(tag);
+  const mod=e.ctrlKey||e.metaKey;
+  if(mod&&!typing&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redo():undo();return;}
+  if(mod&&!typing&&e.key.toLowerCase()==='y'){e.preventDefault();redo();return;}
+  if(typing)return;
+  if(e.code==='Space'&&!spaceDown){spaceDown=true;cv.style.cursor='grab';e.preventDefault();return;}
+  if(mod&&e.key.toLowerCase()==='d'){e.preventDefault();duplicate();return;}
+  if(e.key==='Escape'){if(drawing)cancelDraw();else if(measure){measure=null;draw();}else{sel=null;selVertex=null;renderPanels();draw();}return;}
+  if(e.key==='Enter'&&drawing){finishDraw();return;}
+  if((e.key==='Delete'||e.key==='Backspace')&&sel){e.preventDefault();if(selVertex!=null)delVertex();else removeSel();return;}
+  const it=getItem(sel);
+  if(it&&e.key.toLowerCase()==='r'&&it.kind==='rect'){pushHist();it.rot=(it.rot+90)%360;commitEdit();return;}
+  const arrows={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};
+  if(it&&arrows[e.key]){e.preventDefault();const st=e.shiftKey?2:(snapOn()?.5:.1),[dx,dy]=arrows[e.key];pushHist();
+    if(it.pts)it.pts=it.pts.map(p=>({x:+(p.x+dx*st).toFixed(2),y:+(p.y+dy*st).toFixed(2)}));else{it.x=+(it.x+dx*st).toFixed(2);it.y=+(it.y+dy*st).toFixed(2);}
+    save();draw();renderSummary();updReadout();}
+});
+addEventListener('keyup',e=>{if(e.code==='Space'){spaceDown=false;cv.style.cursor='';}});
+
+/* ---------- dialogs ---------- */
+let toastT;function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2600);}
+$('#bUndo').onclick=undo;$('#bRedo').onclick=redo;
+$('#bFile').onclick=()=>{$('#fileText').value=JSON.stringify(S);$('#dlgFile').showModal();};
+$('#fClose').onclick=()=>$('#dlgFile').close();
+$('#fCopy').onclick=()=>{const ta=$('#fileText');const done=()=>toast('تم النسخ. الصقه في ملف نصي أو رسالة لحفظه');
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ta.value).then(done).catch(()=>{ta.select();toast('النص محدد، اضغط Ctrl+C للنسخ');});
+  else{ta.select();toast('النص محدد، اضغط Ctrl+C للنسخ');}};
+function importText(txt){try{const d=JSON.parse(txt);if(!d||!Array.isArray(d.items))throw 0;pushHist();S=normalize(d);sel=null;selVertex=null;save();renderAll();fit();$('#dlgFile').close();toast('تم فتح المشروع');}
+  catch(e){toast('النص غير صالح. تأكد أنه منسوخ بالكامل من هذه الأداة');}}
+$('#fLoad').onclick=()=>importText($('#fileText').value);
+$('#fInput').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#fileText').value=r.result;importText(r.result);};r.readAsText(f);e.target.value='';};
+$('#bImg').onclick=()=>{const keep=sel;sel=null;draw();
+  const out=document.createElement('canvas');out.width=cv.width;out.height=cv.height+Math.round(56*DPR);const o=out.getContext('2d');
+  o.fillStyle=T.panel;o.fillRect(0,0,out.width,out.height);o.drawImage(cv,0,Math.round(56*DPR));
+  o.scale(DPR,DPR);o.fillStyle=T.ink;o.textAlign='right';o.textBaseline='middle';o.direction='rtl';o.font=`700 18px "Reem Kufi", "IBM Plex Sans Arabic", sans-serif`;
+  o.fillText(S.name,W-16,20);const st=stats();o.font=NUMFONT(11);o.fillStyle=T.muted;o.direction='ltr';
+  o.fillText(`${fmt(st.land)} m² · ${fmt(st.land/100,1)} are · built ${fmt(st.built)} m² · ${st.units} units / ${st.beds} guests`,W-16,42);
+  $('#imgOut').src=out.toDataURL('image/png');sel=keep;draw();$('#dlgImg').showModal();};
+$('#iClose').onclick=()=>$('#dlgImg').close();
+$('#bNew').onclick=()=>$('#dlgNew').showModal();$('#nCancel').onclick=()=>$('#dlgNew').close();
+$('#nBlank').onclick=()=>{pushHist();S=blank();sel=null;save();renderAll();view.s=6;view.ox=W/2;view.oy=H/2;updScale();draw();$('#dlgNew').close();toast('مخطط فارغ: ابدأ برسم حدود الأرض');};
+$('#nSample').onclick=()=>{pushHist();S=sample();sel=null;save();renderAll();fit();$('#dlgNew').close();};
+
+/* ---------- boot ---------- */
+S=load()||sample();
+readTheme();renderAll();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+</script>
+</body></html>
