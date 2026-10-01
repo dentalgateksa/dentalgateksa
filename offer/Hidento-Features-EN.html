@@ -13,7 +13,7 @@ ol{list-style:none}li{display:flex;gap:10px;font-size:14px;line-height:1.55;padd
 </style></head><body>
 <div class="hd"><div><div class="brand"><svg viewBox="0 0 192 192"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#EDB88F"/><stop offset="50%" stop-color="#E2A16F"/><stop offset="100%" stop-color="#E0833B"/></linearGradient></defs><rect width="192" height="192" rx="40" fill="url(#bg)"/><path fill="#fff" d="M96,46 C82,46 74,54 66,54 C56,54 48,46 38,46 C32,46 28,52 28,60 C28,80 36,94 40,112 C43,126 46,142 56,142 C64,142 66,128 70,114 C73,104 76,98 82,98 C88,98 91,104 94,114 C98,128 100,142 108,142 C118,142 121,126 124,112 C128,94 136,80 136,60 C136,52 132,46 126,46 C116,46 108,54 98,54 Z" transform="translate(14 0)"/></svg><div><div class="n">Hidento</div><div class="s">DENTAL ECOSYSTEM PLATFORM</div></div></div>
 <h1>Every feature of the platform on one page</h1><p>A quick guide for anyone who will work on or take over the platform: what exists and what it does</p></div>
-<div class="total"><b>64</b>features</div></div>
+<div class="total"><b>67</b>features</div></div>
 <div class="grid">
 <section class="card"><h2><span class="ic">🦷</span>Lab management (ERP)<span class="cnt">8</span></h2><ol>
 <li><span class="num">1</span><span>Case intake and tracking: received → in progress → ready → delivered, with a full log of who changed what and when</span></li>
@@ -25,81 +25,84 @@ ol{list-style:none}li{display:flex;gap:10px;font-size:14px;line-height:1.55;padd
 <li><span class="num">7</span><span>Role-based permissions: admin, branch manager, employee, HR, accountant, technician</span></li>
 <li><span class="num">8</span><span>AI assistant that answers the manager's questions from the lab's data (Arabic and English)</span></li>
 </ol></section>
-<section class="card"><h2><span class="ic">🏭</span>Production and quality<span class="cnt">5</span></h2><ol>
+<section class="card"><h2><span class="ic">🏭</span>Production and quality<span class="cnt">6</span></h2><ol>
 <li><span class="num">9</span><span>Production board with stages: design → milling → sintering → finishing → quality check</span></li>
 <li><span class="num">10</span><span>A failed quality check logs a remake and sends the case back to production</span></li>
 <li><span class="num">11</span><span>Technician performance: stages completed, average time, remake rate</span></li>
 <li><span class="num">12</span><span>Shows the lab's slowest stage (the bottleneck)</span></li>
-<li><span class="num">13</span><span>Upload the design (STL, image or PDF) and the doctor approves it in a 3D viewer</span></li>
+<li><span class="num">13</span><span>QR label on every case: scan it with a phone to open the case and move it to the next stage in one tap</span></li>
+<li><span class="num">14</span><span>Upload the design (STL, image or PDF) and the doctor approves it in a 3D viewer</span></li>
 </ol></section>
-<section class="card"><h2><span class="ic">💰</span>Invoicing and accounts<span class="cnt">10</span></h2><ol>
-<li><span class="num">14</span><span>Itemized tax invoices with sequential numbering, in Arabic and English</span></li>
-<li><span class="num">15</span><span>Tax for 55 countries: rate, tax name, tax-number label and currency per country</span></li>
-<li><span class="num">16</span><span>Saudi ZATCA QR code (Phase 1) on invoices</span></li>
-<li><span class="num">17</span><span>Credit notes with a reason and the original invoice number; invoices can't be edited after issue</span></li>
-<li><span class="num">18</span><span>Full payment ledger: amount, method, date and who recorded it</span></li>
-<li><span class="num">19</span><span>Service price list, with special prices per doctor</span></li>
-<li><span class="num">20</span><span>Automatic invoice on delivery, or one consolidated invoice per doctor</span></li>
-<li><span class="num">21</span><span>Doctor accounts: balances and debt aging (0–30, 31–60, 61–90, 90+ days)</span></li>
-<li><span class="num">22</span><span>Printable statement of account per doctor with a running balance</span></li>
-<li><span class="num">23</span><span>Case cost and profitability by service and by doctor</span></li>
+<section class="card"><h2><span class="ic">💰</span>Invoicing and accounts<span class="cnt">11</span></h2><ol>
+<li><span class="num">15</span><span>Itemized tax invoices with sequential numbering, in Arabic and English</span></li>
+<li><span class="num">16</span><span>Tax for 55 countries: rate, tax name, tax-number label and currency per country</span></li>
+<li><span class="num">17</span><span>Saudi ZATCA QR code (Phase 1) on invoices</span></li>
+<li><span class="num">18</span><span>Credit notes with a reason and the original invoice number; invoices can't be edited after issue</span></li>
+<li><span class="num">19</span><span>Full payment ledger: amount, method, date and who recorded it</span></li>
+<li><span class="num">20</span><span>Service price list, with special prices per doctor</span></li>
+<li><span class="num">21</span><span>Automatic invoice on delivery, or one consolidated invoice per doctor</span></li>
+<li><span class="num">22</span><span>Doctor accounts: balances and debt aging (0–30, 31–60, 61–90, 90+ days)</span></li>
+<li><span class="num">23</span><span>Printable statement of account per doctor with a running balance</span></li>
+<li><span class="num">24</span><span>Case cost and profitability by service and by doctor</span></li>
+<li><span class="num">25</span><span>Doctor loyalty points: points on every payment, Silver, Gold and Platinum tiers, redeemable as an invoice discount</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">📦</span>Inventory and staff<span class="cnt">6</span></h2><ol>
-<li><span class="num">24</span><span>Inventory per branch with a minimum level and a low-stock alert</span></li>
-<li><span class="num">25</span><span>Materials are deducted from stock automatically on delivery</span></li>
-<li><span class="num">26</span><span>A file for every employee: ID or residency permit, contract, emergency contact</span></li>
-<li><span class="num">27</span><span>Alert 30 days before an ID or residency permit expires</span></li>
-<li><span class="num">28</span><span>Leave balances and leave requests approved by the manager</span></li>
-<li><span class="num">29</span><span>Financial, operational, inventory and staff reports, with PDF printing</span></li>
+<li><span class="num">26</span><span>Inventory per branch with a minimum level and a low-stock alert</span></li>
+<li><span class="num">27</span><span>Materials are deducted from stock automatically on delivery</span></li>
+<li><span class="num">28</span><span>A file for every employee: ID or residency permit, contract, emergency contact</span></li>
+<li><span class="num">29</span><span>Alert 30 days before an ID or residency permit expires</span></li>
+<li><span class="num">30</span><span>Leave balances and leave requests approved by the manager</span></li>
+<li><span class="num">31</span><span>Financial, operational, inventory and staff reports, with PDF printing</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">📥</span>Import and export<span class="cnt">3</span></h2><ol>
-<li><span class="num">30</span><span>Import inventory and the price list from an Excel or CSV file</span></li>
-<li><span class="num">31</span><span>Ready Excel template, row preview before saving, errors shown by row number</span></li>
-<li><span class="num">32</span><span>Export balances, the price list and technician performance to Excel</span></li>
+<li><span class="num">32</span><span>Import inventory and the price list from an Excel or CSV file</span></li>
+<li><span class="num">33</span><span>Ready Excel template, row preview before saving, errors shown by row number</span></li>
+<li><span class="num">34</span><span>Export balances, the price list and technician performance to Excel</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">⚙️</span>Automations (on/off in Settings)<span class="cnt">4</span></h2><ol>
-<li><span class="num">33</span><span>Weekly report for the lab owner every Sunday</span></li>
-<li><span class="num">34</span><span>Weekly reminders to doctors with overdue balances, plus a summary for the accountant</span></li>
-<li><span class="num">35</span><span>Alert when a case is stuck in a stage longer than usual</span></li>
-<li><span class="num">36</span><span>Monthly statement for every doctor in the portal</span></li>
+<li><span class="num">35</span><span>Weekly report for the lab owner every Sunday</span></li>
+<li><span class="num">36</span><span>Weekly reminders to doctors with overdue balances, plus a summary for the accountant</span></li>
+<li><span class="num">37</span><span>Alert when a case is stuck in a stage longer than usual</span></li>
+<li><span class="num">38</span><span>Monthly statement for every doctor in the portal</span></li>
 </ol></section>
-<section class="card"><h2><span class="ic">👨‍⚕️</span>Doctor portal<span class="cnt">5</span></h2><ol>
-<li><span class="num">37</span><span>Doctors send a new case and track it without creating an account</span></li>
-<li><span class="num">38</span><span>A direct link for every lab; the portal remembers the doctor's lab</span></li>
-<li><span class="num">39</span><span>A doctor account with all their cases, balance and statement</span></li>
-<li><span class="num">40</span><span>Notifications to the doctor on status changes and messages</span></li>
-<li><span class="num">41</span><span>Spam and bot protection on requests</span></li>
+<section class="card"><h2><span class="ic">👨‍⚕️</span>Doctor portal<span class="cnt">6</span></h2><ol>
+<li><span class="num">39</span><span>Doctors send a new case and track it without creating an account</span></li>
+<li><span class="num">40</span><span>A direct link for every lab; the portal remembers the doctor's lab</span></li>
+<li><span class="num">41</span><span>A doctor account with all their cases, balance and statement</span></li>
+<li><span class="num">42</span><span>Notifications to the doctor on status changes and messages</span></li>
+<li><span class="num">43</span><span>Doctors rate each delivered case (fit, shade, timing), and a low rating alerts the manager immediately</span></li>
+<li><span class="num">44</span><span>Spam and bot protection on requests</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">😁</span>Smile designer for doctors<span class="cnt">6</span></h2><ol>
-<li><span class="num">42</span><span>Finds the mouth in the patient's photo automatically</span></li>
-<li><span class="num">43</span><span>Realistic new upper and lower teeth replace the old ones</span></li>
-<li><span class="num">44</span><span>Edit any tooth by touch: move, resize, rotate; measurements update live</span></li>
-<li><span class="num">45</span><span>VITA shade per tooth, undo/redo and zoom to the mouth</span></li>
-<li><span class="num">46</span><span>Separate "after" image, before/after comparison and image download</span></li>
-<li><span class="num">47</span><span>Facial features outside the mouth never change</span></li>
+<li><span class="num">45</span><span>Finds the mouth in the patient's photo automatically</span></li>
+<li><span class="num">46</span><span>Realistic new upper and lower teeth replace the old ones</span></li>
+<li><span class="num">47</span><span>Edit any tooth by touch: move, resize, rotate; measurements update live</span></li>
+<li><span class="num">48</span><span>VITA shade per tooth, undo/redo and zoom to the mouth</span></li>
+<li><span class="num">49</span><span>Separate "after" image, before/after comparison and image download</span></li>
+<li><span class="num">50</span><span>Facial features outside the mouth never change</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">🌐</span>DentoMedia: professional network<span class="cnt">6</span></h2><ol>
-<li><span class="num">48</span><span>Posts, stories, likes, comments, shares and follows</span></li>
-<li><span class="num">49</span><span>Direct messages plus voice and video calls</span></li>
-<li><span class="num">50</span><span>Freelance marketplace: job posts, offers and two-way reviews</span></li>
-<li><span class="num">51</span><span>Search technicians and labs by skill, rating and verification</span></li>
-<li><span class="num">52</span><span>Paid ads and a paid verification badge for freelancers</span></li>
-<li><span class="num">53</span><span>Report, block and a moderation panel; data export and account deletion</span></li>
+<li><span class="num">51</span><span>Posts, stories, likes, comments, shares and follows</span></li>
+<li><span class="num">52</span><span>Direct messages plus voice and video calls</span></li>
+<li><span class="num">53</span><span>Freelance marketplace: job posts, offers and two-way reviews</span></li>
+<li><span class="num">54</span><span>Search technicians and labs by skill, rating and verification</span></li>
+<li><span class="num">55</span><span>Paid ads and a paid verification badge for freelancers</span></li>
+<li><span class="num">56</span><span>Report, block and a moderation panel; data export and account deletion</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">👑</span>Platform owner and sales<span class="cnt">5</span></h2><ol>
-<li><span class="num">54</span><span>Owner dashboard: labs, branches, doctors, cases and estimated revenue</span></li>
-<li><span class="num">55</span><span>Self-serve signup for any lab in any country with a 15-day free trial</span></li>
-<li><span class="num">56</span><span>Monthly and yearly subscriptions that renew automatically via Paddle</span></li>
-<li><span class="num">57</span><span>Live demo for any visitor, protected and reset every night</span></li>
-<li><span class="num">58</span><span>Pricing page, investors page and an overview video</span></li>
+<li><span class="num">57</span><span>Owner dashboard: labs, branches, doctors, cases and estimated revenue</span></li>
+<li><span class="num">58</span><span>Self-serve signup for any lab in any country with a 15-day free trial</span></li>
+<li><span class="num">59</span><span>Monthly and yearly subscriptions that renew automatically via Paddle</span></li>
+<li><span class="num">60</span><span>Live demo for any visitor, protected and reset every night</span></li>
+<li><span class="num">61</span><span>Pricing page, investors page and an overview video</span></li>
 </ol></section>
 <section class="card"><h2><span class="ic">🛡️</span>Technology and security<span class="cnt">6</span></h2><ol>
-<li><span class="num">59</span><span>Arabic and English on every screen</span></li>
-<li><span class="num">60</span><span>Installable app on phone and desktop (PWA) with push notifications</span></li>
-<li><span class="num">61</span><span>Each lab's data is fully isolated from other labs</span></li>
-<li><span class="num">62</span><span>4 security reviews, 299 automated tests, 0 known vulnerabilities</span></li>
-<li><span class="num">63</span><span>Fully cloud-based (Convex + Vercel), no servers to maintain</span></li>
-<li><span class="num">64</span><span>A full handover guide for the developer taking over</span></li>
+<li><span class="num">62</span><span>Arabic and English on every screen</span></li>
+<li><span class="num">63</span><span>Installable app on phone and desktop (PWA) with push notifications</span></li>
+<li><span class="num">64</span><span>Each lab's data is fully isolated from other labs</span></li>
+<li><span class="num">65</span><span>4 security reviews, 307 automated tests, 0 known vulnerabilities</span></li>
+<li><span class="num">66</span><span>Fully cloud-based (Convex + Vercel), no servers to maintain</span></li>
+<li><span class="num">67</span><span>A full handover guide for the developer taking over</span></li>
 </ol></section>
 </div>
 <div class="ft"><span><b>Hidento</b> · An integrated platform for dental labs and their doctors</span><span>Contact: amrmreda1988@gmail.com</span></div>
