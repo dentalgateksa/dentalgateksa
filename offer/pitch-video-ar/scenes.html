@@ -1,0 +1,185 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden}
+body{font-family:Cairo,sans-serif;color:#1f2937;background:#FFF9F4}
+.bg{position:absolute;inset:0;background:radial-gradient(1100px 700px at 100% 0%,#FBE3CD 0,transparent 60%),radial-gradient(900px 600px at 0% 100%,#FDEBDD 0,transparent 60%),linear-gradient(180deg,#FFF9F4,#fff)}
+.bg.dark{background:radial-gradient(1000px 700px at 85% 10%,#3a2a20 0,transparent 60%),linear-gradient(160deg,#0f172a,#1b2433)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35}
+.wrap{position:absolute;inset:0;padding:110px 100px;display:flex;align-items:center;gap:70px}
+.txt{flex:0 0 600px}
+.vis{flex:1;min-width:0;position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.kicker{display:inline-flex;align-items:center;gap:10px;background:#FDF4EC;color:#C2611F;border:1px solid #F6CDAA;font-weight:800;font-size:24px;padding:6px 20px;border-radius:999px;margin-bottom:26px}
+h1{font-size:76px;line-height:1.15;font-weight:900;color:#111827;letter-spacing:-.5px}
+h1 em{font-style:normal;color:#C2611F}
+p.lead{font-size:34px;line-height:1.6;color:#475569;margin-top:26px;font-weight:600}
+ul.pts{list-style:none;margin-top:34px;display:flex;flex-direction:column;gap:20px}
+ul.pts li{display:flex;gap:18px;align-items:center;font-size:32px;font-weight:700;color:#1f2937}
+ul.pts li i{flex:none;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#EDB88F,#C2611F);color:#fff;font-style:normal;display:grid;place-items:center;font-size:24px;font-weight:900}
+.shot{border-radius:22px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(120,60,20,.45),0 0 0 1px rgba(0,0,0,.06);background:#fff}
+.shot img{display:block;width:100%}
+.browser{width:100%;max-width:1050px}
+.browser .bar{height:44px;background:#f1f5f9;display:flex;align-items:center;gap:9px;padding:0 18px;direction:ltr;border-bottom:1px solid #e2e8f0}
+.browser .bar span{width:13px;height:13px;border-radius:50%;background:#e2e8f0}
+.browser .bar span:nth-child(1){background:#f87171}.browser .bar span:nth-child(2){background:#fbbf24}.browser .bar span:nth-child(3){background:#34d399}
+.browser .bar b{margin-left:18px;flex:1;height:26px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;font:600 15px/26px Cairo,sans-serif;color:#64748b;padding:0 12px}
+.phone{width:330px;border-radius:46px;padding:12px;background:#0f172a;box-shadow:0 40px 90px -30px rgba(15,23,42,.6)}
+.phone .scr{border-radius:36px;overflow:hidden;height:690px;background:#fff}
+.phone img{width:100%;display:block}
+.logo{width:150px;height:150px}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.chips{display:flex;gap:18px;margin-top:40px;justify-content:center}
+.chip{background:#fff;border:1px solid #F6CDAA;color:#A3501A;font-weight:800;font-size:30px;padding:12px 30px;border-radius:999px;box-shadow:0 10px 30px -15px rgba(194,97,31,.5)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:60px;width:1500px}
+.stat{background:#fff;border:1px solid #F6E3D3;border-radius:28px;padding:40px 20px;box-shadow:0 20px 50px -30px rgba(194,97,31,.5)}
+.stat b{display:block;font-size:96px;line-height:1;font-weight:900;color:#C2611F}
+.stat span{display:block;margin-top:16px;font-size:30px;font-weight:700;color:#334155}
+.tech{margin-top:48px;font-size:30px;color:#64748b;font-weight:700;direction:ltr}
+.cards3{display:flex;gap:30px}
+.c3{width:300px;background:#fff;border-radius:28px;padding:36px 26px;text-align:center;box-shadow:0 30px 60px -30px rgba(194,97,31,.45);border:1px solid #F6E3D3}
+.c3 .ic{width:84px;height:84px;margin:0 auto 18px;border-radius:24px;background:linear-gradient(135deg,#EDB88F,#C2611F);display:grid;place-items:center;font-size:44px}
+.c3 h3{font-size:34px;font-weight:900}
+.c3 p{font-size:24px;color:#64748b;margin-top:8px;font-weight:600}
+.link{position:absolute;top:50%;height:6px;background:linear-gradient(90deg,#EDB88F,#C2611F);border-radius:6px}
+.rev{background:#fff;border-radius:28px;border:1px solid #F6E3D3;box-shadow:0 30px 60px -30px rgba(194,97,31,.45);padding:34px 40px;width:900px}
+.rev .row{display:flex;justify-content:space-between;font-size:30px;font-weight:700;padding:16px 0;border-top:1px dashed #F1E4D8}
+.rev .row:first-child{border-top:0}
+.rev .row b{color:#C2611F;direction:ltr}
+.honest{margin-top:28px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:22px;padding:24px 30px;font-size:27px;line-height:1.6;color:#78350F;font-weight:700;width:900px}
+.cta h1{font-size:96px}
+.cta .sub{font-size:40px;color:#475569;font-weight:700;margin-top:24px}
+.btn{display:inline-block;margin-top:50px;background:linear-gradient(135deg,#E0833B,#C2611F);color:#fff;font-size:40px;font-weight:900;padding:22px 60px;border-radius:24px;box-shadow:0 30px 60px -20px rgba(194,97,31,.7)}
+.mail{margin-top:34px;font-size:34px;font-weight:800;color:#334155;direction:ltr}
+.tag{position:absolute;bottom:48px;left:120px;display:flex;align-items:center;gap:14px;direction:ltr;font-weight:900;font-size:30px;color:#0f172a;opacity:.9}
+.tag img{width:46px;height:46px}
+/* حركة */
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-90px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.045)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(60px,-40px)}}
+.a{animation:up .9s cubic-bezier(.22,1,.36,1) both}
+.aL{animation:inL 1.1s cubic-bezier(.22,1,.36,1) both}
+.aP{animation:pop .8s cubic-bezier(.22,1,.36,1) both}
+.z{animation:zoom var(--dur,7s) linear both}
+.d1{animation-delay:.15s}.d2{animation-delay:.35s}.d3{animation-delay:.55s}.d4{animation-delay:.75s}.d5{animation-delay:.95s}.d6{animation-delay:1.15s}.d7{animation-delay:1.4s}
+</style>
+</head>
+<body>
+<div id="stage" style="position:fixed;inset:0;overflow:hidden">
+<div class="bg" id="bg"></div>
+<div class="blob" style="width:520px;height:520px;background:#F6CDAA;top:-120px;left:-120px;animation:drift 8s linear both"></div>
+<div id="root"></div>
+</div>
+<script>
+const LOGO = '<img src="shots/logo.svg">';
+const tag = '<div class="tag">' + LOGO + 'Hidento</div>';
+const browser = (img, url, extra = "") => `<div class="shot browser aL d2 ${extra}"><div class="bar"><span></span><span></span><span></span><b>hidento.app</b></div><div class="z"><img src="shots/${img}"></div></div>`;
+const phone = (img, cls = "aP d3", style = "") => `<div class="phone ${cls}" style="${style}"><div class="scr"><img src="shots/${img}"></div></div>`;
+const pts = (arr, start = 3) => `<ul class="pts">${arr.map((t, i) => `<li class="a d${start + i}"><i>✓</i>${t}</li>`).join("")}</ul>`;
+const S = {
+  intro: `<div class="center">
+    <img class="logo aP" src="shots/logo.svg">
+    <h1 class="a d2" style="font-size:120px;margin-top:30px;direction:ltr">Hidento</h1>
+    <p class="lead a d3" style="font-size:44px;margin-top:10px">منصة متكاملة لمعامل الأسنان وأطبائها</p>
+    <div class="chips"><span class="chip aP d4">نظام إدارة المعمل</span><span class="chip aP d5">بوابة الأطباء</span><span class="chip aP d6">DentoMedia</span></div>
+  </div>`,
+  idea: `<div class="wrap"><div class="txt">
+      <span class="kicker a">الفكرة</span>
+      <h1 class="a d1">معمل واحد،<br><em>منصة واحدة</em></h1>
+      <p class="lead a d2">بدل برامج متفرقة لا تتواصل مع بعضها، يجمع Hidento المعمل وأطباءه وفنييه في نظام واحد، بالعربية والإنجليزية.</p>
+    </div><div class="vis"><div style="position:relative">
+      <div class="cards3">
+        <div class="c3 aP d2"><div class="ic">🦷</div><h3>المعمل</h3><p>الحالات والإنتاج والفواتير</p></div>
+        <div class="c3 aP d4"><div class="ic">👨‍⚕️</div><h3>الطبيب</h3><p>يرسل ويتابع ويقيّم</p></div>
+        <div class="c3 aP d6"><div class="ic">🌐</div><h3>الفنيين</h3><p>شبكة مهنية وسوق عمل</p></div>
+      </div></div></div></div>${tag}`,
+  erp: `<div class="wrap"><div class="txt">
+      <span class="kicker a">نظام إدارة المعمل</span>
+      <h1 class="a d1">المعمل كله<br><em>في شاشة واحدة</em></h1>
+      ${pts(["الحالات ومراحل الإنتاج وأداء الفنيين", "فواتير ضريبية لـ 55 دولة", "حسابات الأطباء وأعمار الديون", "المخزون والموظفين والفروع"], 2)}
+    </div><div class="vis">${browser("dashboard.png")}</div></div>${tag}`,
+  qr: `<div class="wrap"><div class="txt">
+      <span class="kicker a">جديد</span>
+      <h1 class="a d1">ملصق <em>QR</em><br>لكل حالة</h1>
+      <p class="lead a d2">يصوّره الفني بكاميرا الموبايل، فتفتح الحالة وتنتقل للمرحلة التالية بضغطة واحدة.</p>
+      ${pts(["طباعة ملصق أو ورقة A4 كاملة", "كل موظف يرى حالات معمله فقط"], 4)}
+    </div><div class="vis">${browser("scan-crop.png")}</div></div>${tag}`,
+  portal: `<div class="wrap"><div class="txt">
+      <span class="kicker a">بوابة الأطباء</span>
+      <h1 class="a d1">بوابة خاصة<br><em>لكل طبيب</em></h1>
+      ${pts(["يرسل الحالة ويتابعها لحظة بلحظة", "يوافق على التصميم بعارض ثلاثي الأبعاد", "يرى رصيده وكشف حسابه الشهري", "تطبيق على الموبايل وإشعارات فورية"], 2)}
+    </div><div class="vis">${phone("m-track.png")}</div></div>${tag}`,
+  ratings: `<div class="wrap"><div class="txt">
+      <span class="kicker a">جديد</span>
+      <h1 class="a d1">رضا الأطباء<br><em>تحت عينك</em></h1>
+      <p class="lead a d2">يقيّم الطبيب كل حالة بعد التسليم: المقاس واللون والالتزام بالميعاد.</p>
+      ${pts(["التقييم الضعيف ينبّه المدير فورًا", "متوسط الرضا لكل طبيب ولكل فني"], 4)}
+    </div><div class="vis">${browser("ratings.png")}</div></div>${tag}`,
+  loyalty: `<div class="wrap"><div class="txt">
+      <span class="kicker a">جديد</span>
+      <h1 class="a d1">نقاط ولاء<br><em>تشجّع على الدفع</em></h1>
+      ${pts(["نقاط مع كل دفعة، وبونص للدفع المبكر", "مستويات فضي وذهبي وبلاتيني", "النقاط تتحول لخصم على الفاتورة"], 2)}
+    </div><div class="vis">${browser("loyalty.png")}</div></div>${tag}`,
+  smile: `<div class="wrap"><div class="txt">
+      <span class="kicker a">للأطباء</span>
+      <h1 class="a d1">مصمّم<br><em>الابتسامة</em></h1>
+      <p class="lead a d2">يحدد الفم في صورة المريض تلقائيًا، ويضع أسنانًا جديدة واقعية، ويعدّل الطبيب كل سن باللمس.</p>
+      ${pts(["صورة قبل وبعد للمريض", "ملامح الوجه خارج الفم لا تتغير"], 4)}
+    </div><div class="vis">${browser("doctor-smile.png")}</div></div>${tag}`,
+  dento: `<div class="wrap"><div class="txt">
+      <span class="kicker a">DentoMedia</span>
+      <h1 class="a d1">شبكة مهنية<br><em>وسوق عمل</em></h1>
+      ${pts(["منشورات ورسائل ومكالمات صوت وفيديو", "سوق عمل حر بتقييمات متبادلة", "إعلانات وتوثيق مدفوع"], 2)}
+    </div><div class="vis">${browser("dm.png")}</div></div>${tag}`,
+  auto: `<div class="wrap"><div class="txt">
+      <span class="kicker a">أتمتة</span>
+      <h1 class="a d1">يعمل وحده،<br><em>وعلى الموبايل</em></h1>
+      ${pts(["تقرير أسبوعي لصاحب المعمل", "تذكير الأطباء بالمستحقات", "تنبيه الحالات المتعطلة", "كل الشاشات مريحة على الموبايل"], 2)}
+    </div><div class="vis"><div style="position:relative">${browser("automations.png", "", "")}${phone("m-cases.png", "aP d5", "position:absolute;left:-60px;bottom:-80px;width:270px")}</div></div></div>${tag}`,
+  quality: `<div class="center">
+      <span class="kicker a">مبني باحتراف</span>
+      <h1 class="a d1">جودة <em>يمكن قياسها</em></h1>
+      <div class="stats">
+        <div class="stat aP d2"><b>67</b><span>ميزة وخاصية</span></div>
+        <div class="stat aP d3"><b>307</b><span>اختبار آلي ناجح</span></div>
+        <div class="stat aP d4"><b>4</b><span>مراجعات أمنية</span></div>
+        <div class="stat aP d5"><b>56K</b><span>سطر برمجي</span></div>
+      </div>
+      <div class="tech a d6">React · TypeScript · Convex · Vercel</div>
+    </div>`,
+  revenue: `<div class="wrap"><div class="txt">
+      <span class="kicker a">نموذج العمل</span>
+      <h1 class="a d1">مصادر دخل<br><em>جاهزة</em></h1>
+      <p class="lead a d2">الاشتراكات تتجدد تلقائيًا، والدفع عن طريق Paddle لأي دولة.</p>
+    </div><div class="vis" style="flex-direction:column">
+      <div class="rev aL d2">
+        <div class="row"><span>اشتراك المعامل</span><b>$149 / month</b></div>
+        <div class="row"><span>مصمّم الابتسامة للأطباء</span><b>Set by buyer</b></div>
+        <div class="row"><span>إعلانات DentoMedia</span><b>$3–5 / day</b></div>
+        <div class="row"><span>توثيق المستقلين</span><b>$9</b></div>
+        <div class="row"><span>عمولة سوق العمل</span><b>$5 / job</b></div>
+      </div>
+      <div class="honest a d5">بشفافية: المنصة قبل الإيرادات، ولا يوجد عملاء دافعون بعد. وهي متطوّرة بشكل كبير، والمتبقي لمسات بسيطة حسب سوق المشتري.</div>
+    </div></div>${tag}`,
+  cta: `<div class="center cta">
+      <img class="logo aP" src="shots/logo.svg" style="width:120px;height:120px">
+      <h1 class="a d1" style="margin-top:26px">متاحة <em>للاستحواذ الكامل</em></h1>
+      <div class="sub a d2">الكود المصدري · الملكية الفكرية · التوثيق الكامل</div>
+      <div class="btn aP d4">جرّب الديمو المباشر</div>
+      <div class="mail a d5">amrmreda1988@gmail.com</div>
+    </div>`,
+};
+const id = new URLSearchParams(location.search).get("s") || "intro";
+const dur = new URLSearchParams(location.search).get("d") || "7";
+document.documentElement.style.setProperty("--dur", dur + "s");
+document.getElementById("root").innerHTML = S[id];
+window.seek = (t) => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; } };
+</script>
+</body>
+</html>
