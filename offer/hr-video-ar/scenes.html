@@ -1,0 +1,157 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden}
+body{font-family:Cairo,sans-serif;color:#1f2937;background:#FFF9F4}
+.bg{position:absolute;inset:0;background:radial-gradient(1100px 700px at 100% 0%,#FBE3CD 0,transparent 60%),radial-gradient(900px 600px at 0% 100%,#FDEBDD 0,transparent 60%),linear-gradient(180deg,#FFF9F4,#fff)}
+.bg.dark{background:radial-gradient(1000px 700px at 85% 10%,#3a2a20 0,transparent 60%),linear-gradient(160deg,#0f172a,#1b2433)}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35}
+.wrap{position:absolute;inset:0;padding:110px 100px;display:flex;align-items:center;gap:70px}
+.txt{flex:0 0 600px}
+.vis{flex:1;min-width:0;position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+.kicker{display:inline-flex;align-items:center;gap:10px;background:#FDF4EC;color:#C2611F;border:1px solid #F6CDAA;font-weight:800;font-size:24px;padding:6px 20px;border-radius:999px;margin-bottom:26px}
+h1{font-size:76px;line-height:1.15;font-weight:900;color:#111827;letter-spacing:-.5px}
+h1 em{font-style:normal;color:#C2611F}
+p.lead{font-size:34px;line-height:1.6;color:#475569;margin-top:26px;font-weight:600}
+ul.pts{list-style:none;margin-top:34px;display:flex;flex-direction:column;gap:20px}
+ul.pts li{display:flex;gap:18px;align-items:center;font-size:32px;font-weight:700;color:#1f2937}
+ul.pts li i{flex:none;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#EDB88F,#C2611F);color:#fff;font-style:normal;display:grid;place-items:center;font-size:24px;font-weight:900}
+.shot{border-radius:22px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(120,60,20,.45),0 0 0 1px rgba(0,0,0,.06);background:#fff}
+.shot img{display:block;width:100%}
+.browser{width:100%;max-width:1050px}
+.browser .bar{height:44px;background:#f1f5f9;display:flex;align-items:center;gap:9px;padding:0 18px;direction:ltr;border-bottom:1px solid #e2e8f0}
+.browser .bar span{width:13px;height:13px;border-radius:50%;background:#e2e8f0}
+.browser .bar span:nth-child(1){background:#f87171}.browser .bar span:nth-child(2){background:#fbbf24}.browser .bar span:nth-child(3){background:#34d399}
+.browser .bar b{margin-left:18px;flex:1;height:26px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;font:600 15px/26px Cairo,sans-serif;color:#64748b;padding:0 12px}
+.phone{width:330px;border-radius:46px;padding:12px;background:#0f172a;box-shadow:0 40px 90px -30px rgba(15,23,42,.6)}
+.phone .scr{border-radius:36px;overflow:hidden;height:690px;background:#fff}
+.phone img{width:100%;display:block}
+.logo{width:150px;height:150px}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.chips{display:flex;gap:18px;margin-top:40px;justify-content:center}
+.chip{background:#fff;border:1px solid #F6CDAA;color:#A3501A;font-weight:800;font-size:30px;padding:12px 30px;border-radius:999px;box-shadow:0 10px 30px -15px rgba(194,97,31,.5)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:60px;width:1500px}
+.stat{background:#fff;border:1px solid #F6E3D3;border-radius:28px;padding:40px 20px;box-shadow:0 20px 50px -30px rgba(194,97,31,.5)}
+.stat b{display:block;font-size:96px;line-height:1;font-weight:900;color:#C2611F}
+.stat span{display:block;margin-top:16px;font-size:30px;font-weight:700;color:#334155}
+.tech{margin-top:48px;font-size:30px;color:#64748b;font-weight:700;direction:ltr}
+.cards3{display:flex;gap:30px}
+.c3{width:300px;background:#fff;border-radius:28px;padding:36px 26px;text-align:center;box-shadow:0 30px 60px -30px rgba(194,97,31,.45);border:1px solid #F6E3D3}
+.c3 .ic{width:84px;height:84px;margin:0 auto 18px;border-radius:24px;background:linear-gradient(135deg,#EDB88F,#C2611F);display:grid;place-items:center;font-size:44px}
+.c3 h3{font-size:34px;font-weight:900}
+.c3 p{font-size:24px;color:#64748b;margin-top:8px;font-weight:600}
+.link{position:absolute;top:50%;height:6px;background:linear-gradient(90deg,#EDB88F,#C2611F);border-radius:6px}
+.rev{background:#fff;border-radius:28px;border:1px solid #F6E3D3;box-shadow:0 30px 60px -30px rgba(194,97,31,.45);padding:34px 40px;width:900px}
+.rev .row{display:flex;justify-content:space-between;font-size:30px;font-weight:700;padding:16px 0;border-top:1px dashed #F1E4D8}
+.rev .row:first-child{border-top:0}
+.rev .row b{color:#C2611F;direction:ltr}
+.honest{margin-top:28px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:22px;padding:24px 30px;font-size:27px;line-height:1.6;color:#78350F;font-weight:700;width:900px}
+.cta h1{font-size:96px}
+.cta .sub{font-size:40px;color:#475569;font-weight:700;margin-top:24px}
+.btn{display:inline-block;margin-top:50px;background:linear-gradient(135deg,#E0833B,#C2611F);color:#fff;font-size:40px;font-weight:900;padding:22px 60px;border-radius:24px;box-shadow:0 30px 60px -20px rgba(194,97,31,.7)}
+.mail{margin-top:34px;font-size:34px;font-weight:800;color:#334155;direction:ltr}
+.tag{position:absolute;bottom:48px;left:120px;display:flex;align-items:center;gap:14px;direction:ltr;font-weight:900;font-size:30px;color:#0f172a;opacity:.9}
+.tag img{width:46px;height:46px}
+/* حركة */
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-90px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.045)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(60px,-40px)}}
+.a{animation:up .9s cubic-bezier(.22,1,.36,1) both}
+.aL{animation:inL 1.1s cubic-bezier(.22,1,.36,1) both}
+.aP{animation:pop .8s cubic-bezier(.22,1,.36,1) both}
+.z{animation:zoom var(--dur,7s) linear both}
+.d1{animation-delay:.15s}.d2{animation-delay:.35s}.d3{animation-delay:.55s}.d4{animation-delay:.75s}.d5{animation-delay:.95s}.d6{animation-delay:1.15s}.d7{animation-delay:1.4s}
+</style>
+</head>
+<body>
+<div id="stage" style="position:fixed;inset:0;overflow:hidden">
+<div class="bg" id="bg"></div>
+<div class="blob" style="width:520px;height:520px;background:#F6CDAA;top:-120px;left:-120px;animation:drift 8s linear both"></div>
+<div id="root"></div>
+</div>
+<script>
+const LOGO = '<img src="shots/logo.svg">';
+const tag = '<div class="tag">' + LOGO + 'Hidento</div>';
+const browser = (img, url, extra = "") => `<div class="shot browser aL d2 ${extra}"><div class="bar"><span></span><span></span><span></span><b>hidento.com</b></div><div class="z"><img src="shots/${img}"></div></div>`;
+const phone = (img, cls = "aP d3", style = "") => `<div class="phone ${cls}" style="${style}"><div class="scr"><img src="shots/${img}"></div></div>`;
+const pts = (arr, start = 3) => `<ul class="pts">${arr.map((t, i) => `<li class="a d${start + i}"><i>✓</i>${t}</li>`).join("")}</ul>`;
+const paper = (img, style) => `<div class="shot aP d5" style="position:absolute;${style}"><img src="shots/${img}"></div>`;
+const S = {
+  intro: `<div class="center">
+    <img class="logo aP" src="shots/logo.svg">
+    <span class="kicker a d2" style="margin-top:34px;font-size:30px">تحديث أكتوبر 2026</span>
+    <h1 class="a d3" style="font-size:96px">الموارد البشرية والحسابات<br>في <span style="direction:ltr;display:inline-block">Hidento</span></h1>
+    <div class="chips"><span class="chip aP d4">الرواتب</span><span class="chip aP d5">الحضور</span><span class="chip aP d6">الحسابات</span><span class="chip aP d7">المشتريات</span></div>
+  </div>`,
+  payroll: `<div class="wrap"><div class="txt" style="flex-basis:560px">
+      <span class="kicker a">الرواتب</span>
+      <h1 class="a d1">مسير الشهر<br><em>بيتجهز لوحده</em></h1>
+      ${pts(["أجر القطعة من شغل الإنتاج", "التأمينات والغياب والسلف بتتخصم لوحدها", "الاعتماد بيسجّل المصروف"], 2)}
+    </div><div class="vis">${browser("payroll-run.png")}</div></div>${tag}`,
+  payslip: `<div class="wrap"><div class="txt">
+      <span class="kicker a">قسيمة الراتب</span>
+      <h1 class="a d1">قسيمة واضحة<br><em>لكل موظف</em></h1>
+      ${pts(["للطباعة باسم المعمل", "الموظف يشوفها من موبايله", "طلب الإجازة من الموبايل كمان"], 2)}
+    </div><div class="vis"><div style="position:relative;width:1000px;height:760px">
+      ${paper("payslip.png", "left:0;top:200px;width:720px;transform:rotate(-2deg)")}
+      ${phone("m-myhr2.png", "aP d3", "position:absolute;right:0;top:0;width:330px")}
+    </div></div></div>${tag}`,
+  attendance: `<div class="wrap"><div class="txt">
+      <span class="kicker a">الحضور والانصراف</span>
+      <h1 class="a d1">الحضور من<br><em>الموبايل</em></h1>
+      ${pts(["التأخير والإضافي بيتحسبوا لوحدهم", "كشف يومي للموارد البشرية", "الغياب بيتخصم من المسير"], 2)}
+    </div><div class="vis"><div style="position:relative;width:1040px;height:780px">
+      <div class="shot aL d2" style="position:absolute;left:0;top:150px;width:760px"><img src="shots/att-day.png"></div>
+      ${phone("m-myhr.png", "aP d4", "position:absolute;right:0;top:0;width:330px")}
+    </div></div></div>${tag}`,
+  accounting: `<div class="wrap"><div class="txt" style="flex-basis:560px">
+      <span class="kicker a">الحسابات</span>
+      <h1 class="a d1">أرباحك<br><em>من غير الضريبة</em></h1>
+      ${pts(["قائمة الدخل وإقرار الضريبة", "الخزنة والبنك حسب طريقة الدفع", "تصدير Excel للمحاسب"], 2)}
+    </div><div class="vis">${browser("acc-pnl.png")}</div></div>${tag}`,
+  purchases: `<div class="wrap"><div class="txt">
+      <span class="kicker a">المشتريات والموردين</span>
+      <h1 class="a d1">الشراء بيزوّد<br><em>المخزون</em></h1>
+      ${pts(["كاش أو آجل، ويتسجل مصروف لوحده", "حساب لكل مورد وكشف حساب", "الإيجار والمصروفات الثابتة لوحدها"], 2)}
+    </div><div class="vis"><div style="position:relative;width:1040px;height:780px">
+      <div class="shot aL d2" style="position:absolute;right:0;top:0;width:640px"><img src="shots/pur-form.png"></div>
+      <div class="shot aP d5" style="position:absolute;left:0;top:330px;width:600px"><img src="shots/sup-stmt.png"></div>
+    </div></div></div>${tag}`,
+  eos: `<div class="wrap"><div class="txt" style="flex-basis:560px">
+      <span class="kicker a">نهاية الخدمة</span>
+      <h1 class="a d1">المكافأة<br><em>محسوبة جاهزة</em></h1>
+      ${pts(["حسب دولة المعمل (السعودية والإمارات)", "مخصص لكل الموظفين", "مستندات الموظف وتنبيه قبل الانتهاء"], 2)}
+    </div><div class="vis">${browser("eos.png")}</div></div>${tag}`,
+  quality: `<div class="center">
+      <span class="kicker a">بالأرقام</span>
+      <h1 class="a d1">منصة <em>بتكبر كل يوم</em></h1>
+      <div class="stats">
+        <div class="stat aP d2"><b>98</b><span>ميزة وخاصية</span></div>
+        <div class="stat aP d3"><b>351</b><span>اختبار آلي ناجح</span></div>
+        <div class="stat aP d4"><b>7</b><span>مراجعات وفحوص</span></div>
+        <div class="stat aP d5"><b>0</b><span>ثغرات معروفة</span></div>
+      </div>
+    </div>`,
+  cta: `<div class="center cta">
+      <img class="logo aP" src="shots/logo.svg" style="width:120px;height:120px">
+      <h1 class="a d1" style="margin-top:26px">جرّبها <em>بنفسك</em></h1>
+      <div class="sub a d2">ديمو مباشر كامل من غير تسجيل</div>
+      <div class="btn aP d4">hidento.com</div>
+      <div class="mail a d5">amrmreda1988@gmail.com</div>
+    </div>`,
+};
+const id = new URLSearchParams(location.search).get("s") || "intro";
+const dur = new URLSearchParams(location.search).get("d") || "7";
+document.documentElement.style.setProperty("--dur", dur + "s");
+document.getElementById("root").innerHTML = S[id];
+window.seek = (t) => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; } };
+</script>
+</body>
+</html>
