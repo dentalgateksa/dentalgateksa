@@ -645,6 +645,66 @@ a {
     }
 }
 
+
+/* Location */
+.location {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 24px;
+    align-items: stretch;
+}
+.location-info {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.location-info h3 {
+    color: var(--navy);
+    font-size: 20px;
+    font-weight: 800;
+}
+.location-info address {
+    font-style: normal;
+    color: var(--muted);
+    line-height: 1.8;
+}
+.location-info .short-address {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--teal-soft);
+    color: var(--teal);
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 4px 14px;
+    direction: ltr;
+}
+.location-info .btn {
+    align-self: flex-start;
+    margin-top: auto;
+}
+.map-frame {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    min-height: 340px;
+    background: var(--bg-soft);
+}
+.map-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    border: 0;
+}
+@media (max-width: 860px) {
+    .location { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -664,6 +724,7 @@ a {
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#about" data-i18n="nav_about">About</a></li>
                     <li><a href="#how" data-i18n="nav_how">How it works</a></li>
+                    <li><a href="#location" data-i18n="nav_location">Location</a></li>
                     <li><a class="btn btn-primary btn-sm" href="#upload" data-upload data-i18n="nav_upload">Upload a Case</a></li>
                 </ul>
             </nav>
@@ -789,6 +850,27 @@ a {
             </div>
         </section>
 
+        <!-- Location -->
+        <section class="section section-soft" id="location">
+            <div class="container">
+                <div class="section-head">
+                    <p class="eyebrow" data-i18n="location_eyebrow">Visit us</p>
+                    <h2 data-i18n="location_title">Our location</h2>
+                </div>
+                <div class="location">
+                    <div class="location-info">
+                        <h3>DENTALGATE</h3>
+                        <address data-i18n="location_address">8473 Prince Sultan Bin Abdulaziz Street, 3226, Al-Muzahimiyah 19655, Saudi Arabia</address>
+                        <span class="short-address" title="Short national address">OMDA8473</span>
+                        <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=8473%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%A3%D9%85%D9%8A%D8%B1%20%D8%B3%D9%84%D8%B7%D8%A7%D9%86%20%D8%A8%D9%86%20%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B2%D8%8C%20%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%AD%D9%85%D9%8A%D8%A9%2019655%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9" target="_blank" rel="noopener" data-i18n="location_open">Open in Google Maps</a>
+                    </div>
+                    <div class="map-frame">
+                        <iframe src="https://maps.google.com/maps?q=8473%20%D8%B4%D8%A7%D8%B1%D8%B9%20%D8%A7%D9%84%D8%A3%D9%85%D9%8A%D8%B1%20%D8%B3%D9%84%D8%B7%D8%A7%D9%86%20%D8%A8%D9%86%20%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B2%D8%8C%20%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%AD%D9%85%D9%8A%D8%A9%2019655%D8%8C%20%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9&hl=ar&z=16&output=embed" title="DENTALGATE location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="site-footer">
@@ -850,6 +932,11 @@ window.DG_TRANSLATIONS = {
         upload_desc: "ارفع ملفات الحالة وبياناتها بأمان من خلال بوابة الحالات الخاصة بنا.",
         upload_go_btn: "ارفع حالتك الآن",
         upload_soon: "رفع الحالات أونلاين متاح قريباً",
+        nav_location: "موقعنا",
+        location_eyebrow: "تفضل بزيارتنا",
+        location_title: "موقعنا",
+        location_address: "8473 شارع الأمير سلطان بن عبدالعزيز، 3226، المزاحمية 19655، المملكة العربية السعودية",
+        location_open: "افتح في خرائط جوجل",
         footer_rights: "جميع الحقوق محفوظة © 2026 DENTALGATE"
     },
     en: {
@@ -887,6 +974,11 @@ window.DG_TRANSLATIONS = {
         upload_desc: "Upload your case files and details securely through our case portal.",
         upload_go_btn: "Upload a Case Now",
         upload_soon: "Online case upload is coming soon",
+        nav_location: "Location",
+        location_eyebrow: "Visit us",
+        location_title: "Our location",
+        location_address: "8473 Prince Sultan Bin Abdulaziz Street, 3226, Al-Muzahimiyah 19655, Saudi Arabia",
+        location_open: "Open in Google Maps",
         footer_rights: "All rights reserved © 2026 DENTALGATE"
     }
 };
