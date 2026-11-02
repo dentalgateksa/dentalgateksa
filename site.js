@@ -2,8 +2,10 @@
 //
 // uploadUrl: your case-upload link from your dentlflow account (must start with https://).
 // While it is empty, the "Upload Cases" page shows "coming soon" instead of a button.
+// whatsappNumber: the number that receives "Request a Courier" messages (country code, digits only).
 window.DG_CONFIG = {
-        uploadUrl: 'https://hidento.com/?lab=dental-gate-ksa'
+        uploadUrl: 'https://hidento.com/?lab=dental-gate-ksa',
+        whatsappNumber: '966544572384'
 };
 
 window.DG_TRANSLATIONS = {
@@ -24,6 +26,8 @@ window.DG_TRANSLATIONS = {
         hero_desc: "نعمل في DENTALGATE بأحدث تقنيات الـ CAD/CAM لتقديم تركيبات بدقة فائقة تناسب متطلبات العيادات الحديثة.",
         hero_cta: "ارفع حالتك",
         hero_more: "تعرّف علينا",
+        courier_btn: "اطلب مندوب",
+        courier_msg: "السلام عليكم، أرغب في طلب مندوب لاستلام حالة.\nاسم العيادة:\nالموقع:",
         sound_on: "🔇 تشغيل الصوت",
         sound_off: "🔊 كتم الصوت",
         about_eyebrow: "من نحن",
@@ -66,6 +70,8 @@ window.DG_TRANSLATIONS = {
         hero_desc: "At DENTALGATE, we use the latest CAD/CAM technology to deliver high-precision restorations for modern clinics.",
         hero_cta: "Upload a Case",
         hero_more: "Learn more",
+        courier_btn: "Request a Courier",
+        courier_msg: "Hello, I would like to request a courier to pick up a case.\nClinic name:\nLocation:",
         sound_on: "🔇 Sound on",
         sound_off: "🔊 Mute",
         about_eyebrow: "About us",
@@ -121,6 +127,7 @@ window.DG_TRANSLATIONS = {
         document.querySelectorAll('[data-i18n]').forEach((node) => { node.textContent = t(node.dataset.i18n); });
         document.querySelectorAll('[data-i18n-aria]').forEach((node) => { node.setAttribute('aria-label', t(node.dataset.i18nAria)); });
         document.title = t('doc_title');
+        setupWhatsApp();
 
         try { localStorage.setItem('dg_lang', lang); } catch (e) { /* ignore */ }
     }
@@ -129,6 +136,15 @@ window.DG_TRANSLATIONS = {
     function setMenu(open) {
         $('navLinks').classList.toggle('open', open);
         $('menuBtn').setAttribute('aria-expanded', String(open));
+    }
+
+    // ---------- WhatsApp courier request ----------
+    function setupWhatsApp() {
+        const number = String(CFG.whatsappNumber || '').replace(/\D/g, '');
+        document.querySelectorAll('[data-whatsapp]').forEach((a) => {
+            a.hidden = !number;
+            if (number) a.href = 'https://wa.me/' + number + '?text=' + encodeURIComponent(t('courier_msg'));
+        });
     }
 
     // ---------- upload link ----------
